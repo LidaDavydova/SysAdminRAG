@@ -16,6 +16,8 @@ A smart RAG system for creating a system administrator assistant using:
 * 🎯 **LangChain document compressors** for improving context quality (optional)
 
 Demo:
+<video src="demo.mp4" controls="controls" style="max-width: 730px;">
+</video>
 
 ## Installation
 
