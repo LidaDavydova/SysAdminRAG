@@ -1,0 +1,3544 @@
+[
+    {
+        "command": "man",
+        "category": "documentation",
+        "description_lt": "Atveria pasirinktos komandos, failo, demono arba konfigūracijos failo pagalbos puslapį (manual page).",
+        "description_en": "Opens the manual page of a specified command, file, daemon or configuration file.",
+        "usage": "man command",
+        "examples": [
+            "man whois",
+            "man syslogd",
+            "man passwd"
+        ],
+        "notes_lt": "Paspausk Q, kad išeitum iš man puslapio. Dauguma UNIX įrankių turi savo man puslapius.",
+        "notes_en": "Press Q to quit the manual. Most UNIX tools include their own man pages.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "man -k",
+        "category": "documentation",
+        "description_lt": "Ieško man puslapių pagal raktinį žodį ir išveda susijusias komandas.",
+        "description_en": "Searches man pages for a keyword and lists related commands.",
+        "usage": "man -k keyword",
+        "examples": [
+            "man -k syslog",
+            "man -k network"
+        ],
+        "notes_lt": "Equivalent to the `apropos` command. Naudojama kai pamiršti tikslią komandos pavadinimą.",
+        "notes_en": "Equivalent to the `apropos` command. Useful when you don't remember the exact command name.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "whatis",
+        "category": "documentation",
+        "description_lt": "Trumpai paaiškina, ką daro komanda – rodo vienos eilutės aprašymą.",
+        "description_en": "Displays a brief one-line description of a command.",
+        "usage": "whatis command",
+        "examples": [
+            "whatis route",
+            "whatis passwd"
+        ],
+        "notes_lt": "Naudinga greitam komandos paaiškinimui, be pilno man puslapio.",
+        "notes_en": "Useful for quickly checking what a command does without opening the full man page.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "whereis",
+        "category": "documentation",
+        "description_lt": "Suranda komandos binarą, šaltinio failus ir jos man puslapius.",
+        "description_en": "Locates the binary, source files and man pages of a command.",
+        "usage": "whereis command",
+        "examples": [
+            "whereis whois",
+            "whereis ls"
+        ],
+        "notes_lt": "Parodo katalogus, kuriuose egzistuoja komandos failai. Dažnai naudojama derinimui.",
+        "notes_en": "Shows the directories where the command files exist. Useful for debugging or checking installations.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mandb",
+        "category": "documentation",
+        "description_lt": "Atnaujina man puslapių duomenų bazę, kad būtų galima surasti naujas komandas.",
+        "description_en": "Updates the manual page database so that new commands can be found.",
+        "usage": "sudo mandb",
+        "examples": [
+            "mandb",
+            "sudo mandb"
+        ],
+        "notes_lt": "Naudojama, kai naujų man puslapių sistema neranda. RedHat sistemose naudojamas `makewhatis`.",
+        "notes_en": "Used when new man pages cannot be found. On RedHat systems use `makewhatis` instead.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "pwd",
+        "category": "filesystem",
+        "description_lt": "Parodo dabartinį darbinį katalogą (Print Working Directory).",
+        "description_en": "Displays the current working directory (Print Working Directory).",
+        "usage": "pwd",
+        "examples": [
+            "pwd"
+        ],
+        "notes_lt": "Naudinga norint sužinoti, kurioje vietoje failų sistemoje šiuo metu esi.",
+        "notes_en": "Useful for checking where you are located in the filesystem.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cd",
+        "category": "filesystem",
+        "description_lt": "Keičia dabartinį darbinį katalogą į nurodytą.",
+        "description_en": "Changes the current working directory to the specified one.",
+        "usage": "cd /path/to/directory",
+        "examples": [
+            "cd /etc",
+            "cd /bin",
+            "cd /home/user"
+        ],
+        "notes_lt": "Jei nepateikiamas joks kelias, `cd` nuveda į home katalogą.",
+        "notes_en": "If no path is provided, `cd` moves you to your home directory.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cd ~",
+        "category": "filesystem",
+        "description_lt": "Nuvyksta į vartotojo home katalogą.",
+        "description_en": "Navigates to the user's home directory.",
+        "usage": "cd ~",
+        "examples": [
+            "cd ~",
+            "cd",
+            "pwd"
+        ],
+        "notes_lt": "`cd` ir `cd ~` turi tą patį efektą.",
+        "notes_en": "`cd` and `cd ~` behave the same way.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cd ..",
+        "category": "filesystem",
+        "description_lt": "Pereina į viršesnį katalogą (tėvinį katalogą).",
+        "description_en": "Moves up to the parent directory.",
+        "usage": "cd ..",
+        "examples": [
+            "cd ..",
+            "cd /usr/share/games",
+            "cd .."
+        ],
+        "notes_lt": "Naudinga greitai naviguojant katalogų struktūroje.",
+        "notes_en": "Useful for moving upward inside directory trees.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cd -",
+        "category": "filesystem",
+        "description_lt": "Grąžina į ankstesnį katalogą.",
+        "description_en": "Returns to the previous directory.",
+        "usage": "cd -",
+        "examples": [
+            "cd /etc",
+            "cd /home/paul",
+            "cd -"
+        ],
+        "notes_lt": "Veikia kaip katalogų „back“ mygtukas.",
+        "notes_en": "Works like a directory 'back' button.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "paths",
+        "category": "filesystem",
+        "description_lt": "Absolute keliai prasideda root (/). Relative keliai interpretuojami pagal dabartinį katalogą.",
+        "description_en": "Absolute paths start from the root (/). Relative paths are interpreted from the current directory.",
+        "usage": "/home/user OR documents/stuff/file.txt",
+        "examples": [
+            "/home",
+            "/home/paul",
+            "cd home",
+            "cd paul"
+        ],
+        "notes_lt": "Absolute keliai visada prasideda /, relative — ne.",
+        "notes_en": "Absolute paths always start with /; relative paths do not.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls",
+        "category": "filesystem",
+        "description_lt": "Išveda katalogo turinį.",
+        "description_en": "Lists the contents of a directory.",
+        "usage": "ls",
+        "examples": [
+            "ls",
+            "ls /home",
+            "ls /etc"
+        ],
+        "notes_lt": "Be parametrų rodo tik matomus failus.",
+        "notes_en": "Shows only visible files unless options are added.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -a",
+        "category": "filesystem",
+        "description_lt": "Parodo visus failus, įskaitant paslėptus (prasidėjusius nuo .).",
+        "description_en": "Displays all files including hidden ones (starting with .).",
+        "usage": "ls -a",
+        "examples": [
+            "ls -a",
+            "ls -a /home/user"
+        ],
+        "notes_lt": "Paslėpti failai dažniausiai yra konfigūraciniai.",
+        "notes_en": "Hidden files are typically configuration files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -l",
+        "category": "filesystem",
+        "description_lt": "Parodo failų sąrašą detaliu formatu.",
+        "description_en": "Displays directory contents in long listing format.",
+        "usage": "ls -l",
+        "examples": [
+            "ls -l",
+            "ls -l /home"
+        ],
+        "notes_lt": "Rodo leidimus, savininką, grupę, datą ir failo dydį.",
+        "notes_en": "Shows permissions, owner, group, date and file size.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -lh",
+        "category": "filesystem",
+        "description_lt": "Parodo failų dydžius patogiai skaitomu formatu (K, M, G).",
+        "description_en": "Shows file sizes in human-readable format (K, M, G).",
+        "usage": "ls -lh",
+        "examples": [
+            "ls -lh",
+            "ls -lh /var/log"
+        ],
+        "notes_lt": "Naudojamas kartu su `-l` ilgam formatui.",
+        "notes_en": "Used with `-l` to enhance readability of file sizes.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mkdir",
+        "category": "filesystem",
+        "description_lt": "Sukuria naują katalogą.",
+        "description_en": "Creates a new directory.",
+        "usage": "mkdir dirname",
+        "examples": [
+            "mkdir mydir",
+            "mkdir stuff"
+        ],
+        "notes_lt": "Be `-p` neveikia, jei nėra tėvinio katalogo.",
+        "notes_en": "Fails if parent directory does not exist unless using `-p`.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mkdir -p",
+        "category": "filesystem",
+        "description_lt": "Sukuria katalogą ir visus reikiamus tėvinius katalogus.",
+        "description_en": "Creates a directory along with any necessary parent directories.",
+        "usage": "mkdir -p path/to/dir",
+        "examples": [
+            "mkdir -p mydir/subdir1/subdir2",
+            "mkdir -p testdir/deeper/level"
+        ],
+        "notes_lt": "Leidžia kurti gilesnius katalogų medžius vienu veiksmu.",
+        "notes_en": "Allows creating deep directory structures in one command.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rmdir",
+        "category": "filesystem",
+        "description_lt": "Ištrina tuščią katalogą.",
+        "description_en": "Removes an empty directory.",
+        "usage": "rmdir dirname",
+        "examples": [
+            "rmdir mydir",
+            "rmdir emptyfolder"
+        ],
+        "notes_lt": "Nepašalins katalogo, jei jame yra failų.",
+        "notes_en": "Will not remove the directory if it contains files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rmdir -p",
+        "category": "filesystem",
+        "description_lt": "Pašalina katalogą ir tuščius tėvinius katalogus rekursyviai.",
+        "description_en": "Removes a directory and empty parent directories recursively.",
+        "usage": "rmdir -p path/to/dir",
+        "examples": [
+            "rmdir -p test42/subdir",
+            "rmdir -p mydir/sub1/sub2"
+        ],
+        "notes_lt": "Ištrins tik tuščius katalogus — jei kažkas yra, sustos.",
+        "notes_en": "Removes only empty directories — stops if any is not empty.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "file",
+        "category": "filesystem",
+        "description_lt": "Nustato failo tipą pagal jo turinį, o ne plėtinį. Naudoja magic rules failus, kad atpažintų duomenų struktūras.",
+        "description_en": "Determines the file type based on its contents rather than extensions. Uses magic rules to identify data structures.",
+        "usage": "file filename",
+        "examples": [
+            "file pic33.png",
+            "file /etc/passwd",
+            "file Helloworld.c",
+            "file /dev/sda",
+            "file /proc/cpuinfo"
+        ],
+        "notes_lt": "Naudinga diagnozuoti failus, kurių formatas neaiškus arba klaidingas.",
+        "notes_en": "Useful for diagnosing unknown or mislabeled files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "touch",
+        "category": "filesystem",
+        "description_lt": "Sukuria tuščią failą arba atnaujina esamo failo laikus.",
+        "description_en": "Creates an empty file or updates the timestamps of an existing file.",
+        "usage": "touch filename",
+        "examples": [
+            "touch file42",
+            "touch file33",
+            "touch newfile.txt"
+        ],
+        "notes_lt": "Dažnai naudojamas greitam failo sukūrimui be turinio.",
+        "notes_en": "Commonly used to quickly create empty files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "touch -t",
+        "category": "filesystem",
+        "description_lt": "Sukuria failą arba pakeičia jo laiką pagal nurodytą timestamp.",
+        "description_en": "Creates a file or modifies its timestamp to a specified time.",
+        "usage": "touch -t YYYYMMDDhhmm filename",
+        "examples": [
+            "touch -t 200505060900 SinkoDeMayo",
+            "touch -t 130207111630 BigBattle.txt"
+        ],
+        "notes_lt": "Formatas: YYYYMMDDhhmm, pavyzdžiui 200505060900 = 2005-05-06 09:00.",
+        "notes_en": "Format: YYYYMMDDhhmm, e.g., 200505060900 = May 6, 2005, 09:00.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rm",
+        "category": "filesystem",
+        "description_lt": "Pašalina failą. Pašalinimas yra galutinis — nėra šiukšlinės.",
+        "description_en": "Removes a file. Removal is permanent — there is no trash bin.",
+        "usage": "rm filename",
+        "examples": [
+            "rm file33",
+            "rm SinkoDeMayo",
+            "rm file42"
+        ],
+        "notes_lt": "Būk atsargus — aktyviai ištrina failus visam laikui.",
+        "notes_en": "Be careful — deletes files permanently.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rm -i",
+        "category": "filesystem",
+        "description_lt": "Pašalina failą, bet prieš tai klausia patvirtinimo.",
+        "description_en": "Removes a file but asks for confirmation.",
+        "usage": "rm -i filename",
+        "examples": [
+            "rm -i file33",
+            "rm -i SinkoDeMayo"
+        ],
+        "notes_lt": "Naudinga saugiam darbui, kad netyčia neištrintum failų.",
+        "notes_en": "Useful for safe operations to avoid accidental removal.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rm -rf",
+        "category": "filesystem",
+        "description_lt": "Rekursyviai ir priverstinai pašalina katalogus ir failus, įskaitant netuščius katalogus.",
+        "description_en": "Recursively and forcefully removes directories and files, including non-empty folders.",
+        "usage": "rm -rf directory",
+        "examples": [
+            "rm -rf test",
+            "rm -rf dir42",
+            "rm -rf mydir"
+        ],
+        "notes_lt": "LABAI pavojinga komanda — gali ištrinti visą sistemą.",
+        "notes_en": "EXTREMELY dangerous — can delete the entire system.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cp",
+        "category": "filesystem",
+        "description_lt": "Nukopijuoja vieną failą į kitą vietą.",
+        "description_en": "Copies a single file to another location.",
+        "usage": "cp source target",
+        "examples": [
+            "cp file42 file42.copy",
+            "cp SinkoDeMayo file42"
+        ],
+        "notes_lt": "Jei target egzistuoja, jis bus perrašytas.",
+        "notes_en": "If target exists, it will be overwritten.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cp",
+        "category": "filesystem",
+        "description_lt": "Kopijuoja failą į katalogą.",
+        "description_en": "Copies a file into a directory.",
+        "usage": "cp file directory/",
+        "examples": [
+            "cp SinkoDeMayo dir42/",
+            "cp file42 dir42/"
+        ],
+        "notes_lt": "Jei pabaigoje yra /, reiškia, kad tai katalogas.",
+        "notes_en": "A trailing slash indicates a directory destination.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cp -r",
+        "category": "filesystem",
+        "description_lt": "Rekursyviai kopijuoja katalogą ir visą jo turinį.",
+        "description_en": "Recursively copies a directory and all its contents.",
+        "usage": "cp -r source_dir target_dir",
+        "examples": [
+            "cp -r dir42 dir33",
+            "cp -r stuff backup"
+        ],
+        "notes_lt": "`-r` reiškia rekursyvų kopijavimą (visos subdirektorijos).",
+        "notes_en": "`-r` means recursive copy (all subdirectories included).",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cp",
+        "category": "filesystem",
+        "description_lt": "Kopijuoja kelis failus į nurodytą katalogą.",
+        "description_en": "Copies multiple files into a target directory.",
+        "usage": "cp file1 file2 file3 directory/",
+        "examples": [
+            "cp file42 file42.copy SinkoDeMayo dir42/"
+        ],
+        "notes_lt": "Paskutinis argumentas privalo būti katalogas.",
+        "notes_en": "The last argument must be the destination directory.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cp -i",
+        "category": "filesystem",
+        "description_lt": "Kopijuoja failą, bet prašo patvirtinimo prieš perrašant egzistuojantį failą.",
+        "description_en": "Copies a file but asks for confirmation before overwriting an existing one.",
+        "usage": "cp -i source target",
+        "examples": [
+            "cp -i SinkoDeMayo file42"
+        ],
+        "notes_lt": "Apsaugo nuo netyčinio failų perrašymo.",
+        "notes_en": "Protects against accidental overwriting.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mv",
+        "category": "filesystem",
+        "description_lt": "Perkelia arba pervadina failą.",
+        "description_en": "Moves or renames a file.",
+        "usage": "mv source target",
+        "examples": [
+            "mv file42 file42.copy",
+            "mv file33 SinkoDeMayo"
+        ],
+        "notes_lt": "Perkėlimui ir pervadinimui naudojama ta pati komanda.",
+        "notes_en": "Same command is used for moving and renaming.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mv",
+        "category": "filesystem",
+        "description_lt": "Perkelia arba pervadina katalogą.",
+        "description_en": "Moves or renames a directory.",
+        "usage": "mv source_dir target_dir",
+        "examples": [
+            "mv dir33 dir42",
+            "mv dir33 backup"
+        ],
+        "notes_lt": "Naudojama taip pat kaip failams.",
+        "notes_en": "Works the same way as with files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mv -i",
+        "category": "filesystem",
+        "description_lt": "Perkelia failą, bet prieš perrašydama klausia patvirtinimo.",
+        "description_en": "Moves a file but asks for confirmation before overwriting.",
+        "usage": "mv -i source target",
+        "examples": [
+            "mv -i file33 SinkoDeMayo"
+        ],
+        "notes_lt": "Naudinga, jei nenori netyčia perrašyti failų.",
+        "notes_en": "Useful to prevent accidental overwriting.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rename",
+        "category": "filesystem",
+        "description_lt": "Pervadina kelis failus naudojant reguliariąsias išraiškas.",
+        "description_en": "Renames multiple files using regular expressions.",
+        "usage": "rename 's/from/to/' files",
+        "examples": [
+            "rename 's/.txt/.png/' *.txt",
+            "rename 's/file/document/' *.png"
+        ],
+        "notes_lt": "Skirtingose distribucijose gali turėti skirtingą sintaksę.",
+        "notes_en": "Syntax may differ between Linux distributions.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rename",
+        "category": "filesystem",
+        "description_lt": "CentOS/RHEL naudoja kitokią rename sintaksę, skirtingą nuo Debian.",
+        "description_en": "CentOS/RHEL uses a different rename syntax compared to Debian.",
+        "usage": "rename from to files",
+        "examples": [
+            "rename .conf .backup *.conf",
+            "rename ONE ONE_backup *.txt"
+        ],
+        "notes_lt": "Dažnai painiojama su Debian rename versija.",
+        "notes_en": "Often confused with the Debian version of rename.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "head",
+        "category": "file-contents",
+        "description_lt": "Parodo pirmąsias failo eilutes.",
+        "description_en": "Displays the first lines of a file.",
+        "usage": "head filename",
+        "examples": [
+            "head /etc/passwd",
+            "head -4 /etc/passwd",
+            "head -c14 /etc/passwd"
+        ],
+        "notes_lt": "`-n` nustato eilučių skaičių, `-c` nustato baitų skaičių.",
+        "notes_en": "`-n` sets number of lines, `-c` sets number of bytes.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "tail",
+        "category": "file-contents",
+        "description_lt": "Parodo paskutines failo eilutes.",
+        "description_en": "Displays the last lines of a file.",
+        "usage": "tail filename",
+        "examples": [
+            "tail /etc/services",
+            "tail -3 /etc/services"
+        ],
+        "notes_lt": "Dažnai naudojama žiūrėti log failams, realiu laiku galima naudoti `tail -f`.",
+        "notes_en": "Often used for log monitoring; real-time viewing possible with `tail -f`.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat",
+        "category": "file-contents",
+        "description_lt": "Išveda failo turinį į ekraną. Kopijuoja iš stdin į stdout.",
+        "description_en": "Outputs a file to the screen. Copies from standard input to standard output.",
+        "usage": "cat filename",
+        "examples": [
+            "cat /etc/resolv.conf",
+            "cat part1 part2 > complete",
+            "cat > winter.txt"
+        ],
+        "notes_lt": "Labai universali komanda – galima sujungti failus, kurti failus, peradresuoti turinį.",
+        "notes_en": "Very versatile — can concatenate files, create files, or redirect content.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat",
+        "category": "file-contents",
+        "description_lt": "Sujungia kelis failus į vieną arba išveda juos seka.",
+        "description_en": "Concatenates multiple files into one or outputs them sequentially.",
+        "usage": "cat file1 file2 > output",
+        "examples": [
+            "cat part1 part2 part3",
+            "cat part1 part2 > all",
+            "cat all"
+        ],
+        "notes_lt": "cat reiškia „concatenate“. Naudojama daug failų sujungimui.",
+        "notes_en": "cat stands for concatenate. Used to merge files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat >",
+        "category": "file-contents",
+        "description_lt": "Sukuria failą ir leidžia įvesti tekstą, kol paspaudžiamas Ctrl+D (EOF).",
+        "description_en": "Creates a file and allows input until Ctrl+D (EOF) is pressed.",
+        "usage": "cat > filename",
+        "examples": [
+            "cat > winter.txt",
+            "cat > notes.txt"
+        ],
+        "notes_lt": "Ctrl+D užbaigia įvestį ir išsaugo failą.",
+        "notes_en": "Ctrl+D ends input and saves the file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat <<",
+        "category": "file-contents",
+        "description_lt": "Naudoja pasirinktą pabaigos žymeklį (here directive), kad užbaigtų cat įvestį.",
+        "description_en": "Uses a custom end marker (here directive) to terminate cat input.",
+        "usage": "cat << STOP",
+        "examples": [
+            "cat << stop",
+            "cat << END"
+        ],
+        "notes_lt": "Įvestis tęsis, kol bus įrašytas tikslus markeris, pvz. 'stop'.",
+        "notes_en": "Input continues until the exact marker word is typed.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat > newfile",
+        "category": "file-contents",
+        "description_lt": "Kopijuoja failą, išvedant vieną failą į kitą per redirect.",
+        "description_en": "Copies a file by redirecting its output into another file.",
+        "usage": "cat file1 > file2",
+        "examples": [
+            "cat winter.txt > cold.txt"
+        ],
+        "notes_lt": "Jei target failas egzistuoja – bus perrašytas.",
+        "notes_en": "If the target file exists, it will be overwritten.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "tac",
+        "category": "file-contents",
+        "description_lt": "Išveda failo turinį atvirkštine tvarka (nuo apačios į viršų).",
+        "description_en": "Displays a file backwards (from bottom to top).",
+        "usage": "tac filename",
+        "examples": [
+            "tac count"
+        ],
+        "notes_lt": "`tac` yra `cat` atvirkščiai.",
+        "notes_en": "`tac` is `cat` spelled backwards.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "more",
+        "category": "file-contents",
+        "description_lt": "Rodo failo turinį po vieną ekraną.",
+        "description_en": "Displays file content one screen at a time.",
+        "usage": "more filename",
+        "examples": [
+            "more /etc/passwd"
+        ],
+        "notes_lt": "Naudok SPACE peršokti į kitą puslapį, q – išeiti.",
+        "notes_en": "Use SPACE to advance to the next page, q to quit.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "less",
+        "category": "file-contents",
+        "description_lt": "Rodo failo turinį su slinkimu aukštyn ir žemyn.",
+        "description_en": "Displays file content with full scrolling up and down.",
+        "usage": "less filename",
+        "examples": [
+            "less /etc/services"
+        ],
+        "notes_lt": "Dažniausiai laikomas patogesniu nei more.",
+        "notes_en": "Often considered more convenient than more.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "strings",
+        "category": "file-contents",
+        "description_lt": "Parodo skaitomą ASCII tekstą binariniuose failuose.",
+        "description_en": "Displays readable ASCII strings found inside binary files.",
+        "usage": "strings filename",
+        "examples": [
+            "strings /bin/ls",
+            "strings program.bin"
+        ],
+        "notes_lt": "Naudinga derinant programas arba tikrinant binarų turinį.",
+        "notes_en": "Useful for debugging programs or inspecting binary contents.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /",
+        "category": "filesystem",
+        "description_lt": "Išveda root katalogo turinį.",
+        "description_en": "Lists the contents of the root directory.",
+        "usage": "ls /",
+        "examples": [
+            "ls /"
+        ],
+        "notes_lt": "Root katalogas yra failų sistemos viršūnė.",
+        "notes_en": "The root directory is the top of the filesystem.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "file",
+        "category": "filesystem",
+        "description_lt": "Nustato failo tipą – naudojama nagrinėti bibliotekų failus.",
+        "description_en": "Determines the file type – often used to inspect library files.",
+        "usage": "file /lib/filename",
+        "examples": [
+            "file /lib/libc-2.5.so",
+            "file /lib/libcap.so.1.10"
+        ],
+        "notes_lt": "Naudinga matyti, ar failas yra ELF, ar tekstinis failas.",
+        "notes_en": "Useful to see whether a file is ELF or a text file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /usr/bin",
+        "category": "filesystem",
+        "description_lt": "Parodo visas /usr/bin vykdomąsias programas.",
+        "description_en": "Lists all executables inside /usr/bin.",
+        "usage": "ls /usr/bin",
+        "examples": [
+            "ls /usr/bin | wc -l"
+        ],
+        "notes_lt": "/usr/bin yra didžiausias vykdomųjų failų katalogas.",
+        "notes_en": "/usr/bin is the main directory for executable programs.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /usr/include",
+        "category": "filesystem",
+        "description_lt": "Išveda C header failus ir kitus include failus.",
+        "description_en": "Lists C header files and other include files.",
+        "usage": "ls /usr/include",
+        "examples": [
+            "ls /usr/include | head"
+        ],
+        "notes_lt": "Dažniausiai naudojama kompiliuojant C programas.",
+        "notes_en": "Commonly used when compiling C programs.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /usr/lib",
+        "category": "filesystem",
+        "description_lt": "Parodo bibliotekų failus /usr/lib kataloge.",
+        "description_en": "Lists library files inside /usr/lib.",
+        "usage": "ls /usr/lib",
+        "examples": [
+            "ls /usr/lib | head -7"
+        ],
+        "notes_lt": "/usr/lib saugo daugumą sisteminių bibliotekų.",
+        "notes_en": "/usr/lib contains the majority of system libraries.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "du -sh",
+        "category": "filesystem",
+        "description_lt": "Parodo katalogo dydį žmonėms suprantamu formatu.",
+        "description_en": "Shows directory size in human-readable format.",
+        "usage": "du -sh directory",
+        "examples": [
+            "du -sh /usr/local/"
+        ],
+        "notes_lt": "Dažnai naudojama tikrinti disko naudojimui.",
+        "notes_en": "Useful for checking disk usage.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /usr/share",
+        "category": "filesystem",
+        "description_lt": "Parodo /usr/share katalogo turinį, kuriame yra architektūrai nepriklausomi failai.",
+        "description_en": "Lists the content of /usr/share, which contains architecture-independent data.",
+        "usage": "ls /usr/share/",
+        "examples": [
+            "ls /usr/share/ | wc -l"
+        ],
+        "notes_lt": "Čia dažnai būna dokumentacija, lokalizacija ir žaidimų duomenys.",
+        "notes_en": "Often contains documentation, localization, and game data.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /usr/src",
+        "category": "filesystem",
+        "description_lt": "Parodo kernel source katalogus ir kitus programavimo failus.",
+        "description_en": "Lists kernel sources and development files.",
+        "usage": "ls /usr/src/",
+        "examples": [
+            "ls -l /usr/src/"
+        ],
+        "notes_lt": "Dažniausiai naudojama kompiliuojant branduolį ar modulius.",
+        "notes_en": "Commonly used for kernel or module compilation.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /var/log",
+        "category": "filesystem",
+        "description_lt": "Išveda visus sisteminius log failus /var/log kataloge.",
+        "description_en": "Lists all system log files inside /var/log.",
+        "usage": "ls /var/log",
+        "examples": [
+            "ls /var/log"
+        ],
+        "notes_lt": "/var/log yra pagrindinis log failų katalogas Linux sistemoje.",
+        "notes_en": "/var/log is the main log storage directory in Linux.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "tail",
+        "category": "file-contents",
+        "description_lt": "Parodo paskutines /var/log/messages failo eilutes.",
+        "description_en": "Displays the last lines of /var/log/messages.",
+        "usage": "tail /var/log/messages",
+        "examples": [
+            "tail /var/log/messages"
+        ],
+        "notes_lt": "Naudinga diagnozuojant sistemos veikimą.",
+        "notes_en": "Useful for debugging system behavior.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /var/cache",
+        "category": "filesystem",
+        "description_lt": "Parodo programų cache turinį.",
+        "description_en": "Lists cached application data.",
+        "usage": "ls /var/cache/",
+        "examples": [
+            "ls /var/cache/"
+        ],
+        "notes_lt": "Dažnai naudojamas paketų sistemų talpykloms.",
+        "notes_en": "Often used for package manager caches.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -lh /proc/kcore",
+        "category": "filesystem",
+        "description_lt": "Parodo pseudo-failą, atstovaujantį sistemos RAM.",
+        "description_en": "Displays the pseudo-file that represents the system RAM.",
+        "usage": "ls -lh /proc/kcore",
+        "examples": [
+            "ls -lh /proc/kcore"
+        ],
+        "notes_lt": "Neatidarinėti — tai nėra realus failas, o branduolio atvaizdavimas.",
+        "notes_en": "Do not open — it's not a real file but a kernel representation.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mount -t proc",
+        "category": "system",
+        "description_lt": "Prijungia proc failų sistemą.",
+        "description_en": "Mounts the proc filesystem.",
+        "usage": "mount -t proc proc /proc",
+        "examples": [
+            "mount -t proc proc /proc"
+        ],
+        "notes_lt": "Dažniausiai naudojama chroot aplinkose.",
+        "notes_en": "Often used inside chroot environments.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat /proc",
+        "category": "file-contents",
+        "description_lt": "Skaito proc pseudo-failų turinį, kuriame yra duomenys iš Linux branduolio.",
+        "description_en": "Reads contents of /proc pseudo-files, containing kernel data.",
+        "usage": "cat /proc/file",
+        "examples": [
+            "cat /proc/cpuinfo",
+            "cat /proc/interrupts",
+            "cat /proc/kcore"
+        ],
+        "notes_lt": "/proc failai yra dinamiški — jie atspindi realaus laiko branduolio būseną.",
+        "notes_en": "/proc files are dynamic — they reflect real-time kernel state.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /dev/sd*",
+        "category": "filesystem",
+        "description_lt": "Parodo fizinius SATA/SCSI diskus ir jų partition failus.",
+        "description_en": "Lists SATA/SCSI disks and their partition files.",
+        "usage": "ls /dev/sd*",
+        "examples": [
+            "ls /dev/sda /dev/sdb /dev/sdc"
+        ],
+        "notes_lt": "Diskai identifikuojami kaip sda, sdb, sdc ir t.t.",
+        "notes_en": "Disks appear as sda, sdb, sdc, etc.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls /dev/hd*",
+        "category": "filesystem",
+        "description_lt": "Parodo IDE diskų įrenginius.",
+        "description_en": "Lists IDE disk devices.",
+        "usage": "ls /dev/hd*",
+        "examples": [
+            "ls /dev/hda /dev/hdb /dev/hdc"
+        ],
+        "notes_lt": "IDE technologija šiuolaikiniuose PC naudojama retai.",
+        "notes_en": "IDE hardware is rare on modern systems.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat /etc/sysconfig",
+        "category": "file-contents",
+        "description_lt": "Skaito sisteminius konfigūracijos failus /etc/sysconfig kataloge.",
+        "description_en": "Reads system configuration files located in /etc/sysconfig.",
+        "usage": "cat /etc/sysconfig/file",
+        "examples": [
+            "cat /etc/sysconfig/firstboot",
+            "cat /etc/sysconfig/keyboard"
+        ],
+        "notes_lt": "Naudojama RedHat sistemose konfigūracijai peržiūrėti.",
+        "notes_en": "Used on RedHat systems for viewing configuration.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "echo",
+        "category": "shell",
+        "description_lt": "Išveda tekstą arba argumentus į ekraną.",
+        "description_en": "Prints text or arguments to the screen.",
+        "usage": "echo [arguments]",
+        "examples": [
+            "echo Borntowin",
+            "echo Smurfs are blue",
+            "echo Hello    World",
+            "echo 'A line with    single quotes'",
+            "echo \"A line with    double quotes\"",
+            "echo -e \"A line with \\n newline\"",
+            "echo -e \"A line with \\t tab\""
+        ],
+        "notes_lt": "Shell expansion sujungia kelis tarpelius į vieną, nebent naudojamos kabutės.",
+        "notes_en": "Shell expansion collapses multiple spaces unless quotes are used.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "single_quotes",
+        "category": "shell",
+        "description_lt": "Apsaugo tekstą nuo shell expansion ir išlaiko visus tarpelius.",
+        "description_en": "Prevents shell expansion and preserves all whitespace.",
+        "usage": "echo 'text here'",
+        "examples": [
+            "echo 'A line with    single   quotes'"
+        ],
+        "notes_lt": "Visa eilutė tampa vienu argumentu.",
+        "notes_en": "The entire string becomes a single argument.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "double_quotes",
+        "category": "shell",
+        "description_lt": "Išlaiko tarpelius, bet leidžia kintamųjų interpretaciją.",
+        "description_en": "Preserves whitespace but allows variable expansion.",
+        "usage": "echo \"text here\"",
+        "examples": [
+            "echo \"A line with    double   quotes\""
+        ],
+        "notes_lt": "Skirtingai nei single quotes, dvigubos kabutės leidžia $VARIABLE.",
+        "notes_en": "Allows $VARIABLE substitution unlike single quotes.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "echo -e",
+        "category": "shell",
+        "description_lt": "Leidžia naudoti escape simbolius, tokius kaip \\n ir \\t.",
+        "description_en": "Enables escape sequences like \\n and \\t.",
+        "usage": "echo -e \"text\"",
+        "examples": [
+            "echo -e \"A line with \\n newline\"",
+            "echo -e \"A line with \\t tab\""
+        ],
+        "notes_lt": "Dauguma modernių Linux distų palaiko -e pagal nutylėjimą.",
+        "notes_en": "Most modern Linux distributions support -e by default.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "type",
+        "category": "shell",
+        "description_lt": "Parodo, ar komanda yra builtin, ar išorinis binarinis failas.",
+        "description_en": "Shows whether a command is builtin or an external binary.",
+        "usage": "type command",
+        "examples": [
+            "type cd",
+            "type cat",
+            "type ls"
+        ],
+        "notes_lt": "`type` gali parodyti ir alias, jei toks priskirtas.",
+        "notes_en": "`type` can also show aliases if they exist.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "run_external",
+        "category": "shell",
+        "description_lt": "Leidžia paleisti tikrąjį binarinį failą naudojant pilną kelią.",
+        "description_en": "Allows running the real external binary using its full path.",
+        "usage": "/bin/command",
+        "examples": [
+            "/bin/echo hello",
+            "/usr/bin/cat file.txt"
+        ],
+        "notes_lt": "Tai apeina builtin komandų versijas.",
+        "notes_en": "This bypasses builtin versions of commands.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "which",
+        "category": "shell",
+        "description_lt": "Suranda, kurioje vietoje sistemoje yra binarinė komanda.",
+        "description_en": "Finds where an executable command is located on the system.",
+        "usage": "which command",
+        "examples": [
+            "which cp",
+            "which rm",
+            "which mkdir",
+            "which pwd"
+        ],
+        "notes_lt": "Ieško komandų $PATH aplinkoje.",
+        "notes_en": "Searches for commands in the $PATH environment.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "alias",
+        "category": "shell",
+        "description_lt": "Sukuria trumpinį komandai arba komandų rinkiniui.",
+        "description_en": "Creates a shorthand alias for a command or set of commands.",
+        "usage": "alias name='command'",
+        "examples": [
+            "alias ll='ls -lh --color=auto'",
+            "alias rm='rm -i'",
+            "alias c='clear'"
+        ],
+        "notes_lt": "Aliasai galioja tik aktyvios sesijos metu nebent įrašomi į ~/.bashrc.",
+        "notes_en": "Aliases persist only for the session unless added to ~/.bashrc.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "unalias",
+        "category": "shell",
+        "description_lt": "Pašalina egzistuojantį alias.",
+        "description_en": "Removes an existing alias.",
+        "usage": "unalias name",
+        "examples": [
+            "unalias rm",
+            "unalias ll"
+        ],
+        "notes_lt": "`unalias -a` pašalina visus alias.",
+        "notes_en": "`unalias -a` removes all aliases.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "set -x",
+        "category": "shell",
+        "description_lt": "Įjungia shell expansion rodymą — rodo kaip shell interpretuoja komandą.",
+        "description_en": "Enables shell expansion debugging — shows how shell interprets a command.",
+        "usage": "set -x",
+        "examples": [
+            "set -x",
+            "echo $USER",
+            "set +x"
+        ],
+        "notes_lt": "Naudinga debug’inant sudėtingas bash komandas.",
+        "notes_en": "Useful for debugging complex bash commands.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "set +x",
+        "category": "shell",
+        "description_lt": "Išjungia shell expansion rodymą.",
+        "description_en": "Disables shell expansion debugging.",
+        "usage": "set +x",
+        "examples": [
+            "set +x"
+        ],
+        "notes_lt": "Dažniausiai naudojama po `set -x`.",
+        "notes_en": "Commonly used after `set -x`.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "alias (view)",
+        "category": "shell",
+        "description_lt": "Rodo visus aktyvius alias.",
+        "description_en": "Displays all active aliases.",
+        "usage": "alias",
+        "examples": [
+            "alias"
+        ],
+        "notes_lt": "Be argumentų rodo visą alias sąrašą.",
+        "notes_en": "Shows the complete list when used without arguments.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": ";",
+        "category": "control-operator",
+        "description_lt": "Leidžia vykdyti kelias komandas paeiliui vienoje eilutėje.",
+        "description_en": "Allows multiple commands to run sequentially on one line.",
+        "usage": "command1 ; command2",
+        "examples": [
+            "echo Hello ; echo World",
+            "ls ; pwd ; whoami"
+        ],
+        "notes_lt": "`;` NEtikrina ar pirmoji komanda sėkminga – vykdo visas iš eilės.",
+        "notes_en": "`;` does NOT check success of the previous command – runs all sequentially.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "&",
+        "category": "control-operator",
+        "description_lt": "Paleidžia komandą fone ir iškart grąžina shell promptą.",
+        "description_en": "Runs a command in the background and immediately returns the shell prompt.",
+        "usage": "command &",
+        "examples": [
+            "sleep 20 &",
+            "ping google.com &"
+        ],
+        "notes_lt": "Shell parodo job ID ir PID; komanda vykdoma fone.",
+        "notes_en": "Shell shows job ID and PID; command runs in the background.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$?",
+        "category": "shell",
+        "description_lt": "Rodomas ankstesnės komandos exit kodas. 0 reiškia sėkmę.",
+        "description_en": "Displays the exit code of the previous command. 0 means success.",
+        "usage": "echo $?",
+        "examples": [
+            "rm file ; echo $?",
+            "echo hello ; echo $?"
+        ],
+        "notes_lt": "Naudinga if/else, skriptuose ir sąlyginėje logikoje.",
+        "notes_en": "Useful in if/else, scripts, and conditional logic.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "&&",
+        "category": "control-operator",
+        "description_lt": "Vykdo antrą komandą tik jei pirmoji pavyko (exit code 0).",
+        "description_en": "Runs the second command ONLY if the first succeeds (exit code 0).",
+        "usage": "command1 && command2",
+        "examples": [
+            "echo first && echo second",
+            "ls file && echo 'exists'"
+        ],
+        "notes_lt": "`&&` naudojamas if-then logikai vienoje eilutėje.",
+        "notes_en": "`&&` is used for inline if-then control.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "||",
+        "category": "control-operator",
+        "description_lt": "Vykdo antrą komandą tik jei pirmoji nepavyko (exit code != 0).",
+        "description_en": "Runs the second command only if the first fails (exit code != 0).",
+        "usage": "command1 || command2",
+        "examples": [
+            "ls file || echo 'file not found'",
+            "false || echo failed"
+        ],
+        "notes_lt": "`||` yra priešingybė `&&` ir naudojamas klaidoms aptikti.",
+        "notes_en": "`||` is the opposite of `&&` and is useful for error handling.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "&& ||",
+        "category": "control-operator",
+        "description_lt": "Leidžia rašyti if-else logiką vienoje eilutėje.",
+        "description_en": "Allows writing inline if-else logic using both operators.",
+        "usage": "command && echo worked || echo failed",
+        "examples": [
+            "rm file && echo 'It worked!' || echo 'It failed!'"
+        ],
+        "notes_lt": "Jeigu `&&` dalis nepraeina – vykdoma `||` dalis.",
+        "notes_en": "If the `&&` part fails, the `||` part runs.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "#",
+        "category": "control-operator",
+        "description_lt": "Pažymi komentaro pradžią. Viskas po # yra ignoruojama.",
+        "description_en": "Marks the start of a comment. Everything after # is ignored.",
+        "usage": "command # comment",
+        "examples": [
+            "mkdir test # creates a directory",
+            "echo hello # this is a comment"
+        ],
+        "notes_lt": "`#` neturi įtakos komandos vykdymui.",
+        "notes_en": "`#` has no effect on execution.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "\\",
+        "category": "shell",
+        "description_lt": "Escape simbolis, leidžiantis ignoruoti specialią simbolio reikšmę.",
+        "description_en": "Escape character allowing literal interpretation of special symbols.",
+        "usage": "command \\symbol",
+        "examples": [
+            "echo hello \\ world",
+            "echo escaping \\!\\!\\!\\!"
+        ],
+        "notes_lt": "Naudinga su $, !, *, (, ), space ir kitais specialiais simboliais.",
+        "notes_en": "Useful for $, !, *, (, ), space and other special characters.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "line_continuation",
+        "category": "shell",
+        "description_lt": "Leidžia perkelti komandą į kitą eilutę naudojant paskutinį simbolį \\.",
+        "description_en": "Allows splitting a command across multiple lines using a trailing \\.",
+        "usage": "command part1 \\\n part2",
+        "examples": [
+            "echo this command line \\\n is split in three \\\n parts"
+        ],
+        "notes_lt": "Shell sujungia eilutes į vieną ilgą komandą.",
+        "notes_en": "Shell merges all lines into one long command.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$",
+        "category": "shell-variable",
+        "description_lt": "Naudojamas kintamojo reikšmei gauti. Shell pakeičia kintamąjį jo reikšme prieš vykdymą.",
+        "description_en": "Used to access the value of a variable. The shell replaces it with its value before execution.",
+        "usage": "echo $VARIABLE",
+        "examples": [
+            "echo This is the $SHELL shell",
+            "echo The user id of $USER is $UID",
+            "echo My home dir is $HOME"
+        ],
+        "notes_lt": "Dažnai naudojamas su aplinkos kintamaisiais: $USER, $HOME, $SHELL, $HOSTNAME.",
+        "notes_en": "Commonly used with environment variables like $USER, $HOME, $SHELL, $HOSTNAME.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "case_sensitive_variables",
+        "category": "shell-variable",
+        "description_lt": "Kintamųjų pavadinimai yra didžiųjų ir mažųjų raidžių jautrūs.",
+        "description_en": "Variable names are case sensitive in the shell.",
+        "usage": "echo $Variable vs echo $VARIABLE",
+        "examples": [
+            "VAR=hello",
+            "echo $VAR",
+            "echo $var"
+        ],
+        "notes_lt": "VAR ir var laikomi skirtingais kintamaisiais.",
+        "notes_en": "VAR and var are treated as different variables.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "creating_variables",
+        "category": "shell-variable",
+        "description_lt": "Sukuria naują kintamąjį ir priskiria jam reikšmę.",
+        "description_en": "Creates a new variable and assigns a value to it.",
+        "usage": "VARIABLE=value",
+        "examples": [
+            "MyVar=555",
+            "echo $MyVar"
+        ],
+        "notes_lt": "Tarpų aplink '=' neturi būti. Reikšmę galima išvesti su echo.",
+        "notes_en": "No spaces around '='. Use echo to display the value.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "quotes_in_variables",
+        "category": "shell-variable",
+        "description_lt": "Dvigubos kabutės leidžia shell'ui interpretuoti kintamuosius, viengubos — ne.",
+        "description_en": "Double quotes allow variable expansion, single quotes do not.",
+        "usage": "echo \"$VAR\" vs echo '$VAR'",
+        "examples": [
+            "MyVar=555",
+            "echo \"$MyVar\"",
+            "echo '$MyVar'"
+        ],
+        "notes_lt": "Single quotes išveda literalų tekstą, dvigubos — pakeičia kintamąjį jo reikšme.",
+        "notes_en": "Single quotes print literal text; double quotes expand variables.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "set",
+        "category": "shell-variable",
+        "description_lt": "Parodo visų shell kintamųjų ir funkcijų sąrašą.",
+        "description_en": "Displays a list of all shell variables and functions.",
+        "usage": "set",
+        "examples": [
+            "set | less"
+        ],
+        "notes_lt": "Naudinga aplinkos diagnostikai ir išsamiam kintamųjų peržiūrėjimui.",
+        "notes_en": "Useful for environment diagnostics and full variable listing.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "unset",
+        "category": "shell-variable",
+        "description_lt": "Pašalina kintamąjį iš shell aplinkos.",
+        "description_en": "Removes a variable from the shell environment.",
+        "usage": "unset VARIABLE",
+        "examples": [
+            "MyVar=123",
+            "unset MyVar",
+            "echo $MyVar"
+        ],
+        "notes_lt": "Po unset komandos kintamasis nebeegzistuoja.",
+        "notes_en": "After unset, the variable no longer exists.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$PS1",
+        "category": "shell-variable",
+        "description_lt": "Nustato shell prompt'ą (komandų eilutės išvaizdą).",
+        "description_en": "Defines the shell prompt appearance.",
+        "usage": "PS1='new_prompt$ '",
+        "examples": [
+            "PS1='\\u@\\h:\\w\\$ '",
+            "export PS1"
+        ],
+        "notes_lt": "Dažnai keičiamas ~/.bashrc faile; \\u — vartotojas, \\h — kompiuteris, \\w — direktorija.",
+        "notes_en": "Often modified in ~/.bashrc; \\u=user, \\h=host, \\w=working dir.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$PATH",
+        "category": "environment-variable",
+        "description_lt": "Nustato katalogus, kuriuose shell ieško komandų vykdomųjų failų.",
+        "description_en": "Specifies directories where the shell searches for executables.",
+        "usage": "echo $PATH",
+        "examples": [
+            "echo $PATH",
+            "PATH=$PATH:/usr/local/bin",
+            "export PATH"
+        ],
+        "notes_lt": "Skiriama dvitaškiu (:). Įprasta pridėti /usr/local/bin arba /sbin.",
+        "notes_en": "Separated by colons (:). Common additions include /usr/local/bin or /sbin.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "env",
+        "category": "environment-variable",
+        "description_lt": "Rodo visus eksportuotus kintamuosius arba paleidžia komandą su modifikuota aplinka.",
+        "description_en": "Displays all exported variables or runs a command with a modified environment.",
+        "usage": "env [VARIABLE=value] [command]",
+        "examples": [
+            "env",
+            "env LANG=lt_LT.UTF-8 bash"
+        ],
+        "notes_lt": "env -i paleidžia tuščią aplinką; naudinga testuojant konfigūraciją.",
+        "notes_en": "env -i launches an empty environment; useful for configuration testing.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "export",
+        "category": "environment-variable",
+        "description_lt": "Eksportuoja kintamąjį, kad jis būtų prieinamas vaikiniams shell procesams.",
+        "description_en": "Exports a variable to make it available to child shell processes.",
+        "usage": "export VARIABLE",
+        "examples": [
+            "export VarOne",
+            "export VarTwo VarThree"
+        ],
+        "notes_lt": "Neeksportuoja į tėvinį shell. Reikia perrašyti, jei norima išlaikyti visur.",
+        "notes_en": "Does not export back to the parent shell. Must be redefined if needed globally.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "delineate_variables",
+        "category": "shell-variable",
+        "description_lt": "Naudojami skliaustai {} aplink kintamąjį, kad aiškiai atskirti pavadinimą nuo teksto.",
+        "description_en": "Curly braces {} are used to clearly separate variable names from text.",
+        "usage": "echo Hello ${prefix}man",
+        "examples": [
+            "prefix=Super",
+            "echo Hello ${prefix}man and ${prefix}girl"
+        ],
+        "notes_lt": "Padeda išvengti klaidų kai kintamasis šliejasi prie teksto.",
+        "notes_en": "Prevents ambiguity when variable name is followed by text.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "unbound_variables",
+        "category": "shell-variable",
+        "description_lt": "Bandymas išvesti neegzistuojantį kintamąjį sukelia klaidą, jei įjungtas 'set -u'.",
+        "description_en": "Accessing an undefined variable triggers an error when 'set -u' is enabled.",
+        "usage": "set -u ; echo $VAR",
+        "examples": [
+            "set -u",
+            "echo $MyVar"
+        ],
+        "notes_lt": "`set -u` priverčia shell išmesti klaidą dėl nenaudojamo kintamojo.",
+        "notes_en": "`set -u` forces the shell to throw an error for unset variables.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "shell_embedding",
+        "category": "shell",
+        "description_lt": "Shell įterpimas leidžia vykdyti komandą shell viduje, sukuriant laikiną arba įdėtą shell procesą.",
+        "description_en": "Shell embedding allows executing a command inside a subshell, creating a temporary or nested shell process.",
+        "usage": "$( command )",
+        "examples": [
+            "echo $Var1; echo $Var1",
+            "echo $(echo SubShell)"
+        ],
+        "notes_lt": "Įdėtas shell neturi įtakos tėviniam shell kintamųjų reikšmėms.",
+        "notes_en": "A subshell does not modify variables in the parent shell.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "backticks",
+        "category": "shell",
+        "description_lt": "Sena komanda shell įterpimui. Grąžina komandos rezultatą, vykdydama ją atskiroje subshell aplinkoje.",
+        "description_en": "Legacy syntax for command substitution. Executes the command in a subshell and returns its output.",
+        "usage": "`command`",
+        "examples": [
+            "echo `ls -d /etc`",
+            "echo `grep pass /etc/passwd`"
+        ],
+        "notes_lt": "Backticks negali būti įdėti vienas į kitą; rekomenduojama naudoti $( ).",
+        "notes_en": "Backticks cannot be nested; using $( ) is preferred.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "nested_embedding",
+        "category": "shell",
+        "description_lt": "Naudojamas $( ) formatas leidžia daryti įdėtus shell įterpimus keliais lygiais.",
+        "description_en": "The $( ) syntax allows multi-level nested subshell embedding.",
+        "usage": "$( command $(subcommand) )",
+        "examples": [
+            "echo $(echo $(echo SubShell))"
+        ],
+        "notes_lt": "Backticks to padaryti negali — jie nesupranta rekursijos.",
+        "notes_en": "Backticks cannot do this because they do not support recursive nesting.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "set_options",
+        "category": "shell",
+        "description_lt": "set komandą galima naudoti shell parinktims įjungti arba išjungti, pvz., set -u peržiūri nenaudojamus kintamuosius kaip klaidą.",
+        "description_en": "The set command is used to enable or disable shell options, such as set -u treating unassigned variables as errors.",
+        "usage": "set -u | set +u | set -o option",
+        "examples": [
+            "set -u ; echo $Var123",
+            "set +u ; echo $Var123"
+        ],
+        "notes_lt": "set -u padaro shell griežtesnį. set +u grąžina į normalų režimą.",
+        "notes_en": "set -u makes the shell strict. set +u returns to normal behavior.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "echo_dollar_question",
+        "category": "shell",
+        "description_lt": "$? grąžina paskutinės komandos išėjimo kodą (0 reiškia sėkmę).",
+        "description_en": "$? returns the exit status of the last command (0 means success).",
+        "usage": "echo $?",
+        "examples": [
+            "ls ; echo $?",
+            "file_that_does_not_exist ; echo $?"
+        ],
+        "notes_lt": "Naudinga skriptų logikai ir if sąlygoms.",
+        "notes_en": "Useful for script logic and if statements.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "double_ampersand",
+        "category": "shell",
+        "description_lt": "&& vykdo antrą komandą tik jei pirmoji baigėsi sėkmingai (exit code 0).",
+        "description_en": "&& executes the second command only if the first one succeeds (exit code 0).",
+        "usage": "cmd1 && cmd2",
+        "examples": [
+            "echo first && echo second",
+            "ls file && echo Found"
+        ],
+        "notes_lt": "Naudojama automatizavimui ir saugiam komandų vykdymui.",
+        "notes_en": "Used for automation and safe conditional execution.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "double_vertical_bar",
+        "category": "shell",
+        "description_lt": "|| vykdo antrą komandą tik jei pirmoji NEpavyksta (exit code != 0).",
+        "description_en": "|| executes the second command only if the first one fails (exit code != 0).",
+        "usage": "cmd1 || cmd2",
+        "examples": [
+            "ls nonexist || echo File not found",
+            "false || echo This runs"
+        ],
+        "notes_lt": "Dažnai naudojama klaidų valdymui.",
+        "notes_en": "Commonly used for error handling.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "combine_and_or",
+        "category": "shell",
+        "description_lt": "&& ir || gali būti kombinuojami if-else tipo shell struktūroms.",
+        "description_en": "&& and || can be combined to emulate if-else logic on one line.",
+        "usage": "command && echo OK || echo FAIL",
+        "examples": [
+            "rm file && echo It worked! || echo It failed!"
+        ],
+        "notes_lt": "Tai efektyvi sąlyginė konstrukcija vienoje eilutėje.",
+        "notes_en": "Efficient inline conditional structure.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "pound_sign",
+        "category": "shell",
+        "description_lt": "Ženklas # naudojamas komentarams. Shell ignoruoja viską po jo.",
+        "description_en": "The # symbol starts a comment. The shell ignores everything after it.",
+        "usage": "# This is a comment",
+        "examples": [
+            "mkdir test # create directory",
+            "echo hello # ignored"
+        ],
+        "notes_lt": "Komentarai neturi įtakos vykdymui.",
+        "notes_en": "Comments do not affect execution.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "escape_special_characters",
+        "category": "shell",
+        "description_lt": "Backslash \\ leidžia išvengti specialiųjų simbolių interpretavimo.",
+        "description_en": "A backslash \\ prevents special characters from being interpreted by the shell.",
+        "usage": "echo Hello \\ World",
+        "examples": [
+            "echo hello \\ world",
+            "echo escaping \\\\ \\\\"
+        ],
+        "notes_lt": "Naudojama dirbant su tarpais, kabutėmis, $, # ir kitais simboliais.",
+        "notes_en": "Used to handle spaces, quotes, $, # and other special characters.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "end_of_line_backslash",
+        "category": "shell",
+        "description_lt": "Eilutė baigiama backslash, kad būtų tęsiama kitame eilutės lygyje.",
+        "description_en": "Using a trailing backslash continues the command onto the next line.",
+        "usage": "command \\",
+        "examples": [
+            "echo this command line \\",
+            "is split in three"
+        ],
+        "notes_lt": "Shell nes vykdo tol, kol sutinka eilutę be backslash.",
+        "notes_en": "The shell waits for a line without a trailing backslash.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "!!",
+        "category": "shell-history",
+        "description_lt": "Pakartoja paskutinę vykdytą komandą. Dar vadinama „bang bang“. ",
+        "description_en": "Repeats the last executed command. Also called 'bang bang'.",
+        "usage": "!!",
+        "examples": [
+            "echo this will be repeated > file2.txt",
+            "!!"
+        ],
+        "notes_lt": "Naudinga greitam paskutinės komandos pakartojimui be iš naujo rašymo.",
+        "notes_en": "Useful for quickly re-running the previous command without retyping.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "!prefix",
+        "category": "shell-history",
+        "description_lt": "Pakartoja paskutinę komandą, prasidedančią nurodytu simbolių rinkiniu.",
+        "description_en": "Repeats the most recent command starting with the given characters.",
+        "usage": "!string",
+        "examples": [
+            "touch file2",
+            "!to"
+        ],
+        "notes_lt": "Shell randa paskutinę komandą, kurios pradžia sutampa su įvesta eilute.",
+        "notes_en": "The shell finds the most recent command beginning with that text.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "history",
+        "category": "shell-history",
+        "description_lt": "Parodo komandų istoriją su numeriais. Galima riboti rodymo kiekį.",
+        "description_en": "Displays the command history with numbers. The output can be limited.",
+        "usage": "history [n]",
+        "examples": [
+            "history 10",
+            "history"
+        ],
+        "notes_lt": "Naudinga matyti paskutines komandas ir jų numerius naudojant su !n.",
+        "notes_en": "Helpful to see last commands and their indexes for !n recall.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "!n",
+        "category": "shell-history",
+        "description_lt": "Vykdo komandą iš istorijos pagal jos numerį.",
+        "description_en": "Executes a command from history by its number.",
+        "usage": "!number",
+        "examples": [
+            "!43"
+        ],
+        "notes_lt": "Numerį galima sužinoti su `history`. Dažnai naudojama atkurti ankstesnę komandą.",
+        "notes_en": "The number is shown by `history`; executes that specific command.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "Ctrl-r",
+        "category": "shell-history",
+        "description_lt": "Atlieka interaktyvią paiešką komandų istorijoje pagal įvestus simbolius.",
+        "description_en": "Performs an interactive reverse search through command history.",
+        "usage": "Ctrl-r text",
+        "examples": [
+            "(reverse-i-search)`apt': sudo aptitude install screen"
+        ],
+        "notes_lt": "Leidžia greitai rasti ankstesnes komandas be istorijos numerių.",
+        "notes_en": "Lets you quickly find previous commands without needing numbers.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$HISTSIZE",
+        "category": "environment-variable",
+        "description_lt": "Nurodo, kiek komandų bus išsaugota istorijoje dabartinėje sesijoje.",
+        "description_en": "Defines the number of commands remembered in the current session.",
+        "usage": "echo $HISTSIZE",
+        "examples": [
+            "echo $HISTSIZE",
+            "HISTSIZE=5000"
+        ],
+        "notes_lt": "Numatyta reikšmė dažniausiai 500 ar 1000; galima padidinti pagal poreikį.",
+        "notes_en": "Default is often 500 or 1000; can be increased as desired.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$HISTFILE",
+        "category": "environment-variable",
+        "description_lt": "Failas, kuriame saugoma istorija tarp sesijų. Dažniausiai `~/.bash_history`.",
+        "description_en": "File that stores command history between sessions, usually `~/.bash_history`.",
+        "usage": "echo $HISTFILE",
+        "examples": [
+            "echo $HISTFILE",
+            "cat ~/.bash_history"
+        ],
+        "notes_lt": "Terminalo uždarymas pelės mygtuku gali neišsaugoti istorijos.",
+        "notes_en": "Closing terminal via GUI may not save the session history.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$HISTFILESIZE",
+        "category": "environment-variable",
+        "description_lt": "Maksimalus komandų skaičius, išsaugomas istorijos faile.",
+        "description_en": "Maximum number of commands stored in the history file.",
+        "usage": "echo $HISTFILESIZE",
+        "examples": [
+            "HISTFILESIZE=15000"
+        ],
+        "notes_lt": "Kai viršijama riba, seniausios komandos pašalinamos.",
+        "notes_en": "When exceeded, the oldest commands are removed.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "prevent_history_record",
+        "category": "shell-history",
+        "description_lt": "Naudojant tarpą prieš komandą, ji neįrašoma į istoriją.",
+        "description_en": "Prefixing a command with a space prevents it from being recorded in history.",
+        "usage": "␣command",
+        "examples": [
+            " echo secret_command"
+        ],
+        "notes_lt": "Naudinga jautriems duomenims ar slaptažodžiams neįtraukti į istoriją.",
+        "notes_en": "Useful for preventing sensitive commands from appearing in history.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "regular_expressions_in_history",
+        "category": "shell-history",
+        "description_lt": "Leidžia naudoti reguliarųsias išraiškas, kai kartojamos komandos su `!`.",
+        "description_en": "Allows using regular expressions when repeating commands with `!`.",
+        "usage": "!pattern",
+        "examples": [
+            "cat file1",
+            "!:s/file1/file2/"
+        ],
+        "notes_lt": "Galima pakeisti teksto dalį ankstesnėje komandoje be jos perrašymo.",
+        "notes_en": "Lets you modify part of a previous command using pattern substitution.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "korn_shell_history",
+        "category": "shell-history",
+        "description_lt": "Korn shell turi istorijos funkciją, panašią į bash, bet su kitokiu `!` naudojimu.",
+        "description_en": "Korn shell provides history similar to bash but uses a slightly different ! syntax.",
+        "usage": "history n",
+        "examples": [
+            "history 17",
+            "r 12",
+            "r e"
+        ],
+        "notes_lt": "Galima kartoti komandas pagal eilės numerį arba pirmuosius simbolius.",
+        "notes_en": "Commands can be repeated by number or initial letters.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "* (asterisk)",
+        "category": "file-globbing",
+        "description_lt": "Žvaigždutė (*) atitinka bet kokį simbolių skaičių (įskaitant nulį). Naudojama failų vardų išplėtimui.",
+        "description_en": "The asterisk (*) matches any number of characters (including zero). Used for filename expansion.",
+        "usage": "ls *",
+        "examples": [
+            "ls *",
+            "ls File*",
+            "ls F*5"
+        ],
+        "notes_lt": "Jei nenurodytas kelias, shell naudoja esamą katalogą. Tai pagrindinis laukinės kortelės (wildcard) simbolis.",
+        "notes_en": "If no path is given, the shell uses the current directory. This is the main wildcard character.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "? (question mark)",
+        "category": "file-globbing",
+        "description_lt": "Klausimo ženklas (?) atitinka tiksliai vieną simbolį failo varde.",
+        "description_en": "The question mark (?) matches exactly one character in a filename.",
+        "usage": "ls File?",
+        "examples": [
+            "ls File?",
+            "ls File??"
+        ],
+        "notes_lt": "Jei failas turi daugiau arba mažiau simbolių nei nurodyta, jis neatitiks.",
+        "notes_en": "If the filename has more or fewer characters than specified, it won’t match.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "[] (square brackets)",
+        "category": "file-globbing",
+        "description_lt": "Kampiniai skliaustai [] nurodo simbolių sąrašą, iš kurių bet kuris vienas gali būti atitikmuo.",
+        "description_en": "Square brackets [] define a list of characters, any one of which can match.",
+        "usage": "ls File[AB]",
+        "examples": [
+            "ls File[A]",
+            "ls File[AB]",
+            "ls File[1-5]"
+        ],
+        "notes_lt": "Simbolius galima neigti naudojant ženklą `!` — pvz. `[!AB]` reiškia „visi, išskyrus A ir B“.",
+        "notes_en": "Characters can be negated with `!`, e.g. `[!AB]` means 'all except A and B'.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "a-z ir 0-9 ranges",
+        "category": "file-globbing",
+        "description_lt": "Simbolių intervalai leidžia nurodyti tęstinį diapazoną tarp raidžių ar skaičių.",
+        "description_en": "Character ranges specify continuous sequences between letters or numbers.",
+        "usage": "ls [a-z] or ls [0-9]",
+        "examples": [
+            "ls File[a-z]",
+            "ls File[0-9]",
+            "ls File[a-z][0-9]"
+        ],
+        "notes_lt": "Galima derinti raidžių ir skaičių intervalus; priklauso nuo locale nustatymų.",
+        "notes_en": "Letter and number ranges can be combined; behavior depends on locale.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "$LANG ir square brackets",
+        "category": "file-globbing",
+        "description_lt": "Failų išplėtimas gali priklausyti nuo sistemos kalbos (locale). $LANG kintamasis nurodo, kaip traktuoti didžiąsias ir mažąsias raides.",
+        "description_en": "File globbing can depend on the system locale. The $LANG variable defines case sensitivity behavior.",
+        "usage": "echo $LANG ; ls [A-Z]*",
+        "examples": [
+            "echo $LANG",
+            "ls [A-Z]*",
+            "LANG=C ls [A-Z]*"
+        ],
+        "notes_lt": "Kai kurios kalbos apjungia didžiąsias ir mažąsias raides tame pačiame intervale.",
+        "notes_en": "Some languages merge uppercase and lowercase letters in range matching.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "preventing file globbing",
+        "category": "file-globbing",
+        "description_lt": "Failų išplėtimą galima išjungti naudojant kabutes arba pabėgimo simbolį (backslash).",
+        "description_en": "File globbing can be disabled using quotes or escape characters.",
+        "usage": "echo '*' or echo \\*",
+        "examples": [
+            "echo *",
+            "echo \\*",
+            "echo '*'",
+            "echo \"*\""
+        ],
+        "notes_lt": "Be pabėgimo simbolių, * išsiplės į visus failus kataloge.",
+        "notes_en": "Without escaping, * expands to all files in the directory.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "stdin, stdout, stderr",
+        "category": "I/O redirection",
+        "description_lt": "Shell naudoja tris standartinius srautus: stdin (0) – įvestis, stdout (1) – išvestis, stderr (2) – klaidų pranešimai. Klaviatūra dažniausiai veikia kaip stdin, o terminalas rodo stdout ir stderr.",
+        "description_en": "The shell uses three standard streams: stdin (0) for input, stdout (1) for normal output, and stderr (2) for error messages. The keyboard typically provides stdin, while the terminal displays stdout and stderr.",
+        "usage": "Komandos automatiškai naudoja šiuos srautus. Išvedimas rodomas per stdout, klaidos – per stderr.",
+        "examples": [
+            "program < input.txt",
+            "program > output.txt",
+            "program 2> errors.txt"
+        ],
+        "notes_lt": "stdout ir stderr yra atskiri; tai leidžia atskirai nukreipti klaidas.",
+        "notes_en": "stdout and stderr are independent streams; they can be redirected separately.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": ">",
+        "category": "Output redirection",
+        "description_lt": "Operatorius > nukreipia stdout į failą. Jei failas egzistuoja, jis yra perrašomas.",
+        "description_en": "The > operator redirects stdout to a file. If the file exists, it will be overwritten.",
+        "usage": "komanda > failas",
+        "examples": [
+            "echo 'tekstai' > file.txt",
+            "ls > listing.txt"
+        ],
+        "notes_lt": "Šis operatorius visada išvalo failą prieš įrašydamas turinį.",
+        "notes_en": "This operator always truncates the file before writing.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "> (failo išvalymas)",
+        "category": "Output redirection",
+        "description_lt": "Kai naudojamas >, failas išvalomas prieš vykdant komandą, net jei pati komanda sugeneruoja klaidą.",
+        "description_en": "When using >, the file is cleared before the command executes, even if the command itself fails.",
+        "usage": "neteisinga_komanda > failas.txt",
+        "examples": [
+            "notacommand > example.txt"
+        ],
+        "notes_lt": "Failas bus tuščias net jei komanda neegzistuoja.",
+        "notes_en": "The file becomes empty even if the command does not exist.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "set -o noclobber",
+        "category": "Shell options",
+        "description_lt": "Apsaugo failus nuo perrašymo naudojant > redirekciją.",
+        "description_en": "Prevents overwriting existing files when using > redirection.",
+        "usage": "set -o noclobber",
+        "examples": [
+            "set -o noclobber",
+            "echo test > file.txt"
+        ],
+        "notes_lt": "Kai noclobber įjungtas, naudojant > į esamą failą gaunama klaida.",
+        "notes_en": "With noclobber enabled, using > on an existing file results in an error.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": ">|",
+        "category": "Output redirection",
+        "description_lt": ">| priverstinai perrašo failą, nepaisant noclobber nustatymo.",
+        "description_en": "The >| operator forces overwriting even if noclobber is enabled.",
+        "usage": "komanda >| failas",
+        "examples": [
+            "echo test >| file.txt"
+        ],
+        "notes_lt": "Tai naudinga, kai noclobber įjungtas, bet failą vis tiek reikia perrašyti.",
+        "notes_en": "Useful when noclobber is active but a file must be overwritten anyway.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": ">>",
+        "category": "Output redirection",
+        "description_lt": "Operatorius >> prideda išvestį į failo pabaigą, jo neištrinant.",
+        "description_en": "The >> operator appends output to the end of a file without removing existing content.",
+        "usage": "komanda >> failas",
+        "examples": [
+            "echo 'tekstas' >> log.txt",
+            "date >> history.log"
+        ],
+        "notes_lt": "Failas sukuriamas automatiškai, jei jo nėra.",
+        "notes_en": "If the file does not exist, it will be created automatically.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "2>",
+        "category": "Error redirection",
+        "description_lt": "Nukreipia standartinį klaidų srautą (stderr) į failą.",
+        "description_en": "Redirects the standard error stream (stderr) to a file.",
+        "usage": "komanda 2> klaidos.txt",
+        "examples": [
+            "rm nonexist.txt 2> errors.log"
+        ],
+        "notes_lt": "stderr yra file descriptor 2.",
+        "notes_en": "stderr is file descriptor 2.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "2>&1",
+        "category": "I/O merging",
+        "description_lt": "Sujungia stderr su stdout, kad abu keliautų į tą patį srautą arba failą.",
+        "description_en": "Merges stderr into stdout so both streams go to the same location.",
+        "usage": "komanda > failas 2>&1",
+        "examples": [
+            "ls /invalid > output.txt 2>&1"
+        ],
+        "notes_lt": "Tvarka svarbi: 2>&1 turi būti po >.",
+        "notes_en": "Order matters: 2>&1 must come after >.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "stderr per pipes → 2>&1",
+        "category": "Pipes",
+        "description_lt": "Pagal nutylėjimą stderr nepatenka į pipe. Naudojamas 2>&1, kad klaidos būtų siunčiamos kartu su stdout.",
+        "description_en": "By default stderr does not go through pipes. Use 2>&1 to send errors into the same pipeline as stdout.",
+        "usage": "komanda 2>&1 | kita_komanda",
+        "examples": [
+            "ls /bad /etc 2>&1 | grep etc"
+        ],
+        "notes_lt": "Pipes veikia tik su stdout.",
+        "notes_en": "Pipes operate on stdout only unless stderr is merged.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "&>",
+        "category": "I/O merging",
+        "description_lt": "Sujungia stdout ir stderr į vieną srautą.",
+        "description_en": "Combines stdout and stderr into a single output stream.",
+        "usage": "komanda &> failas",
+        "examples": [
+            "program &> output.log"
+        ],
+        "notes_lt": "Alternatyva: > failas 2>&1",
+        "notes_en": "Alternative: > file 2>&1",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "<",
+        "category": "Input redirection",
+        "description_lt": "Nukreipia failą kaip komandos stdin.",
+        "description_en": "Redirects a file to be used as stdin for a command.",
+        "usage": "komanda < failas",
+        "examples": [
+            "cat < text.txt"
+        ],
+        "notes_lt": "Dažnai naudojama komandų testavimui.",
+        "notes_en": "Often used for testing commands.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "<<",
+        "category": "Input redirection",
+        "description_lt": "Leidžia įvesti daug eilučių iki žymiklio (pvz., EOF).",
+        "description_en": "Allows entering multiple lines into a command until an ending marker is reached.",
+        "usage": "komanda << ŽYMA",
+        "examples": [
+            "cat << EOF\ntext\nmore\nEOF"
+        ],
+        "notes_lt": "Dažnai naudojama skriptuose.",
+        "notes_en": "Commonly used in scripts.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "<<<",
+        "category": "Input redirection",
+        "description_lt": "Nukreipia vieną tekstinę eilutę kaip stdin.",
+        "description_en": "Redirects a single string as stdin.",
+        "usage": "komanda <<< 'tekstas'",
+        "examples": [
+            "base64 <<< 'linux-training.be'"
+        ],
+        "notes_lt": "Panašu į echo | komanda, bet paprasčiau.",
+        "notes_en": "Similar to echo | command but cleaner.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sudėtingi redirekcijos deriniai",
+        "category": "I/O redirection",
+        "description_lt": "Shell visada skenuoja visą eilutę prieš vykdydamas redirekciją, todėl daug derinių, atrodantys painūs, yra teisingi.",
+        "description_en": "The shell scans the entire line before applying redirection, so various unusual combinations are still valid.",
+        "usage": "komanda > a < b 2> c",
+        "examples": [
+            "cat winter.txt > snow.txt 2> errors.txt"
+        ],
+        "notes_lt": "Tvarka gali atrodyti paini, bet shell ją supranta.",
+        "notes_en": "Order may look confusing but the shell interprets it correctly.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "> failas",
+        "category": "File manipulation",
+        "description_lt": "Greitas būdas išvalyti failą – naudoti tik > su failo vardu.",
+        "description_en": "The quickest way to clear a file is using > followed by the filename.",
+        "usage": "> failas",
+        "examples": [
+            ">foo",
+            ">bar"
+        ],
+        "notes_lt": "Veikia net be komandos prieš operatorių.",
+        "notes_en": "Works even with no command preceding the operator.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat",
+        "category": "filters",
+        "description_lt": "Skaito failo turinį ir išveda jį į standartinę išvestį. Dažnai naudojamas kartu su pipe operatoriais.",
+        "description_en": "Reads a file and prints its contents to stdout. Commonly used in pipelines.",
+        "usage": "cat [failas]",
+        "examples": [
+            "cat file.txt",
+            "tac count.txt | cat | cat | cat"
+        ],
+        "notes_lt": "Kai cat naudojamas tarp dviejų pipe'ų, jis neatlieka jokio apdorojimo – tik praleidžia duomenis toliau.",
+        "notes_en": "When used between two pipes, cat performs no processing – it simply passes data through.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "tee",
+        "category": "filters",
+        "description_lt": "Nuskaito duomenis iš stdin, išveda juos į stdout ir tuo pačiu įrašo į failą.",
+        "description_en": "Reads from stdin, outputs to stdout and simultaneously writes to a file.",
+        "usage": "command | tee failas",
+        "examples": [
+            "tac count.txt | tee temp.txt | tac",
+            "echo 'text' | tee file.txt"
+        ],
+        "notes_lt": "Naudingas, kai reikia tiek matyti išvestį, tiek ją išsaugoti.",
+        "notes_en": "Useful when you want to view the output while saving it to a file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep",
+        "category": "filters",
+        "description_lt": "Filtruoja eilutes, kuriose yra nurodyta teksto seka.",
+        "description_en": "Filters lines that contain a specified text pattern.",
+        "usage": "grep [pattern] [file]",
+        "examples": [
+            "grep Williams tennis.txt",
+            "grep -i bel tennis.txt",
+            "grep -v usa tennis.txt",
+            "grep -A1 'Belgium' tennis.txt",
+            "grep -C1 'Henin' tennis.txt"
+        ],
+        "notes_lt": "Galingas teksto paieškos įrankis. Gali naudoti regex.",
+        "notes_en": "A powerful text search tool. Supports regular expressions.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cut",
+        "category": "filters",
+        "description_lt": "Išrenka konkrečias teksto stulpelių ar simbolių pozicijas pagal skirtuką arba simbolius.",
+        "description_en": "Extracts specific columns or character ranges from text.",
+        "usage": "cut -d ':' -f1,3 file",
+        "examples": [
+            "cut -d ':' -f1,3 /etc/passwd",
+            "cut -d ' ' -f1 tennis.txt",
+            "cut -c2-7 /etc/passwd | tail -4"
+        ],
+        "notes_lt": "Naudoja skirtukus (delimiters) arba simbolių pozicijas.",
+        "notes_en": "Works with delimiters or character ranges.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "tr",
+        "category": "filters",
+        "description_lt": "Pakeičia simbolius, juos pašalina arba transformuoja.",
+        "description_en": "Translates, deletes, or squeezes characters from input.",
+        "usage": "tr [nustatymai]",
+        "examples": [
+            "cat file.txt | tr 'e' 'E'",
+            "cat file.txt | tr 'a-z' 'A-Z'",
+            "cat count.txt | tr '\\n' ' '",
+            "cat spaces.txt | tr -s ' '",
+            "cat tennis.txt | tr -d 'e'"
+        ],
+        "notes_lt": "d flag šalina simbolius; -s sutraukia pasikartojančius simbolius.",
+        "notes_en": "The -d flag deletes characters; -s squeezes repeated characters.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "wc",
+        "category": "filters",
+        "description_lt": "Suskaičiuoja failo žodžius, eilutes ir simbolius.",
+        "description_en": "Counts words, lines, and characters in a file.",
+        "usage": "wc [failas]",
+        "examples": [
+            "wc tennis.txt",
+            "wc -l tennis.txt",
+            "wc -m tennis.txt"
+        ],
+        "notes_lt": "Dažnai naudojama pipe'ams, pvz. who | wc -l.",
+        "notes_en": "Useful in pipes, e.g. who | wc -l.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sort",
+        "category": "filters",
+        "description_lt": "Rūšiuoja teksto eilutes abėcėlės ar skaitine tvarka.",
+        "description_en": "Sorts text lines alphabetically or numerically.",
+        "usage": "sort [failas]",
+        "examples": [
+            "sort music.txt",
+            "sort -k1 country.txt",
+            "sort -k2 country.txt",
+            "sort -n -k3 country.txt"
+        ],
+        "notes_lt": "Naudoja stulpelių numerius (-k), numerinį rikiavimą (-n).",
+        "notes_en": "Supports column sorting (-k) and numeric sorting (-n).",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "uniq",
+        "category": "filters",
+        "description_lt": "Pašalina pasikartojančias eilutes iš surūšiuoto sąrašo.",
+        "description_en": "Removes duplicate adjacent lines from a sorted list.",
+        "usage": "uniq [failas]",
+        "examples": [
+            "sort music.txt | uniq",
+            "sort music.txt | uniq -c"
+        ],
+        "notes_lt": "Dirba tik su iš anksto surūšiuotu tekstu. -c rodo pasikartojimų skaičių.",
+        "notes_en": "Works only on sorted input. -c displays counts.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "comm",
+        "category": "filters",
+        "description_lt": "Lygina dvi surūšiuotas tekstų rinkmenas ir parodo skirtumus bei sutapimus.",
+        "description_en": "Compares two sorted files and outputs differences and matches.",
+        "usage": "comm file1 file2",
+        "examples": [
+            "comm list1.txt list2.txt",
+            "comm -12 list1.txt list2.txt",
+            "comm -23 list1.txt list2.txt"
+        ],
+        "notes_lt": "Palaiko 3 stulpelius: tik pirmajame, tik antrajame ir abiejuose.",
+        "notes_en": "Has 3 columns: only in file1, only in file2, in both.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "od",
+        "category": "filters",
+        "description_lt": "Parodo failo turinį įvairiais formatais (hex, octal, ASCII).",
+        "description_en": "Displays file content in various formats (hex, octal, ASCII).",
+        "usage": "od [parametrai] failas",
+        "examples": [
+            "od text.txt",
+            "od -t x1 text.txt",
+            "od -t o1 text.txt"
+        ],
+        "notes_lt": "Naudojamas analizuojant baitus ar žemos pakopos duomenis.",
+        "notes_en": "Used to inspect raw bytes or low-level file structure.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed",
+        "category": "filters",
+        "description_lt": "Teksto srauto redaktorius, leidžiantis keisti, šalinti ir transformuoti eilutes.",
+        "description_en": "Stream editor for modifying, deleting, or transforming text.",
+        "usage": "sed 'pattern' [failas]",
+        "examples": [
+            "echo levels | sed 's/5/42/'",
+            "echo levels | sed 's/level/jump/'",
+            "echo levels | sed 's/level/jump/g'",
+            "cat tennis.txt | sed '/BE/d'"
+        ],
+        "notes_lt": "Galingas įrankis masinėms teksto transformacijoms.",
+        "notes_en": "Powerful tool for large-scale stream editing.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "who | wc",
+        "category": "filters (pipe examples)",
+        "description_lt": "Suskaičiuoja, kiek naudotojų šiuo metu yra prisijungę prie sistemos.",
+        "description_en": "Counts how many users are currently logged into the system.",
+        "usage": "who | wc -l",
+        "examples": [
+            "who | wc -l"
+        ],
+        "notes_lt": "Komanda `who` išveda prisijungusius vartotojus, o `wc -l` suskaičiuoja eilutes.",
+        "notes_en": "`who` lists logged-in users and `wc -l` counts the number of lines.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "who | cut | sort",
+        "category": "filters (pipe examples)",
+        "description_lt": "Išveda surūšiuotą prisijungusių naudotojų sąrašą.",
+        "description_en": "Displays a sorted list of logged-in users.",
+        "usage": "who | cut -d ' ' -f1 | sort",
+        "examples": [
+            "who | cut -d ' ' -f1 | sort"
+        ],
+        "notes_lt": "Ši komanda rodo naudotojų sąrašą su pasikartojančiomis reikšmėmis.",
+        "notes_en": "Shows all users, including duplicates.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "who | cut | sort | uniq",
+        "category": "filters (pipe examples)",
+        "description_lt": "Išveda surūšiuotą ir be pasikartojimų prisijungusių naudotojų sąrašą.",
+        "description_en": "Displays a sorted list of logged-in users with duplicates removed.",
+        "usage": "who | cut -d ' ' -f1 | sort | uniq",
+        "examples": [
+            "who | cut -d ' ' -f1 | sort | uniq"
+        ],
+        "notes_lt": "Naudinga norint sužinoti, kokie naudotojai yra prisijungę bent kartą.",
+        "notes_en": "Useful for showing which users have at least one active session.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep | cut",
+        "category": "filters (pipe examples)",
+        "description_lt": "Išveda vartotojų, kurių shell yra bash, sąrašą iš /etc/passwd failo.",
+        "description_en": "Displays a list of users whose shell is bash from /etc/passwd.",
+        "usage": "grep bash /etc/passwd | cut -d ':' -f1",
+        "examples": [
+            "grep bash /etc/passwd",
+            "grep bash /etc/passwd | cut -d ':' -f1"
+        ],
+        "notes_lt": "Filtruoja visus įrašus, kurių paskutinis laukas yra /bin/bash.",
+        "notes_en": "Filters entries where the final field is /bin/bash.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "find",
+        "category": "basic Unix tools",
+        "description_lt": "Komanda naudojama ieškoti failų pagal pavadinimą, tipą ar laiką kataloguose.",
+        "description_en": "The command is used to search for files by name, type, or modification time within directories.",
+        "usage": "find [path] [options] [expression]",
+        "examples": [
+            "find /etc > etcfiles.txt",
+            "find / > allfiles.txt",
+            "find . -name '*.conf'",
+            "find . -type f -name '*.conf'",
+            "find /data -type d -name '*.bak'",
+            "find . -newer file42.txt",
+            "find /data -name '*.old' -exec cp {} /backup/ \\;",
+            "find /data -name '*.old' -ok rm {} \\;"
+        ],
+        "notes_lt": "find leidžia vykdyti komandą kiekvienam rastam failui naudojant -exec arba -ok.",
+        "notes_en": "find allows executing a command for each found file using -exec or -ok.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "locate",
+        "category": "basic Unix tools",
+        "description_lt": "Naudoja indeksuotą duomenų bazę failams ieškoti pagal pavadinimą, todėl yra greitesnė nei find.",
+        "description_en": "Uses an indexed database to search for files by name, making it faster than find.",
+        "usage": "locate [pattern]",
+        "examples": [
+            "locate Samba",
+            "sudo updatedb"
+        ],
+        "notes_lt": "Norint atnaujinti duomenų bazę, naudokite updatedb komandą.",
+        "notes_en": "Use the updatedb command to refresh the locate database.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "date",
+        "category": "basic Unix tools",
+        "description_lt": "Parodo arba nustato dabartinę datą ir laiką.",
+        "description_en": "Displays or sets the current date and time.",
+        "usage": "date [options] [+format]",
+        "examples": [
+            "date",
+            "date '+%d-%m-%y'",
+            "date +%s",
+            "date -d '1970-01-01 +2000000000 seconds'"
+        ],
+        "notes_lt": "Naudokite +%s, kad gautumėte Unix laiką sekundėmis.",
+        "notes_en": "Use +%s to get Unix time in seconds.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cal",
+        "category": "basic Unix tools",
+        "description_lt": "Rodo kalendorių su pažymėta einamąja diena.",
+        "description_en": "Displays a calendar with the current day highlighted.",
+        "usage": "cal [month] [year]",
+        "examples": [
+            "cal",
+            "cal 2 1979"
+        ],
+        "notes_lt": "Galima nurodyti konkretų mėnesį ir metus.",
+        "notes_en": "You can specify a particular month and year.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sleep",
+        "category": "basic Unix tools",
+        "description_lt": "Pristabdo vykdymą nurodytam sekundžių skaičiui.",
+        "description_en": "Pauses execution for a specified number of seconds.",
+        "usage": "sleep [seconds]",
+        "examples": [
+            "sleep 5"
+        ],
+        "notes_lt": "Dažnai naudojama scenarijuose tarp komandų laukimo.",
+        "notes_en": "Often used in scripts to introduce delays between commands.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "time",
+        "category": "basic Unix tools",
+        "description_lt": "Matuoja, kiek laiko užtrunka komandos vykdymas.",
+        "description_en": "Measures how long a command takes to execute.",
+        "usage": "time [command]",
+        "examples": [
+            "time date",
+            "time sleep 5",
+            "time bzip2 text.txt"
+        ],
+        "notes_lt": "Parodo realų, vartotojo ir sistemos laiką.",
+        "notes_en": "Displays real, user, and system time usage.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "gzip",
+        "category": "basic Unix tools",
+        "description_lt": "Sumažina failo dydį jį suspausdamas.",
+        "description_en": "Compresses files to reduce their size.",
+        "usage": "gzip [file]",
+        "examples": [
+            "gzip text.txt",
+            "ls -lh text.txt.gz"
+        ],
+        "notes_lt": "Naudokite gunzip suspaustam failui išpakuoti.",
+        "notes_en": "Use gunzip to decompress a gzipped file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "gunzip",
+        "category": "basic Unix tools",
+        "description_lt": "Išpakuoja gzip suspaustus failus.",
+        "description_en": "Decompresses files compressed with gzip.",
+        "usage": "gunzip [file.gz]",
+        "examples": [
+            "gunzip text.txt.gz"
+        ],
+        "notes_lt": "Atkuria pradinį failą pašalindama .gz plėtinį.",
+        "notes_en": "Restores the original file by removing the .gz extension.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "zcat",
+        "category": "basic Unix tools",
+        "description_lt": "Parodo gzip suspausto failo turinį neišpakuojant jo į diską.",
+        "description_en": "Displays the contents of a gzipped file without decompressing it to disk.",
+        "usage": "zcat [file.gz]",
+        "examples": [
+            "zcat text.txt.gz | head -4"
+        ],
+        "notes_lt": "Naudinga greitai patikrinti failo turinį.",
+        "notes_en": "Useful for quickly viewing the contents of compressed files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "zmore",
+        "category": "basic Unix tools",
+        "description_lt": "Leidžia naršyti gzip suspausto failo turinį puslapiais.",
+        "description_en": "Allows viewing gzipped file contents page by page.",
+        "usage": "zmore [file.gz]",
+        "examples": [
+            "zmore text.txt.gz"
+        ],
+        "notes_lt": "Veikia kaip more, bet su suspaustais failais.",
+        "notes_en": "Works like more, but for compressed files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "bzip2",
+        "category": "basic Unix tools",
+        "description_lt": "Suspaudžia failus efektyviau nei gzip, bet lėčiau.",
+        "description_en": "Compresses files more efficiently than gzip, but slower.",
+        "usage": "bzip2 [file]",
+        "examples": [
+            "bzip2 text.txt",
+            "ls -lh text.txt.bz2"
+        ],
+        "notes_lt": "Sukuria .bz2 plėtinį prie failo pavadinimo.",
+        "notes_en": "Creates a .bz2 extension for the compressed file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "bunzip2",
+        "category": "basic Unix tools",
+        "description_lt": "Išpakuoja failus, suspaustus su bzip2.",
+        "description_en": "Decompresses files that were compressed using bzip2.",
+        "usage": "bunzip2 [file.bz2]",
+        "examples": [
+            "bunzip2 text.txt.bz2"
+        ],
+        "notes_lt": "Atkuria pradinį failą pašalindama .bz2 plėtinį.",
+        "notes_en": "Restores the original file by removing the .bz2 extension.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "bzcat",
+        "category": "basic Unix tools",
+        "description_lt": "Rodo bzip2 suspausto failo turinį neišpakuojant jo į diską.",
+        "description_en": "Displays the contents of a bzip2-compressed file without decompressing it to disk.",
+        "usage": "bzcat [file.bz2]",
+        "examples": [
+            "bzcat text.txt.bz2 | head -4"
+        ],
+        "notes_lt": "Naudinga peržiūrėti suspausto failo turinį.",
+        "notes_en": "Useful to view the content of compressed files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "bzmore",
+        "category": "basic Unix tools",
+        "description_lt": "Leidžia skaityti bzip2 suspausto failo turinį puslapiais.",
+        "description_en": "Allows reading bzip2 compressed file contents page by page.",
+        "usage": "bzmore [file.bz2]",
+        "examples": [
+            "bzmore text.txt.bz2"
+        ],
+        "notes_lt": "Naudinga dideliems suspaustiems failams naršyti.",
+        "notes_en": "Useful for paging through large compressed files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep",
+        "category": "regular expressions",
+        "description_lt": "Ieško eilutėse teksto pagal šabloną naudojant reguliariąsias išraiškas.",
+        "description_en": "Searches lines of text for patterns using regular expressions.",
+        "usage": "grep [options] pattern [file]",
+        "examples": [
+            "grep a names",
+            "grep -E 'i|a' list",
+            "grep -E 'o+' list2",
+            "grep -E 'as$' names",
+            "grep -E '^la' names",
+            "grep -E '\\bover\\b' text",
+            "grep -w over text",
+            "grep -v 'usa' tennis.txt",
+            "grep -i 'usa' tennis.txt",
+            "grep -A1 'henin' tennis.txt",
+            "grep -B1 'henin' tennis.txt",
+            "grep -C2 'henin' tennis.txt"
+        ],
+        "notes_lt": "Gali naudoti BRE, ERE ir PCRE sintakses; dažniausiai naudojama su -E.",
+        "notes_en": "Can use BRE, ERE or PCRE syntax; -E enables extended regex.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "rename",
+        "category": "regular expressions",
+        "description_lt": "Pervadina failus naudojant Perl reguliariąsias išraiškas.",
+        "description_en": "Renames files using Perl regular expressions.",
+        "usage": "rename 's/regex/replacement/' files",
+        "examples": [
+            "rename 's/\\.TXT/\\.txt/' *.TXT",
+            "rename 's/abc/backup/' *",
+            "rename 's/\\.txt$/.text/' *.txt",
+            "rename -n 's/.*/test/' *"
+        ],
+        "notes_lt": "Debian sistemoje rename naudoja Perl regex sintaksę.",
+        "notes_en": "On Debian systems, rename uses Perl regex engine.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed",
+        "category": "regular expressions",
+        "description_lt": "Srautinis redaktorius, leidžiantis keisti tekstą naudojant reguliariąsias išraiškas.",
+        "description_en": "A stream editor that modifies text using regular expressions.",
+        "usage": "sed [options] 'command' [file]",
+        "examples": [
+            "echo Sunday | sed 's/Sun/Mon/'",
+            "sed 's/Sun/Mon/' today",
+            "sed -i 's/Sun/Mon/' today",
+            "echo Sunday | sed 's/\\(Sun\\)/\\1day/'",
+            "echo Sunday | sed 's/\\(Sun\\).*/\\1day/'",
+            "echo 2014-08-01 | sed 's/..\\/-/\\/YYYY-MM-DD/'",
+            "echo 2014-08-01 | sed 's/\\(..\\)-\\(..\\)-\\(..\\)/\\3-\\2-\\1/'"
+        ],
+        "notes_lt": "Naudoja BRE pagal nutylėjimą; galima naudoti ERE su -r.",
+        "notes_en": "Uses BRE by default; ERE available with -r.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "regex-syntax",
+        "category": "regular expressions",
+        "description_lt": "Apibrėžia reguliariųjų išraiškų tipus: BRE, ERE ir Perl PCRE.",
+        "description_en": "Defines regex types: BRE, ERE and Perl PCRE.",
+        "usage": "N/A",
+        "examples": [
+            "grep -E 'pattern' file",
+            "sed -r 's/a/b/' file"
+        ],
+        "notes_lt": "Skirtingos komandos priima skirtingas regex versijas.",
+        "notes_en": "Different tools use different regex variants.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed-substitute",
+        "category": "regular expressions",
+        "description_lt": "Naudoja & simbolį, kuris reiškia visą derinį, atitikusį paieškos šabloną.",
+        "description_en": "Uses the & symbol, which represents the entire matched pattern.",
+        "usage": "sed 's/pattern/&/g' file",
+        "examples": [
+            "echo 'levels' | sed 's/l/L/'",
+            "echo 'levels' | sed 's/l/[&]/'"
+        ],
+        "notes_lt": "Simbolis & pakeitimo dalyje įterpia pilną rastą atitikmenį.",
+        "notes_en": "The & symbol inserts the full matched pattern into the replacement.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed-backreference",
+        "category": "regular expressions",
+        "description_lt": "Naudoja grupavimą su skliaustais ir leidžia panaudoti sugautas grupes pakeitime naudojant \\1, \\2 ir kt.",
+        "description_en": "Uses grouping with parentheses and allows referencing captured groups in replacements using \\1, \\2, etc.",
+        "usage": "sed 's/\\(pattern\\)/\\1replacement/' file",
+        "examples": [
+            "echo 'Sunday' | sed 's/\\(Sun\\)/\\1day/'",
+            "echo '2014-08-01' | sed 's/\\(....\\)-\\(..\\)-\\(..\\)/\\3-\\2-\\1/'"
+        ],
+        "notes_lt": "Backreference leidžia pakartoti tekstą iš originalaus atitikmens.",
+        "notes_en": "Backreferences allow reusing matched text captured in groups.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed-dot",
+        "category": "regular expressions",
+        "description_lt": "Simbolis . reiškia vieną bet kokį simbolį. Naudojamas apibrėžti nežinomas pozicijas tekste.",
+        "description_en": "The dot symbol matches any single character. Used to define unknown positions in text.",
+        "usage": "sed 's/./x/' file",
+        "examples": [
+            "echo 'test' | sed 's/./X/'",
+            "echo 'abc123' | sed 's/.../###/'"
+        ],
+        "notes_lt": "Draudžiami newline simboliai — tarp eilučių . neveikia.",
+        "notes_en": "Does not match newline characters.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed-multiple-backreferences",
+        "category": "regular expressions",
+        "description_lt": "Leidžia panaudoti kelias grupes ir jas pakartotinai naudoti pakeitime, pvz., \\1, \\2, \\3.",
+        "description_en": "Allows using multiple capture groups and reusing them in replacements with \\1, \\2, \\3.",
+        "usage": "sed 's/\\(group1\\)-\\(group2\\)-\\(group3\\)/\\3-\\1-\\2/'",
+        "examples": [
+            "echo 'abc-123-xyz' | sed 's/\\(.*\\)-\\(.*\\)-\\(.*\\)/\\3-\\1-\\2/'",
+            "echo '2024-05-28' | sed 's/\\(....\\)-\\(..\\)-\\(..\\)/\\2-\\3-\\1/'"
+        ],
+        "notes_lt": "Kuo daugiau grupių, tuo sudėtingesnius transformavimus galima atlikti.",
+        "notes_en": "Multiple groups enable complex text transformations.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sed 's/\\s\\+/ /g'",
+        "category": "regular_expressions",
+        "description_lt": "Pakeičia visus tarpų ar tabų pasikartojimus vienu tarpu.",
+        "description_en": "Replaces all whitespace sequences (spaces or tabs) with a single space.",
+        "usage": "sed 's/\\s\\+/ /g' file",
+        "examples": [
+            "echo \"today\\tis\\twarm\" | sed 's/\\s\\+/ /g'"
+        ],
+        "notes_lt": "Naudojamas regex simbolis \\s, reiškiantis tarpą ar tabą.",
+        "notes_en": "\\s matches spaces and tabs in many regex engines.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep -E 'oo?o'",
+        "category": "regular_expressions",
+        "description_lt": "Klaustukas reiškia, kad simbolis prieš jį yra pasirenkamas.",
+        "description_en": "The question mark makes the previous character optional.",
+        "usage": "grep -E 'oo?o' file",
+        "examples": [
+            "grep -E 'oo?o' list2",
+            "sed 's/oo?o/A/' list2"
+        ],
+        "notes_lt": "Oo?o atitinka 'ooo' ir 'oo o'.",
+        "notes_en": "oo?o matches both 'ooo' and 'ooo' with optional middle character.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep -E 'o{3}'",
+        "category": "regular_expressions",
+        "description_lt": "Ieško simbolio, kuris pasikartoja tiksliai n kartų.",
+        "description_en": "Searches for a character repeated exactly n times.",
+        "usage": "grep -E 'o{3}' file",
+        "examples": [
+            "grep -E 'o{3}' list2",
+            "sed 's/o{3}/A/' list2"
+        ],
+        "notes_lt": "Pavyzdyje ieškoma tiksliai trijų 'o'.",
+        "notes_en": "o{3} means exactly three occurrences of 'o'.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep -E 'o{2,3}'",
+        "category": "regular_expressions",
+        "description_lt": "Ieško simbolio, pasikartojančio nuo n iki m kartų.",
+        "description_en": "Looks for a character repeated between n and m times.",
+        "usage": "grep -E 'o{2,3}' file",
+        "examples": [
+            "grep -E 'o{2,3}' list2",
+            "sed 's/o{2,3}/A/' list2"
+        ],
+        "notes_lt": "{2,3} reiškia nuo dviejų iki trijų 'o'.",
+        "notes_en": "{2,3} means between two and three occurrences.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "bash history expansion (!)",
+        "category": "bash_history",
+        "description_lt": "Bash leidžia naudoti ! simbolį istorijos komandų iškvietimui.",
+        "description_en": "Bash allows using ! for quick access to history commands.",
+        "usage": "!<pattern>, !<number>, !!",
+        "examples": [
+            "!!",
+            "!ls",
+            "!2002",
+            "!?file",
+            "!-2"
+        ],
+        "notes_lt": "Galima naudoti ! su istorijos numeriais arba šablonais.",
+        "notes_en": "History expansion allows calling previous commands by pattern or number.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "whoami",
+        "category": "users",
+        "description_lt": "Parodo dabartinio vartotojo vardą.",
+        "description_en": "Displays the username of the current user.",
+        "usage": "whoami",
+        "examples": [
+            "whoami"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "who",
+        "category": "users",
+        "description_lt": "Parodo, kas yra prisijungę prie sistemos.",
+        "description_en": "Shows who is logged into the system.",
+        "usage": "who",
+        "examples": [
+            "who"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "who am i",
+        "category": "users",
+        "description_lt": "Parodo informaciją apie dabartinę terminalo sesiją.",
+        "description_en": "Displays information about the current terminal session.",
+        "usage": "who am i",
+        "examples": [
+            "who am i"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "w",
+        "category": "users",
+        "description_lt": "Parodo prisijungusius vartotojus ir jų veiklą.",
+        "description_en": "Shows logged-in users and what they are doing.",
+        "usage": "w",
+        "examples": [
+            "w"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "id",
+        "category": "users",
+        "description_lt": "Parodo vartotojo UID, GID ir grupes.",
+        "description_en": "Displays a user’s UID, GID and groups.",
+        "usage": "id [username]",
+        "examples": [
+            "id",
+            "id paul"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "su username",
+        "category": "users",
+        "description_lt": "Perjungia į kitą vartotoją paprašant slaptažodžio.",
+        "description_en": "Switches to another user, asking for password.",
+        "usage": "su username",
+        "examples": [
+            "su tania",
+            "su laura"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "su root",
+        "category": "users",
+        "description_lt": "Perjungia į root vartotoją.",
+        "description_en": "Switches to the root user.",
+        "usage": "su root",
+        "examples": [
+            "su root"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "su -",
+        "category": "users",
+        "description_lt": "Perjungia į root su pilna root aplinka.",
+        "description_en": "Switches to root with full root environment.",
+        "usage": "su -",
+        "examples": [
+            "su -"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "su - username",
+        "category": "users",
+        "description_lt": "Perjungia į kitą vartotoją perkraunant jo login aplinką.",
+        "description_en": "Switches to another user with full login environment.",
+        "usage": "su - username",
+        "examples": [
+            "su - laura",
+            "su - harry"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "su",
+        "category": "users",
+        "description_lt": "Be parametro – perjungia į root vartotoją.",
+        "description_en": "Without arguments, switches to root.",
+        "usage": "su",
+        "examples": [
+            "su"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sudo -u username command",
+        "category": "users",
+        "description_lt": "Vykdo komandą kaip kitas vartotojas.",
+        "description_en": "Executes a command as another user.",
+        "usage": "sudo -u username command",
+        "examples": [
+            "sudo -u valentina /usr/sbin/useradd",
+            "sudo -u root useradd harry"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "visudo",
+        "category": "users",
+        "description_lt": "Atidaro sudoers failą saugiam redagavimui.",
+        "description_en": "Safely edits the sudoers configuration file.",
+        "usage": "visudo",
+        "examples": [
+            "visudo"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "sudo su",
+        "category": "users",
+        "description_lt": "Suteikia root shell naudojant sudo teises.",
+        "description_en": "Gives a root shell using sudo permissions.",
+        "usage": "sudo su",
+        "examples": [
+            "sudo su"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep sudo /var/log/auth.log",
+        "category": "users",
+        "description_lt": "Parodo sudo įrašus iš žurnalo failų.",
+        "description_en": "Displays sudo log entries from system logs.",
+        "usage": "grep sudo /var/log/auth.log",
+        "examples": [
+            "grep sudo /var/log/auth.log",
+            "tail /var/log/secure | grep sudo"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "useradd",
+        "category": "user management",
+        "description_lt": "Sukuria naują vartotoją sistemoje.",
+        "description_en": "Creates a new user on the system.",
+        "usage": "useradd [parinktys] username",
+        "examples": [
+            "useradd yannina",
+            "useradd -m -d /home/yannina -c \"Yannina Wickmayer\" yannina"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat /etc/passwd",
+        "category": "user management",
+        "description_lt": "Parodo sistemos vartotojų įrašus iš /etc/passwd failo.",
+        "description_en": "Displays system user entries from /etc/passwd.",
+        "usage": "cat /etc/passwd",
+        "examples": [
+            "cat /etc/passwd"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "head -n 1 /etc/passwd",
+        "category": "user management",
+        "description_lt": "Parodo pirmą /etc/passwd įrašą – root vartotoją.",
+        "description_en": "Shows the first entry of /etc/passwd – the root user.",
+        "usage": "head -n 1 /etc/passwd",
+        "examples": [
+            "head -n 1 /etc/passwd"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "useradd -D",
+        "category": "user management",
+        "description_lt": "Parodo numatytus useradd nustatymus.",
+        "description_en": "Displays default settings for useradd.",
+        "usage": "useradd -D",
+        "examples": [
+            "useradd -D",
+            "useradd -D | grep HOME"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "userdel",
+        "category": "user management",
+        "description_lt": "Ištrina vartotoją iš sistemos.",
+        "description_en": "Deletes a user from the system.",
+        "usage": "userdel [parinktys] username",
+        "examples": [
+            "userdel yannina",
+            "userdel -r yannina"
+        ],
+        "notes_lt": "Parinktis -r ištrina ir vartotojo namų katalogą.",
+        "notes_en": "The -r option also deletes the user's home directory.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "usermod",
+        "category": "user management",
+        "description_lt": "Keičia esamo vartotojo nustatymus.",
+        "description_en": "Modifies an existing user.",
+        "usage": "usermod [parinktys] username",
+        "examples": [
+            "usermod -c \"Coach Harry\" harry",
+            "usermod -d /home/newhome harry"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mkdir",
+        "category": "user management",
+        "description_lt": "Sukuria namų katalogą vartotojui (naudojama alternatyviai vietoj useradd -m).",
+        "description_en": "Creates a home directory manually (alternative to useradd -m).",
+        "usage": "mkdir /home/username",
+        "examples": [
+            "mkdir /home/laura",
+            "mkdir /home/anna"
+        ],
+        "notes_lt": "Reikia vėliau priskirti teises su chown ir chmod.",
+        "notes_en": "Must be followed by chown and chmod to set correct permissions.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chown",
+        "category": "user management",
+        "description_lt": "Nustato failo arba katalogo savininką.",
+        "description_en": "Sets the owner of a file or directory.",
+        "usage": "chown user:group path",
+        "examples": [
+            "chown laura:laura /home/laura"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -la /etc/skel",
+        "category": "user management",
+        "description_lt": "Parodo numatytuosius failus, kurie kopijuojami į naujo vartotojo namų katalogą.",
+        "description_en": "Displays default files copied to new users' home directories.",
+        "usage": "ls -la /etc/skel",
+        "examples": [
+            "ls -la /etc/skel"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "userdel -r",
+        "category": "user management",
+        "description_lt": "Ištrina vartotoją ir jo namų katalogą.",
+        "description_en": "Deletes a user and their home directory.",
+        "usage": "userdel -r username",
+        "examples": [
+            "userdel -r wim"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "usermod -s",
+        "category": "user management",
+        "description_lt": "Pakeičia vartotojo prisijungimo shell.",
+        "description_en": "Changes the user's login shell.",
+        "usage": "usermod -s /path/to/shell username",
+        "examples": [
+            "usermod -s /bin/bash laura",
+            "usermod -s /bin/ksh annelies"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chsh",
+        "category": "user management",
+        "description_lt": "Leidžia vartotojui pasikeisti savo login shell.",
+        "description_en": "Allows a user to change their login shell.",
+        "usage": "chsh -s /path/to/shell",
+        "examples": [
+            "chsh -s /bin/ksh",
+            "chsh -s /bin/bash"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "passwd",
+        "category": "user-management",
+        "description_lt": "Keičia vartotojo slaptažodį.",
+        "description_en": "Changes a user's password.",
+        "usage": "passwd [username]",
+        "examples": [
+            "passwd",
+            "passwd tania"
+        ],
+        "notes_lt": "Root vartotojas gali keisti slaptažodžius be seno slaptažodžio.",
+        "notes_en": "Root can change passwords without needing the old one.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cat /etc/shadow",
+        "category": "user-management",
+        "description_lt": "Parodo užšifruotus slaptažodžių įrašus.",
+        "description_en": "Displays hashed password entries.",
+        "usage": "cat /etc/shadow",
+        "examples": [
+            "sudo cat /etc/shadow"
+        ],
+        "notes_lt": "Failą gali skaityti tik root.",
+        "notes_en": "File is readable only by root.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "useradd -m username -p $(openssl passwd 'pass')",
+        "category": "user-management",
+        "description_lt": "Sukuria vartotoją su užšifruotu slaptažodžiu.",
+        "description_en": "Creates a user with an encrypted password.",
+        "usage": "useradd -m -p <encrypted> username",
+        "examples": [
+            "useradd -m -p $(openssl passwd xavier) xavier"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "openssl passwd hunter2",
+        "category": "crypto",
+        "description_lt": "Sugeneruoja slaptažodžio hash.",
+        "description_en": "Generates a password hash.",
+        "usage": "openssl passwd <password>",
+        "examples": [
+            "openssl passwd hunter2",
+            "openssl passwd -salt 42 hunter2"
+        ],
+        "notes_lt": "Galima nurodyti salt parametrą.",
+        "notes_en": "You can specify a salt parameter.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "gcc MyCrypt.c -o MyCrypt -lcrypt",
+        "category": "development",
+        "description_lt": "Sukompiliuoja C programą, kuri naudoja crypt funkciją.",
+        "description_en": "Compiles a C program using the crypt function.",
+        "usage": "gcc MyCrypt.c -o MyCrypt -lcrypt",
+        "examples": [
+            "./MyCrypt hunter2 42",
+            "./MyCrypt hunter2 932"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "grep PASS /etc/login.defs",
+        "category": "user-management",
+        "description_lt": "Parodo slaptažodžių politikos nustatymus.",
+        "description_en": "Displays password policy configuration.",
+        "usage": "grep PASS /etc/login.defs",
+        "examples": [
+            "grep PASS /etc/login.defs"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chage",
+        "category": "user-management",
+        "description_lt": "Keičia slaptažodžio galiojimo nustatymus.",
+        "description_en": "Changes password aging settings.",
+        "usage": "chage [options] username",
+        "examples": [
+            "chage -l paul",
+            "chage -E 2025-01-01 paul"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "usermod -L username",
+        "category": "user-management",
+        "description_lt": "Užrakina vartotojo slaptažodį.",
+        "description_en": "Locks a user's password.",
+        "usage": "usermod -L username",
+        "examples": [
+            "usermod -L laura",
+            "grep laura /etc/shadow | cut -c1-70"
+        ],
+        "notes_lt": "Prie užšifruoto slaptažodžio pridedamas ! simbolis.",
+        "notes_en": "Adds ! at the beginning of the hash.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "usermod -U username",
+        "category": "user-management",
+        "description_lt": "Atrakina vartotojo slaptažodį.",
+        "description_en": "Unlocks a user's password.",
+        "usage": "usermod -U username",
+        "examples": [
+            "usermod -U laura"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "vipw",
+        "category": "system",
+        "description_lt": "Saugiai redaguoja /etc/passwd failą.",
+        "description_en": "Safely edits the /etc/passwd file.",
+        "usage": "vipw",
+        "examples": [
+            "vipw"
+        ],
+        "notes_lt": "Užrakina failą redagavimo metu.",
+        "notes_en": "Locks the file while editing.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "vipw -s",
+        "category": "system",
+        "description_lt": "Saugiai redaguoja /etc/shadow.",
+        "description_en": "Safely edits the /etc/shadow file.",
+        "usage": "vipw -s",
+        "examples": [
+            "vipw -s"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "groups",
+        "category": "groups",
+        "description_lt": "Parodo, kokioms grupėms priklauso vartotojas.",
+        "description_en": "Shows which groups the user belongs to.",
+        "usage": "groups [username]",
+        "examples": [
+            "groups",
+            "groups harry"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "usermod",
+        "category": "groups",
+        "description_lt": "Modifikuoja vartotojo grupes – prideda ar pašalina iš grupių.",
+        "description_en": "Modifies a user's group membership – adds or removes from groups.",
+        "usage": "usermod -a -G <group> <user>",
+        "examples": [
+            "usermod -a -G tennis inge",
+            "usermod -a -G darts sandra",
+            "usermod -a -G football annelies"
+        ],
+        "notes_lt": "Svarbu naudoti -a kartu su -G, kad neištrintų senų grupių.",
+        "notes_en": "Important: always use -a with -G to avoid removing existing groups.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "groupmod",
+        "category": "groups",
+        "description_lt": "Pakeičia grupės pavadinimą arba parametrus.",
+        "description_en": "Changes a group's name or settings.",
+        "usage": "groupmod -n <new_name> <old_name>",
+        "examples": [
+            "groupmod -n darts snooker",
+            "groupmod -n pool tennis"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "groupdel",
+        "category": "groups",
+        "description_lt": "Ištrina grupę iš sistemos.",
+        "description_en": "Deletes a group from the system.",
+        "usage": "groupdel <group_name>",
+        "examples": [
+            "groupdel tennis"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "gpasswd",
+        "category": "groups",
+        "description_lt": "Valdo grupių administratorius ir narius.",
+        "description_en": "Manages group administrators and group members.",
+        "usage": "gpasswd <options> <group>",
+        "examples": [
+            "gpasswd -a serena sports",
+            "gpasswd -a harry sports",
+            "gpasswd -d serena sports",
+            "gpasswd -A '' sports"
+        ],
+        "notes_lt": "Leidžia pridėti ir pašalinti narius be root slaptažodžio.",
+        "notes_en": "Allows adding and removing members without root password.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "newgrp",
+        "category": "groups",
+        "description_lt": "Sukuria naują subshell su nurodyta pagrindine grupe.",
+        "description_en": "Starts a subshell with the specified primary group.",
+        "usage": "newgrp <group>",
+        "examples": [
+            "newgrp tennis",
+            "newgrp admin"
+        ],
+        "notes_lt": "",
+        "notes_en": "",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "vigr",
+        "category": "groups",
+        "description_lt": "Saugi /etc/group redagavimo komanda su failo užrakinimu.",
+        "description_en": "Safe editor for /etc/group with locking.",
+        "usage": "vigr",
+        "examples": [
+            "vigr"
+        ],
+        "notes_lt": "Naudoti tik administratoriui, veikia kaip vipw.",
+        "notes_en": "Administrator-only editor, works like vipw but for groups.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -l",
+        "category": "file_ownership",
+        "description_lt": "Išsamiai išvardija failus su savininku, grupe ir teisėmis.",
+        "description_en": "Lists files verbosely showing owner, group, and permissions.",
+        "usage": "ls -l [path]",
+        "examples": [
+            "ls -l",
+            "ls -l /etc"
+        ],
+        "notes_lt": "Naudinga greitai patikrinti teises ir savininką.",
+        "notes_en": "Useful to quickly inspect permissions and ownership.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -lh",
+        "category": "file_ownership",
+        "description_lt": "Rodo detalią informaciją su žmogui patogiais dydžiais (KB/MB).",
+        "description_en": "Shows detailed listing with human-readable sizes (KB/MB).",
+        "usage": "ls -lh [path]",
+        "examples": [
+            "ls -lh",
+            "ls -lh /var/log"
+        ],
+        "notes_lt": "Papildomas -h nekeičia rodomų teisių ar savininko.",
+        "notes_en": "The -h flag does not affect permissions/owner display.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -ld /dev/console /dev/sda",
+        "category": "special_files",
+        "description_lt": "Parodo nurodytų specialių įrenginių metaduomenis.",
+        "description_en": "Displays metadata for the specified device nodes.",
+        "usage": "ls -ld <paths>",
+        "examples": [
+            "ls -ld /dev/console /dev/sda"
+        ],
+        "notes_lt": "Naudojama tikrinti specialių failų teises ir tipus.",
+        "notes_en": "Use to verify permissions and types of device files.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -ld /etc /etc/hosts /etc/motd",
+        "category": "special_files",
+        "description_lt": "Rodo katalogų ir konfigūracijų įrašų teises/savininką.",
+        "description_en": "Shows permissions/ownership for directories and config entries.",
+        "usage": "ls -ld <paths>",
+        "examples": [
+            "ls -ld /etc /etc/hosts /etc/motd"
+        ],
+        "notes_lt": "Naudinga greitam sisteminių failų patikrinimui.",
+        "notes_en": "Handy for quick inspection of system entries.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cut -d: -f1 /etc/passwd | column",
+        "category": "file_ownership",
+        "description_lt": "Išskiria /etc/passwd vartotojų vardus ir gražiai suformatuoja.",
+        "description_en": "Extracts usernames from /etc/passwd and formats them in columns.",
+        "usage": "cut -d: -f1 /etc/passwd | column",
+        "examples": [
+            "cut -d: -f1 /etc/passwd | column"
+        ],
+        "notes_lt": "Padeda peržiūrėti tik vardų sąrašą be papildomų laukų.",
+        "notes_en": "Useful to view a clean list of usernames only.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "ls -l proc2.bash",
+        "category": "permissions_rwx",
+        "description_lt": "Parodo konkretaus failo teises, savininką ir grupę.",
+        "description_en": "Shows a specific file’s permissions, owner and group.",
+        "usage": "ls -l <file>",
+        "examples": [
+            "ls -l proc2.bash"
+        ],
+        "notes_lt": "Greitas vieno failo teisių patikrinimas.",
+        "notes_en": "Quick inspection of a single file's permissions.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chgrp tennis file2",
+        "category": "permissions_chgrp",
+        "description_lt": "Pakeičia failo grupę į nurodytą.",
+        "description_en": "Changes a file’s group to the specified one.",
+        "usage": "chgrp <group> <file>",
+        "examples": [
+            "chgrp tennis file2"
+        ],
+        "notes_lt": "Reikia atitinkamų teisių arba būti savininku.",
+        "notes_en": "Requires privileges or ownership of the file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chgrp snooker file3",
+        "category": "permissions_chgrp",
+        "description_lt": "Priskiria kitą grupę failui.",
+        "description_en": "Assigns another group to a file.",
+        "usage": "chgrp <group> <file>",
+        "examples": [
+            "chgrp snooker file3"
+        ],
+        "notes_lt": "Grupė turi egzistuoti sistemoje.",
+        "notes_en": "Target group must exist on the system.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chgrp foo file1",
+        "category": "permissions_chgrp",
+        "description_lt": "Keičia failo grupę į „foo“. ",
+        "description_en": "Sets the file’s group to “foo”.",
+        "usage": "chgrp <group> <file>",
+        "examples": [
+            "chgrp foo file1"
+        ],
+        "notes_lt": "Naudojamas grupinės nuosavybės koregavimui.",
+        "notes_en": "Used to adjust group ownership.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chown paul fileForPaul",
+        "category": "permissions_chown",
+        "description_lt": "Pakeičia failo savininką į nurodytą vartotoją.",
+        "description_en": "Changes a file’s owner to the specified user.",
+        "usage": "chown <user> <file>",
+        "examples": [
+            "chown paul fileForPaul"
+        ],
+        "notes_lt": "Dažniausiai reikia root teisių.",
+        "notes_en": "Usually requires root privileges.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chown root:paul fileForPaul",
+        "category": "permissions_chown",
+        "description_lt": "Pakeičia savininką ir grupę vienu veiksmu.",
+        "description_en": "Changes both owner and group in one operation.",
+        "usage": "chown <user>:<group> <file>",
+        "examples": [
+            "chown root:paul fileForPaul"
+        ],
+        "notes_lt": "Patogu nustatyti pilną nuosavybę.",
+        "notes_en": "Convenient to set full ownership.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chown paul:paul fileForPaul",
+        "category": "permissions_chown",
+        "description_lt": "Nustato tiek savininką, tiek grupę į tą patį vartotoją.",
+        "description_en": "Sets both owner and group to the same user.",
+        "usage": "chown <user>:<group> <file>",
+        "examples": [
+            "chown paul:paul fileForPaul"
+        ],
+        "notes_lt": "Dažna praktika namų katalogams.",
+        "notes_en": "Common for home directory ownership.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chown root:project12 fileForPaul",
+        "category": "permissions_chown",
+        "description_lt": "Pakeičia savininką ir grupę pagal projekto reikmes.",
+        "description_en": "Adjusts owner and group for project workflows.",
+        "usage": "chown <user>:<group> <file>",
+        "examples": [
+            "chown root:project12 fileForPaul"
+        ],
+        "notes_lt": "Naudinga kai failas priklauso projektinei grupei.",
+        "notes_en": "Useful when a file belongs to a project group.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod u+x permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Prideda vykdymo teisę savininkui.",
+        "description_en": "Adds execute permission for the owner.",
+        "usage": "chmod u+x <file>",
+        "examples": [
+            "chmod u+x permissions.txt"
+        ],
+        "notes_lt": "Simbolinė teisė keičia tik nurodytą subjektą.",
+        "notes_en": "Symbolic mode affects only the targeted class.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod g-r permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Pašalina skaitymo teisę grupei.",
+        "description_en": "Removes read permission for the group.",
+        "usage": "chmod g-r <file>",
+        "examples": [
+            "chmod g-r permissions.txt"
+        ],
+        "notes_lt": "Naudojama apriboti grupės prieigą.",
+        "notes_en": "Used to restrict group access.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod o-r permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Pašalina skaitymo teisę kitiems.",
+        "description_en": "Removes read permission for others.",
+        "usage": "chmod o-r <file>",
+        "examples": [
+            "chmod o-r permissions.txt"
+        ],
+        "notes_lt": "Mažina viešą failo prieinamumą.",
+        "notes_en": "Reduces public visibility of the file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod u+w permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Suteikia rašymo teisę savininkui.",
+        "description_en": "Grants write permission to the owner.",
+        "usage": "chmod u+w <file>",
+        "examples": [
+            "chmod u+w permissions.txt"
+        ],
+        "notes_lt": "Leidžia savininkui keisti failo turinį.",
+        "notes_en": "Allows owner to modify the file.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod u-rw permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Pašalina skaitymo ir rašymo teises savininkui.",
+        "description_en": "Removes read and write permissions for the owner.",
+        "usage": "chmod u-rw <file>",
+        "examples": [
+            "chmod u-rw permissions.txt"
+        ],
+        "notes_lt": "Dažnai taikoma tik pavyzdžiams; praktikoje retai.",
+        "notes_en": "Commonly shown in examples; rarely used in practice.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod a+r permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Suteikia skaitymo teisę visiems (u,g,o).",
+        "description_en": "Grants read permission to all (u,g,o).",
+        "usage": "chmod a+r <file>",
+        "examples": [
+            "chmod a+r permissions.txt"
+        ],
+        "notes_lt": "Padidina prieinamumą visiems vartotojams.",
+        "notes_en": "Makes the file readable by everyone.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod u=rw,g=r,o=",
+        "category": "chmod_symbolic",
+        "description_lt": "Tiksliai nustato teises: savininkui rw, grupei r, kitiems – jokios.",
+        "description_en": "Sets exact mode: owner rw, group r, others none.",
+        "usage": "chmod u=rw,g=r,o= <file>",
+        "examples": [
+            "chmod u=rw,g=r,o= permissions.txt"
+        ],
+        "notes_lt": "Užrašo teises tiksliai, ne prideda/atimina.",
+        "notes_en": "Assigns exact bits rather than add/remove.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod u+rwx,g+rw,o+r permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Prideda kelias teises skirtingoms klasėms vienu veiksmu.",
+        "description_en": "Adds multiple permissions for different classes at once.",
+        "usage": "chmod u+rwx,g+rw,o+r <file>",
+        "examples": [
+            "chmod u+rwx,g+rw,o+r permissions.txt"
+        ],
+        "notes_lt": "Galima kombinuoti keletą segmentų su kableliais.",
+        "notes_en": "Multiple segments can be combined in one command.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod u+rw,g-wx,o-r permissions.txt",
+        "category": "chmod_symbolic",
+        "description_lt": "Vienu metu suteikia ir atima teises skirtingoms klasėms.",
+        "description_en": "Adds and removes permissions for different classes in one go.",
+        "usage": "chmod u+rw,g-wx,o-r <file>",
+        "examples": [
+            "chmod u+rw,g-wx,o-r permissions.txt"
+        ],
+        "notes_lt": "Patogu koreguoti teises vienu veiksmu.",
+        "notes_en": "Convenient for one-shot permission adjustments.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod 777 permissions.txt",
+        "category": "chmod_octal",
+        "description_lt": "Suteikia pilnas teises visiems (rwxrwxrwx).",
+        "description_en": "Grants full permissions to everyone (rwxrwxrwx).",
+        "usage": "chmod 777 <file>",
+        "examples": [
+            "chmod 777 permissions.txt"
+        ],
+        "notes_lt": "Nenaudoti jautriems failams dėl saugumo.",
+        "notes_en": "Avoid for sensitive files due to security risks.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod 654 permissions.txt",
+        "category": "chmod_octal",
+        "description_lt": "Nustato teises: savininkui rw-, grupei r-x, kitiems r--.",
+        "description_en": "Sets mode: owner rw-, group r-x, others r--.",
+        "usage": "chmod 654 <file>",
+        "examples": [
+            "chmod 654 permissions.txt"
+        ],
+        "notes_lt": "Oktalinė forma greitai apibrėžia visus bitus.",
+        "notes_en": "Octal form sets all bits quickly.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod 751 permissions.txt",
+        "category": "chmod_octal",
+        "description_lt": "Nustato teises: savininkui rwx, grupei r-x, kitiems --x.",
+        "description_en": "Sets mode: owner rwx, group r-x, others --x.",
+        "usage": "chmod 751 <file>",
+        "examples": [
+            "chmod 751 permissions.txt"
+        ],
+        "notes_lt": "Tinka vykdomiems failams su ribotu skaitymu.",
+        "notes_en": "Good for executables with limited read access.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "chmod 789 permissions.txt",
+        "category": "chmod_octal",
+        "description_lt": "Bando nustatyti neteisingas teises (9 nėra galiojantis bitas).",
+        "description_en": "Attempts to set an invalid mode (9 is not a valid bit).",
+        "usage": "chmod 789 <file>",
+        "examples": [
+            "chmod 789 permissions.txt"
+        ],
+        "notes_lt": "Oktalinėse teisėse galimi tik 0–7.",
+        "notes_en": "Only digits 0–7 are valid in octal modes.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "umask",
+        "category": "permissions_umask",
+        "description_lt": "Parodo dabartinę umask reikšmę, kuri nurodo, kokios teisės bus pašalintos naujiems failams ir katalogams.",
+        "description_en": "Displays the current umask value, defining which permissions are removed from newly created files and directories.",
+        "usage": "umask",
+        "examples": [
+            "umask",
+            "umask 022",
+            "umask 077"
+        ],
+        "notes_lt": "Umask nėra teisės — tai bitai, kurie atimami iš numatytų teisių.",
+        "notes_en": "Umask is not permissions; it subtracts bits from default permissions.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "mkdir -m 700 mydir",
+        "category": "permissions_mkdir",
+        "description_lt": "Sukuria katalogą su nurodytomis teisėmis.",
+        "description_en": "Creates a directory with explicitly defined permissions.",
+        "usage": "mkdir -m <mode> <directory>",
+        "examples": [
+            "mkdir -m 700 mydir",
+            "mkdir -m 755 public"
+        ],
+        "notes_lt": "chmod nereikia, jei teises nurodomos iškart su -m.",
+        "notes_en": "No need for chmod if permissions are set during creation via -m.",
+        "source": "KITM - Linux Fundamentals"
+    },
+    {
+        "command": "cp -p file1 file2",
+        "category": "permissions_copy",
+        "description_lt": "Kopijuoja failą ir išsaugo teises, savininką ir laiko žymes.",
+        "description_en": "Copies a file while preserving permissions, owner, and timestamps.",
+        "usage": "cp -p <source> <destination>",
+        "examples": [
+            "cp -p file1 file2",
+            "cp -p myfile.txt backup/myfile.txt"
+        ],
+        "notes_lt": "Labai svarbu kopijuojant konfigūracijų ar sisteminius failus.",
+        "notes_en": "Essential when copying system or configuration files.",
+        "source": "KITM - Linux Fundamentals"
+    }
+]

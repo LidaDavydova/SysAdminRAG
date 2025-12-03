@@ -1,0 +1,3911 @@
+,query,expected,score_max,score_mean,top_text,retrieval_time_sec
+0,"Pods with sidecars never terminate, causing job completion delays.",Sidecar containers keep process alive. Use Kubernetes 'Sidecar container' feature (1.28+) or add preStop hooks and shared termination signals via postStart script.,0.4168509542942047,0.2051139459013939,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",1.0570104122161865
+1,Image pull fails with 'toomanyrequests: rate limit exceeded'.,"Authenticate with Docker Hub using `docker login`, use a mirror registry, or consider a Docker Hub Pro account to increase pull limits.",0.27398329973220825,0.14886600375175477,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.8344125747680664
+2,Docker build ARG variable not persisting between stages.,ARG values are scoped per stage. Redefine `ARG` in each stage or convert to ENV if persistence is required.,0.37665969133377075,0.16628853231668472,"1) Argo CD settings: Enable resource exclusions (e.g., Events) and narrow the set of watched namespaces. Use ApplicationSet generators to shard apps across multiple controllers to distribute load. 
+2) Informer resync: Increase `--app-resync` interval; enable `--sharding` with `--shard` flags. 
+3) Large manifests: Split monolithic Helm charts; avoid embedding large binaries or gigantic ConfigMaps/Secrets. 
+4) Server-side apply: Prefer SSA with field managers to reduce patch conflicts. Ensure `--prune` is used judiciously to prevent wholesale DELETE/CREATE churn. 
+5) API PF (Priority & Fairness): Define fair-queuing for Argo CD clients to prevent starvation of system controllers. 
+6) Observability: Track apiserver metrics by user agent; confirm drops after sharding/exclusions. 
+7) Last resort: Introduce dedicated APIServer for aggregated CRDs (API Aggregation) isolating heavy CRDs from core paths.",0.7988278865814209
+3,Docker build ARGs ignored when building on CI pipeline.,Pass args explicitly with `--build-arg` in the CI build command. Environment variables in pipeline are not automatically forwarded to Docker build context.,0.4204848110675812,0.2636015251278877,"/docker-entrypoint.sh:
+/docker-entrypoint.d/
+is
+not
+empty,
+will
+attempt
+to
+perform
+configuration
+/docker-entrypoint.sh:
+Looking
+for
+shell
+scripts
+in
+/docker-entrypoint.d/
+/docker-entrypoint.sh:
+Launching
+/docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh:
+Configuration
+complete
+;
+ready
+for
+start
+up
+Depending on the driver you might also want to pass some options. You can do that via the CLI, passing
+--log-opt
+or in the daemon config file adding the key
+log-opts
+. For more information check the
+logging driver documentation
+.
+Docker CLI also provides the
+docker
+logs
+and
+docker
+service
+logs
+commands which allows one to check for the logs produced by a given container or service (set of containers) in the host. However, those two commands are functional only if the logging driver for the containers is
+json-file
+,
+local
+or
+journald
+. They are useful for debugging in general, but there is the downside of increasing the storage needed in the host.
+The remote logging drivers are useful to store data in an external service/host, and they also avoid spending more disk space in the host to store log files. Nonetheless, sometimes, for debugging purposes, it is important to have log files locally. Considering that, Docker has a feature called “dual logging”, which is enabled by default, and even if the system administrator configures a logging driver different from
+json-file
+,
+local
+and
+journald
+, the logs will be available locally to be accessed via the Docker CLI. If this is not the desired behavior, the feature can be disabled in the
+/etc/docker/daemon.json
+file:
+{
+""log-driver""
+:
+""syslog""
+,
+""log-opts""
+:
+{
+""cache-disabled""
+:
+""true""
+,
+""syslog-address""
+:
+""udp://1.2.3.4:1111""
+}
+}
+The option
+cache-disabled
+is used to disable the “dual logging” feature. If you try to run
+docker
+logs
+with that configuration you will get the following error:
+$
+docker
+logs
+web-server",0.8369617462158203
+4,Docker exec gives 'container not running' error.,Ensure container is running: `docker ps -a`. Restart it with `docker start -ai <container>` or use `docker logs` to identify crash reason.,0.41523653268814087,0.2828443437814713,"/docker-entrypoint.sh:
+/docker-entrypoint.d/
+is
+not
+empty,
+will
+attempt
+to
+perform
+configuration
+/docker-entrypoint.sh:
+Looking
+for
+shell
+scripts
+in
+/docker-entrypoint.d/
+/docker-entrypoint.sh:
+Launching
+/docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh:
+Configuration
+complete
+;
+ready
+for
+start
+up
+Depending on the driver you might also want to pass some options. You can do that via the CLI, passing
+--log-opt
+or in the daemon config file adding the key
+log-opts
+. For more information check the
+logging driver documentation
+.
+Docker CLI also provides the
+docker
+logs
+and
+docker
+service
+logs
+commands which allows one to check for the logs produced by a given container or service (set of containers) in the host. However, those two commands are functional only if the logging driver for the containers is
+json-file
+,
+local
+or
+journald
+. They are useful for debugging in general, but there is the downside of increasing the storage needed in the host.
+The remote logging drivers are useful to store data in an external service/host, and they also avoid spending more disk space in the host to store log files. Nonetheless, sometimes, for debugging purposes, it is important to have log files locally. Considering that, Docker has a feature called “dual logging”, which is enabled by default, and even if the system administrator configures a logging driver different from
+json-file
+,
+local
+and
+journald
+, the logs will be available locally to be accessed via the Docker CLI. If this is not the desired behavior, the feature can be disabled in the
+/etc/docker/daemon.json
+file:
+{
+""log-driver""
+:
+""syslog""
+,
+""log-opts""
+:
+{
+""cache-disabled""
+:
+""true""
+,
+""syslog-address""
+:
+""udp://1.2.3.4:1111""
+}
+}
+The option
+cache-disabled
+is used to disable the “dual logging” feature. If you try to run
+docker
+logs
+with that configuration you will get the following error:
+$
+docker
+logs
+web-server",0.7939426898956299
+5,Docker container crashes with 'Out of memory' though host has free memory.,Docker cgroup memory limits might be too restrictive. Increase container memory using `--memory` or check for swap disabled scenarios.,0.4047318398952484,0.2798392355442047,"""DriverOpts""
+:
+{}
+}
+}
+}
+The container c2 is connected to two networks
+bridge
+and
+my-net
+. The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers.",0.867772102355957
+6,Docker build cache not shared across runners in CI/CD.,Use BuildKit cache exporter with `--cache-to=type=registry` and `--cache-from` options to share layer cache across builds.,0.3205805718898773,0.1275841338559985,"The upgrade tries to rename/move files as needed, but it can’t do so for an active mount point. In that case you will need to adapt either the mount point or the config in
+/etc/squid/squid.conf
+so that they match. The same applies if the
+include
+config statement was used to pull in more files from the old path at
+/etc/squid3/
+. In those cases you should move and adapt your configuration accordingly. Troubleshooting
+¶
+To monitor Squid behavior and check for potential errors and problems, there are useful commands to be executed and files to be checked. Squid version and status can be checked with:
+sudo
+squid
+-v
+sudo
+systemctl
+status
+squid
+Checking or watching the log files may be useful to see potential errors, and to verify cache hits and misses:
+sudo
+cat
+/var/log/squid/cache.log
+sudo
+cat
+/var/log/squid/access.log
+For a status summary containing runtime statistics and congfiguration, run:
+squidclient
+mgr:info
+While monitoring, these cache status indicators can help identifying what is happening with requests:
+TCP_MISS
+: Content not in cache, fetched from origin
+TCP_HIT
+: Content served from disk cache
+TCP_MEM_HIT
+: Content served from memory cache
+TCP_REFRESH_HIT
+: Cached content revalidated with origin
+TCP_TUNNEL
+: HTTPS traffic (not cached by default)
+A healthy cache should show increasing hit ratios over time, of non-zero size, and a growing number of cached objects. Further reading
+¶
+The Squid Website
+Ubuntu Wiki page on Squid
+.",0.9096620082855225
+7,AKS: Azure Policy add-on blocks deployments unexpectedly.,"A policy or initiative denies resources (e.g., 'deny elevated privileges'). Review `Gatekeeper` or Azure Policy events and exempt namespaces or update constraints as needed.",0.49476826190948486,0.20919565632939338,"1) Inventory failures: Collect OPA/Gatekeeper violations via audit; map constraints blocking specific workloads (initContainers often need elevated permissions). 
+2) Namespaced exceptions: Label specific namespaces with PSA exemptions or Gatekeeper `excludedNamespaces`. 
+3) Fine-grained policies: For workloads requiring NET_BIND_SERVICE or SYS_TIME, define Constraints allowing these capabilities for labeled service accounts only. 
+4) Migration: Refactor pods to drop all caps by default and add minimal ones; use ephemeral containers for debug with elevated profiles in a break-glass namespace. 
+5) Verification: Add admission tests in CI validating new manifests against the policy set to prevent regressions.",0.8031058311462402
+8,"A multi-tenant cluster uses Calico in eBPF mode. After enabling strict NetworkPolicies and migrating tenants to separate namespaces, some services randomly become unreachable across namespaces. Packet captures show dropped traffic with no matching deny rules. What’s the systematic approach?","This pattern often indicates policy ordering, namespace selectors, or eBPF program conflicts. 
+
+1) Policy audit: Use `calicoctl get networkpolicy -o yaml` and verify namespaceSelectors resolve to intended namespaces. Check for default-deny in each namespace and confirm `egress` rules for DNS and observability sidecars. 
+2) eBPF verification: `calico-node` logs may reveal map sync failures. Ensure kernel supports required eBPF features and that BPF programs were reattached after node upgrades (`bpftool prog show`). 
+3) Identity resolution: If you use service accounts or labels in `networkPolicy`, confirm label propagation via admission webhooks; a delayed label change can cause transient drops. 
+4) Cross-namespace services: Prefer `namespaceSelector`+`podSelector` combos and ensure FQDN policies or egress allow to kube-dns. 
+5) Rollback plan: Temporarily switch Calico to iptables dataplane on a subset of nodes to confirm dataplane issue vs. policy logic. 
+6) Observability: Enable Calico flow logs; determine which rule matched the drop. Adjust policies to include necessary `egress`/`ingress` to cluster services, and add explicit allowlists for control-plane DNS/metrics endpoints.",0.940108597278595,0.3030021607875824,"1) Policy audit: Use `calicoctl get networkpolicy -o yaml` and verify namespaceSelectors resolve to intended namespaces. Check for default-deny in each namespace and confirm `egress` rules for DNS and observability sidecars. 
+2) eBPF verification: `calico-node` logs may reveal map sync failures. Ensure kernel supports required eBPF features and that BPF programs were reattached after node upgrades (`bpftool prog show`). 
+3) Identity resolution: If you use service accounts or labels in `networkPolicy`, confirm label propagation via admission webhooks; a delayed label change can cause transient drops. 
+4) Cross-namespace services: Prefer `namespaceSelector`+`podSelector` combos and ensure FQDN policies or egress allow to kube-dns. 
+5) Rollback plan: Temporarily switch Calico to iptables dataplane on a subset of nodes to confirm dataplane issue vs. policy logic. 
+6) Observability: Enable Calico flow logs; determine which rule matched the drop. Adjust policies to include necessary `egress`/`ingress` to cluster services, and add explicit allowlists for control-plane DNS/metrics endpoints.",1.0237081050872803
+9,Docker build fails with 'error creating overlay mount'.,File system may be full or overlay driver misconfigured. Clear unused containers and verify overlayfs support in kernel.,0.4431149959564209,0.2448907494544983,"03483cc28166fc5c56317e4ee71904941ec5942071e7c936524f74d732b6a24c
+Inspect your container to check for the tmpfs mount:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""tmpfs""
+,
+""Source""
+:
+""""
+,
+""Destination""
+:
+""/app""
+,
+""Mode""
+:
+""""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+Choosing the right storage drivers
+¶
+Before changing the configuration and restarting the daemon, make sure that the specified filesystem (zfs, btrfs, or device mapper) is mounted at
+/var/lib/docker
+.
+Otherwise, if you configure the Docker daemon to use a storage driver different from the filesystem mounted at
+/var/lib/docker
+, a failure will happen. The Docker daemon expects that
+/var/lib/docker
+is correctly set up when it starts.
+Check the current storage driver
+$
+docker
+info
+|
+grep
+""Storage Driver""
+Storage
+Driver:
+overlay2
+Ensure the required Filesystem is available. We will be using the ZFS Filesystem.
+$
+apt
+install
+zfsutils-linux
+-y
+# Install ZFS
+$
+fallocate
+-l
+5G
+/zfs-pool.img
+# Create a 5GB file
+$
+zpool
+create
+mypool
+/zfs-pool.img
+# Create a ZFS pool
+$
+zfs
+create
+-o
+mountpoint
+=
+/var/lib/docker
+mypool/docker
+# Create a ZFS dataset and mount it to dockers directory, ""/var/lib/docker"".
+$
+zfs
+list
+# Verify that it mounted successfully
+NAME
+USED
+AVAIL
+REFER
+MOUNTPOINT
+mypool
+162K
+4
+.36G
+24K
+/mypool
+mypool/docker
+39K
+4
+.36G
+39K
+/var/lib/docker
+Change the storage driver
+Stop the docker daemon
+systemctl
+stop
+docker
+Edit
+/etc/docker/daemon.json
+using your favorite editor, then update the storage driver value to
+zfs
+.",0.9776339530944824
+10,Docker container clock drift causes SSL handshake failures.,Sync container and host clocks with NTP. Mount `/etc/localtime` and `/etc/timezone` or restart the container to resync system time.,0.5656378865242004,0.3981539249420166,"Bad Clocks and secure time syncing:
+NTS is based on TLS, and TLS needs a
+reasonably correct clock. Due to that, an NTS-based sync might fail if the
+clock is too far off. On hardware affected by this problem, one can consider
+using the
+nocerttimecheck
+option, which allows to set the number of times
+that the time can be synced without checking validation and expiration. Note
+A new CA is installed in
+/etc/chrony/nts-bootstrap-ubuntu.crt
+that is
+used specifically for the Ubuntu NTS bootstrap server, needed for when the
+clock is too far off. This is added to certificate set ID “1”, and defined
+via
+/etc/chrony/conf.d/ubuntu-nts.conf
+. Configure Chrony
+¶
+An admin can control the timezone and how the system clock should relate to the
+hwclock
+using the common
+timedatectl
+[set-timezone/set-local-rtc]
+commands, provided by
+systemd
+. For more specific actions, like adding of time-sources, the
+chronyc
+command can be used. See
+man
+chronyc
+for more details. One can edit configuration in
+/etc/chrony/sources.d/
+to add/remove server lines. By default these servers are configured:
+# Use NTS by default
+# NTS uses an additional port to negotiate security: 4460/tcp
+# The normal NTP port remains in use: 123/udp
+pool 1.ntp.ubuntu.com iburst maxsources 1 nts prefer
+pool 2.ntp.ubuntu.com iburst maxsources 1 nts prefer
+pool 3.ntp.ubuntu.com iburst maxsources 1 nts prefer
+pool 4.ntp.ubuntu.com iburst maxsources 1 nts prefer
+# The bootstrap server is needed by systems without a hardware clock, or a very
+# large initial clock offset. The specified certificate set is defined in
+# /etc/chrony/conf.d/ubuntu-nts.conf.
+pool ntp-bootstrap.ubuntu.com iburst maxsources 1 nts certset 1
+After adding or removing sources, they can be reloaded using
+sudo
+chrony
+reload
+sources
+. Of the pool,
+2.ubuntu.pool.ntp.org
+and
+ntp.ubuntu.com
+also support IPv6, if needed.",0.9301619529724121
+11,EKS: Pods can’t reach Internet though nodes can.,"NAT/Gateway or routing issue. For private subnets, ensure NAT Gateway is attached and route tables for ENI subnets have 0.0.0.0/0 to NAT. Verify security group egress rules and Network ACLs.",0.22393465042114258,0.12474300786852836,"1) Path validation: From a pod, `dig +trace` to see where resolution fails. Confirm NodeLocal DNSCache forwards to CoreDNS, which in turn forwards to Azure DNS (168.63.129.16) or the resolver you intend. 
+2) Azure Firewall: Allow outbound 53/UDP+TCP from node and firewall rules to resolver. If using FQDN tags, verify the domains. 
+3) Private DNS zone linking: Ensure the VNet is linked to the Private DNS zone and that split-horizon doesn’t loop. Avoid forwarding back into the same zone. 
+4) CoreDNS: Increase `max_concurrent` and cache TTL. Ensure stubdomains don’t point to resolvers only reachable via blocked UDRs. 
+5) NodeLocal DNSCache: Update to latest; set `-localip` and `-upstreamsvc` explicitly. If cache evictions high, grow cache capacity. 
+6) Verification: Run steady DNS qps tests; ensure p99 latency is stable and NXDOMAIN rates match expectations.",1.140632152557373
+12,AKS: Node pool autoscaling stuck at minimum size.,"Scale set API throttling or pending pod constraints. Check Cluster Autoscaler logs for 'NoExpanders' or 'Unschedulable'. Increase `maxCount`, remove restrictive nodeSelectors, and ensure quotas are not exceeded at subscription level.",0.5870667695999146,0.24801742434501647,"1) SDK config: Ensure your SDK uses a cached credential provider and retries AssumeRoleWithWebIdentity with exponential backoff. Increase HTTP connection pooling. 
+2) Token audiences & clock skew: Confirm the projected service account token’s aud matches IAM role trust policy; fix NTP drift on nodes to prevent early/late token rejection. 
+3) Token refresh: Lengthen token rotation window; mount the projected token and ensure the SDK reloads automatically (newer AWS SDKs support file-watching). 
+4) Scale-out: If bursts exceed STS throttling, shard workloads across multiple roles or pre-warm connections. Consider larger pod replicas to smooth spikes. 
+5) Observability: Emit STS metrics and S3 retry counts; validate drop after adding backoff + connection reuse.",1.085336685180664
+13,Kubernetes pod stuck in 'ContainerCreating'.,Check if the image is available and pull secrets are configured. Inspect kubelet logs for CNI or volume mount errors causing delay.,0.27947157621383667,0.18402862772345543,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.7550501823425293
+14,AKS: PodIdentity (AAD Pod Identity) stopped working after upgrade.,"AAD Pod Identity is deprecated; migrate to **Azure AD Workload Identity**. Install the webhook, create a Federated Identity Credential for the service account, and update apps to use token exchange.",0.4626006782054901,0.16083427369594575,"1) SDK config: Ensure your SDK uses a cached credential provider and retries AssumeRoleWithWebIdentity with exponential backoff. Increase HTTP connection pooling. 
+2) Token audiences & clock skew: Confirm the projected service account token’s aud matches IAM role trust policy; fix NTP drift on nodes to prevent early/late token rejection. 
+3) Token refresh: Lengthen token rotation window; mount the projected token and ensure the SDK reloads automatically (newer AWS SDKs support file-watching). 
+4) Scale-out: If bursts exceed STS throttling, shard workloads across multiple roles or pre-warm connections. Consider larger pod replicas to smooth spikes. 
+5) Observability: Emit STS metrics and S3 retry counts; validate drop after adding backoff + connection reuse.",0.8755853176116943
+15,Developers depend on `hostNetwork: true` for a latency-sensitive service but it conflicts with NodePorts and monitoring agents. How can you safely provide near-host networking without global side effects?,"Options to isolate ports and still get low latency: 
+
+1) Use dedicated nodes (taints/tolerations) for hostNetwork workloads to avoid conflicts. 
+2) Bind to specific interfaces/ports; coordinate with kube-proxy reserved ranges. 
+3) Evaluate DPDK or SR-IOV for direct NIC access if ultra-low latency is needed. 
+4) Add NetworkPolicies to restrict hostNetwork pods' access and egress. 
+5) Ensure observability via sidecar agents or eBPF-based collectors that respect hostNetwork.",0.3014844059944153,0.2217293620109558,"This means that there is always an inherent trade-off between features exposed to the container and host security from malicious containers. Containers by default are therefore restricted from features needed to nest child containers. In order to run lxc or lxd containers under a lxd container, the
+security.nesting
+feature must be set to true:
+lxc
+config
+set
+container1
+security
+.
+nesting
+true
+Once this is done,
+container1
+will be able to start sub-containers. In order to run unprivileged (the default in LXD) containers nested under an unprivileged container, you will need to ensure a wide enough UID mapping. Please see the ‘UID mapping’ section below. Limits
+¶
+LXD supports flexible constraints on the resources which containers can consume. The limits come in the following categories:
+CPU: limit cpu available to the container in several ways. Disk: configure the priority of I/O requests under load
+RAM: configure memory and swap availability
+Network: configure the network priority under load
+Processes: limit the number of concurrent processes in the container. For a full list of limits known to LXD, see
+the configuration documentation
+. UID mappings and privileged containers
+¶
+By default, LXD creates unprivileged containers. This means that root in the container is a non-root UID on the host. It is privileged against the resources owned by the container, but unprivileged with respect to the host, making root in a container roughly equivalent to an unprivileged user on the host. (The main exception is the increased attack surface exposed through the system call interface)
+Briefly, in an unprivileged container, 65536 UIDs are ‘shifted’ into the container. For instance, UID 0 in the container may be 100000 on the host, UID 1 in the container is 100001, etc, up to 165535.",0.9405155181884766
+16,Docker run fails with 'port already allocated'. How to fix?,Another container or process is using the port. Run `docker ps` to find and stop conflicting containers or change the host port mapping using `-p <new_host_port>:<container_port>`.,0.5552469491958618,0.25695906281471254,"""DriverOpts""
+:
+{}
+}
+}
+}
+The container c2 is connected to two networks
+bridge
+and
+my-net
+. The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers.",0.8466498851776123
+17,Pods using initContainers that download files over HTTPS fail with 'x509 unknown authority'.,CA bundle missing. Mount `/etc/ssl/certs` from host or include `ca-certificates` in initContainer image.,0.17000149190425873,0.14366765916347504,"Authentication
+¶
+By default, LXD will allow all members of group
+lxd
+to talk to it over the UNIX socket. Communication over the network is authorized using server and client certificates. Before client
+c1
+wishes to use remote
+r1
+,
+r1
+must be registered using:
+lxc
+remote
+add
+r1
+r1
+.
+example
+.
+com
+:
+8443
+The fingerprint of r1’s certificate will be shown, to allow the user at c1 to reject a false certificate. The server in turn will verify that c1 may be trusted in one of two ways. The first is to register it in advance from any already-registered client, using:
+lxc
+config
+trust
+add
+r1
+certfile
+.
+crt
+Now when the client adds r1 as a known remote, it will not need to provide a password as it is already trusted by the server. The other step is to configure a ‘trust password’ with
+r1
+, either at initial configuration using
+lxd
+init
+, or after the fact using:
+lxc
+config
+set
+core
+.
+trust_password
+PASSWORD
+The password can then be provided when the client registers
+r1
+as a known remote. Backing store
+¶
+LXD supports several backing stores. The recommended and the default backing store is
+zfs
+. If you already have a ZFS pool configured, you can tell LXD to use it during the
+lxd
+init
+procedure, otherwise a file-backed zpool will be created automatically. With ZFS, launching a new container is fast because the
+filesystem
+starts as a copy on write clone of the images’ filesystem. Note that unless the container is privileged (see below) LXD will need to change ownership of all files before the container can start, however this is fast and change very little of the actual filesystem data. The other supported backing stores are described in detail in the
+Storage configuration
+section of the LXD documentation. Container configuration
+¶
+Containers are configured according to a set of profiles, described in the next section, and a set of container-specific configuration. Profiles are applied first, so that container specific configuration can override profile configuration.",0.9259476661682129
+18,AKS: CSI Azure Disk PVC stuck in Pending.,"StorageClass zone/sku mismatch or disk encryption set. Ensure `managed-csi` driver installed, correct `skuName` and `zones` match node pool zones. For encryption-at-host or CMK, match cluster configuration and permissions.",0.4362923204898834,0.24316997230052947,"Login to [iface: iscsi01, target: iqn.2003-01.org.linux-iscsi.storage.x8664:sn.2c084c8320ca, portal: 10.250.94.99,3260] successful. Accessing the Logical Units (or LUNs)
+¶
+Check
+dmesg
+to make sure that the new disks have been detected:
+dmesg
+[
+166.840694
+]
+scsi
+7
+:
+0
+:
+0
+:
+4
+:
+Direct
+-
+Access
+LIO
+-
+ORG
+TCMU
+device
+>
+0002
+PQ
+:
+0
+ANSI
+:
+5
+[
+166.840892
+]
+scsi
+8
+:
+0
+:
+0
+:
+4
+:
+Direct
+-
+Access
+LIO
+-
+ORG
+TCMU
+device
+>
+0002
+PQ
+:
+0
+ANSI
+:
+5
+[
+166.841741
+]
+sd
+7
+:
+0
+:
+0
+:
+4
+:
+Attached
+scsi
+generic
+sg2
+type
+0
+[
+166.841808
+]
+sd
+8
+:
+0
+:
+0
+:
+4
+:
+Attached
+scsi
+generic
+sg3
+type
+0
+[
+166.842278
+]
+scsi
+7
+:
+0
+:
+0
+:
+3
+:
+Direct
+-
+Access
+LIO
+-
+ORG
+TCMU
+device
+>
+0002
+PQ
+:
+0
+ANSI
+:
+5
+[
+166.842571
+]
+scsi
+8
+:
+0
+:
+0
+:
+3
+:
+Direct
+-
+Access
+LIO
+-
+ORG
+TCMU
+device
+>
+0002
+PQ
+:
+0
+ANSI
+:
+5
+[
+166.843482
+]
+sd
+8
+:
+0
+:
+0
+:
+3
+:
+Attached
+scsi
+generic
+sg4
+type
+0
+[
+166.843681
+]
+sd
+7
+:
+0
+:
+0
+:
+3
+:
+Attached
+scsi
+generic
+sg5
+type
+0
+[
+166.843706
+]
+sd
+8
+:
+0
+:
+0
+:
+4
+:
+[
+sdd
+]
+2097152
+512
+-
+byte
+logical
+blocks
+:
+>
+(
+1.07
+GB
+/
+1.00
+GiB
+)
+[
+166.",0.807013750076294
+19,"A cluster wide feature gate was enabled via API server flags. Some nodes still behave as if the gate is off, causing divergent behavior in controllers. What is the proper procedure to ensure uniform feature state?","Feature gates must be consistent across apiserver, controller-manager, scheduler, and kubelets. 
+
+1) Audit all component manifests (static pods, systemd units) for the gate. 
+2) Roll control plane sequentially, then nodes by pool. 
+3) Validate via `/metrics` or component logs that the feature gate is recognized. 
+4) If the feature is beta/GA-sensitive, run conformance tests for a sample workload that depends on it. 
+5) Document rollback flags to flip off consistently if issues arise.",0.4122436046600342,0.2721295118331909,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",0.9163262844085693
+20,Docker image push to Artifactory fails with 'unauthorized: incorrect credentials'.,Ensure credentials are stored in `~/.docker/config.json`. Use `docker login <registry>` and confirm repository permissions match.,0.4996762275695801,0.24858119785785676,"Then,
+24.0.7-0ubuntu4.1
+was removed from the
+-updates
+pocket on
+2024-11-26
+. You could then use
+20241126T230000Z
+as the snapshot ID to get the target
+package (
+26.1.3-0ubuntu1~24.04.1
+):
+$ sudo apt install docker.io --update --snapshot 20241126T230000Z
+...
+$ docker --version
+Docker version 26.1.3, build 26.1.3-0ubuntu1~24.04.1
+Note
+Note that, at the time of writing, the version of
+docker.io
+in the
+noble-security
+pocket is
+27.5.1-0ubuntu3~24.04.2
+, i.e., the version used in
+the example above may be affected by known vulnerabilities.",0.791682243347168
+21,A microservice uses gRPC streaming and abruptly fails during Node drains even with preStop hooks. Connections drop before load balancer detects unready. How to make drains lossless?,"Sequence conditions and delays. 
+
+1) On SIGTERM, immediately fail readiness probe and keep liveness passing; add `terminationGracePeriodSeconds` large enough for stream teardown. 
+
+2) Configure load balancer health checks with short interval and `healthy_threshold` low so nodes exit quickly. 
+3) Implement server-side graceful shutdown: stop accepting new streams, drain existing with deadlines. 
+4) Use connection draining at Ingress/Envoy with `drain_timeout`. 
+5) Test end-to-end by draining a single pod under load.",0.5873677730560303,0.30894985496997834,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.814971923828125
+22,"After adding Calico BPF mode, DNS requests start failing intermittently.",Node-local-dns conflicts with Calico BPF policy enforcement. Exclude CoreDNS namespace from BPF dataplane or set `CALICO_IPV4POOL_BPFENABLED=false` temporarily.,0.5423588156700134,0.2652189560234547,"1) Policy audit: Use `calicoctl get networkpolicy -o yaml` and verify namespaceSelectors resolve to intended namespaces. Check for default-deny in each namespace and confirm `egress` rules for DNS and observability sidecars. 
+2) eBPF verification: `calico-node` logs may reveal map sync failures. Ensure kernel supports required eBPF features and that BPF programs were reattached after node upgrades (`bpftool prog show`). 
+3) Identity resolution: If you use service accounts or labels in `networkPolicy`, confirm label propagation via admission webhooks; a delayed label change can cause transient drops. 
+4) Cross-namespace services: Prefer `namespaceSelector`+`podSelector` combos and ensure FQDN policies or egress allow to kube-dns. 
+5) Rollback plan: Temporarily switch Calico to iptables dataplane on a subset of nodes to confirm dataplane issue vs. policy logic. 
+6) Observability: Enable Calico flow logs; determine which rule matched the drop. Adjust policies to include necessary `egress`/`ingress` to cluster services, and add explicit allowlists for control-plane DNS/metrics endpoints.",0.9736356735229492
+23,Cluster access from CI/CD fails with 'x509: certificate signed by unknown authority'.,"CA certificate changed post-rotation. Update CI kubeconfig with new cluster CA bundle, or regenerate service account token with correct root CA.",0.25510334968566895,0.2050471395254135,"Executing: /lib/systemd/systemd-sysv-install enable iscsid
+Created symlink /etc/systemd/system/sysinit.target.wants/iscsid.service → /lib/systemd/system/iscsid.service.
+restarting
+iscsid
+service
+$ systemctl restart iscsid.service
+and, finally,
+login in
+discovered logical units
+$ sudo iscsiadm -m node --loginall=automatic
+Logging in to [iface: iscsi02, target: iqn.2003-01.org.linux-iscsi.storage.x8664:sn.2c084c8320ca, portal: 10.250.93.99,3260] (multiple)
+Logging in to [iface: iscsi01, target: iqn.2003-01.org.linux-iscsi.storage.x8664:sn.2c084c8320ca, portal: 10.250.94.99,3260] (multiple)
+Login to [iface: iscsi02, target: iqn.2003-01.org.linux-iscsi.storage.x8664:sn.2c084c8320ca, portal: 10.250.93.99,3260] successful. Login to [iface: iscsi01, target: iqn.2003-01.org.linux-iscsi.storage.x8664:sn.2c084c8320ca, portal: 10.250.94.99,3260] successful. Accessing the Logical Units (or LUNs)
+¶
+Check
+dmesg
+to make sure that the new disks have been detected:
+dmesg
+[
+166.840694
+]
+scsi
+7
+:
+0
+:
+0
+:
+4
+:
+Direct
+-
+Access
+LIO
+-
+ORG
+TCMU
+device
+>
+0002
+PQ
+:
+0
+ANSI
+:
+5
+[
+166.840892
+]
+scsi
+8
+:
+0
+:
+0
+:
+4
+:
+Direct
+-
+Access
+LIO
+-
+ORG
+TCMU
+device
+>
+0002
+PQ
+:
+0
+ANSI
+:
+5
+[
+166.841741
+]
+sd
+7
+:
+0
+:
+0
+:
+4
+:
+Attached
+scsi
+generic
+sg2
+type
+0
+[
+166.",0.8709557056427002
+24,Docker logs show 'write /dev/stdout: no space left on device'.,The log driver is full or `/var/lib/docker/containers` partition is full. Use `--log-opt max-size` and `max-file` to limit log rotation.,0.5784751176834106,0.3607188642024994,"For more information, check the manpages of those commands. Managing logs
+¶
+The default logging driver is called
+json
+file
+, and the system administrator can change it to suite their needs. Modifying the logging driver via the docker daemon file
+¶
+Edit the docker daemon file and update the logging driver
+vim
+/etc/docker/daemon.json
+{
+""log-driver""
+:
+""journald""
+}
+Modifying the logging driver when creating a container
+¶
+Another option is specifying the logging driver during container creation time:
+Specify a log driver when executing a
+docker
+run
+$
+docker
+run
+-d
+--name
+web-server
+--log-driver
+=
+journald
+ubuntu/nginx",1.0522756576538086
+25,Node reports 'kubelet: failed to get cgroup stats for pod'.,"Cgroups might be corrupted. Restart kubelet and container runtime, or reboot node if metrics system is stuck.",0.3913993239402771,0.2891314923763275,"Tasks
+:
+2
+(
+limit
+:
+4915
+)
+CGroup
+:
+/
+system
+.
+slice
+/
+systemd
+-
+timesyncd
+.
+service
+|-
+3744
+/
+lib
+/
+systemd
+/
+systemd
+-
+timesyncd
+Feb
+23
+08
+:
+55
+:
+46
+bionic
+-
+test
+systemd
+[
+1
+]:
+Starting
+Network
+Time
+Synchronization
+... Feb
+23
+08
+:
+55
+:
+46
+bionic
+-
+test
+systemd
+[
+1
+]:
+Started
+Network
+Time
+Synchronization
+. Feb
+23
+08
+:
+55
+:
+46
+bionic
+-
+test
+systemd
+-
+timesyncd
+[
+3744
+]:
+Synchronized
+to
+time
+server
+91.189.89.198
+:
+123
+(
+ntp
+.
+ubuntu
+.
+com
+)
+.",0.9883098602294922
+26,Pod stuck at 'Evicted' status.,Node ran out of resources. Use `kubectl describe pod` for eviction reason. Delete and recreate pod once node pressure clears.,0.28965187072753906,0.1752864494919777,"1) Inventory failures: Collect OPA/Gatekeeper violations via audit; map constraints blocking specific workloads (initContainers often need elevated permissions). 
+2) Namespaced exceptions: Label specific namespaces with PSA exemptions or Gatekeeper `excludedNamespaces`. 
+3) Fine-grained policies: For workloads requiring NET_BIND_SERVICE or SYS_TIME, define Constraints allowing these capabilities for labeled service accounts only. 
+4) Migration: Refactor pods to drop all caps by default and add minimal ones; use ephemeral containers for debug with elevated profiles in a break-glass namespace. 
+5) Verification: Add admission tests in CI validating new manifests against the policy set to prevent regressions.",0.9146075248718262
+27,Docker pull hangs indefinitely.,Try using `--network host` to bypass proxy issues or configure proxy variables in Docker daemon settings. Check for firewall restrictions.,0.3793215751647949,0.2584161847829819,"Then,
+24.0.7-0ubuntu4.1
+was removed from the
+-updates
+pocket on
+2024-11-26
+. You could then use
+20241126T230000Z
+as the snapshot ID to get the target
+package (
+26.1.3-0ubuntu1~24.04.1
+):
+$ sudo apt install docker.io --update --snapshot 20241126T230000Z
+...
+$ docker --version
+Docker version 26.1.3, build 26.1.3-0ubuntu1~24.04.1
+Note
+Note that, at the time of writing, the version of
+docker.io
+in the
+noble-security
+pocket is
+27.5.1-0ubuntu3~24.04.2
+, i.e., the version used in
+the example above may be affected by known vulnerabilities.",0.9849734306335449
+28,"After enabling IPVS mode for kube-proxy, some Services with externalTrafficPolicy=Local return 503 on one AZ during scale-out. Nodes in that AZ have ready pods, but ipvsadm shows missing endpoints briefly. How to remedy?","Endpoint programming lag can cause brief blackholes. 
+
+1) Ensure CPU headroom for kube-proxy; increase `--proxy-mode=ipvs` sync periods if too aggressive. 
+2) Enable EndpointSlice and reduce slice churn by stable labels. 
+3) For externalTrafficPolicy=Local, ensure `externalIPs`/LB health checks target correct NodePort and that your LB uses pod health (or `kube-proxy` health) checks per node. 
+4) Consider `topologyKeys` or enabling `GracefulTermination` features that keep endpoints shortly after termination. 
+5) Validate conntrack settings so new flows don’t race against stale endpoints.",0.6565770506858826,0.3066990524530411,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",1.0501136779785156
+29,Kube-proxy iptables mode shows massive rule chains causing slow updates and packet processing. Migrating to IPVS isn’t immediate. What mitigations are available now?,"Trim churn and simplify chains. 
+
+1) Enable EndpointSlice; reduce endpoint updates by stabilizing pod labels. 
+2) Increase kube-proxy sync period; batch changes. 
+3) Reduce number of NodePorts/LoadBalancer Services; collapse internal services behind a mesh. 
+4) Pin frequently updated services to headless and use DNS SRV on clients. 
+5) Plan phased migration to IPVS with kernel module pre-load.",0.6527866125106812,0.37127370536327364,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",1.0018558502197266
+30,Cluster-autoscaler scales nodes but pending pods still not scheduled.,Pods require more ephemeral-storage than available. Add ephemeral storage requests/limits or switch node type with larger ephemeral disk.,0.33987370133399963,0.2002777300775051,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.8829803466796875
+31,Cannot connect to Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?,"Ensure the Docker service is running: `sudo systemctl start docker`. If still failing, verify your user has access to the docker group: `sudo usermod -aG docker $USER` and re-login.",0.46749982237815857,0.19867992550134658,"The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers. Exposing ports of any system is always a concern, since it increases the surface for malicious attacks. For containers, we also need to be careful, analysing whether we really need to publish ports to the host. For instance, if the goal is to allow containers to access a specific port from another container, there is no need to publish any port to the host. This can be solved by connecting all the containers to the same network. You should publish ports of a container to the host only if you want to make it available to non-Docker workloads. When a container is created no port is published to the host, the option
+--publish
+(or
+-p
+) should be passed to
+docker
+run
+or
+docker
+create
+listing which port will be exposed and how. The
+--publish
+option of Docker CLI accepts the following options:
+First, the host port that will be used to publish the container’s port. It can also contain the IP address of the host. For example,
+0.0.0.0:8080
+. Second, the container’s port to be published. For example,
+80
+.",0.9231932163238525
+32,Docker system prune removes volumes unexpectedly.,Avoid using `--volumes` flag unless intended. Run `docker volume ls` before pruning and use labels to protect critical volumes.,0.5510776042938232,0.36296849846839907,"0709c1b632801fddd767deddda0d273289ba423e9228cc1d77b2194989e0a882
+Inspect your container to make sure the volume is mounted correctly:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""volume""
+,
+""Name""
+:
+""my-vol""
+,
+""Source""
+:
+""/var/lib/docker/volumes/my-vol/_data""
+,
+""Destination""
+:
+""/app""
+,
+""Driver""
+:
+""local""
+,
+""Mode""
+:
+""z""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+By default, all your volumes will be stored in
+/var/lib/docker/volumes
+.
+Stop and remove the container, then remove its volume.
+docker
+stop
+web-server
+docker
+rm
+web-server
+docker
+volume
+rm
+my-vol
+How to configure bind mounts
+¶
+Create a Docker container and bind mount your host directory:
+$
+docker
+run
+-d
+\
+--name
+web-server
+\
+--mount
+type
+=
+bind,source
+=
+""
+$(
+pwd
+)
+""
+,target
+=
+/app
+\
+ubuntu/apache2",0.9341573715209961
+33,"Your cluster-wide rate limiter (Envoy rate limit service) uses Redis. During a Redis failover, the proxy started allowing all traffic (fail-open) causing backend overload. How do you design a safe-degraded mode?","Introduce layered protection. 
+
+1) Set per-route local rate limits in Envoy as a fallback, with conservative defaults. 
+2) Configure fail-closed for critical routes if SLO demands it, returning 429 instead of hammering backends. 
+3) Use a Redis cluster with quorum and health checks; keep latency budgets for remote calls. 
+4) Emit overload signals to Kubernetes HPA/PodAutoscaler to temporarily scale services. 
+5) Run chaos drills to validate desired behavior under store failures.",0.6736199855804443,0.32435681819915774,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",1.0747532844543457
+34,Kubelet reports 'NodeHasNetworkUnavailable'.,"CNI plugin failed initialization. Restart kubelet, ensure `/opt/cni/bin` populated, and network interface created by plugin exists. Inspect `/var/log/cni.log`.",0.3503668010234833,0.20384638607501984,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",0.981069803237915
+35,AKS: HPA not scaling; metrics.k8s.io not available.,Enable the metrics-server add-on or deploy it manually. Ensure API aggregation is functioning and the metrics-server has `--kubelet-insecure-tls` if necessary in private clusters.,0.47980523109436035,0.32897570431232454,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.977363109588623
+36,Docker service memory limit not applied in Compose.,"Compose v3 requires deploying to Swarm mode for `deploy.resources` limits. For local Compose, use `mem_limit` under the service definition.",0.24259065091609955,0.1413479968905449,"Docker for system admins - Ubuntu Server documentation
+Contents
+Menu
+Expand
+Light mode
+Dark mode
+Auto light/dark, in light mode
+Auto light/dark, in dark mode
+Skip to content
+Back to top
+View this page
+Docker for system admins
+¶
+We are going to explore set-ups for configuring storage, networking, and logging in the subsequent sections. This will also help you get familiarized with Docker command line interface (CLI).
+Installation
+¶
+First, install Docker if it’s not already installed:
+$
+sudo
+apt-get
+install
+-y
+docker.io
+docker-compose-v2
+Configuring storage
+¶
+How to configure volumes
+¶
+Create a volume
+$
+docker
+volume
+create
+my-vol",0.9906094074249268
+37,Docker build caching not working. Always rebuilding layers.,"Avoid using dynamic commands like `ADD . /app` early in the Dockerfile. Reorder Dockerfile so static steps occur first, enabling layer caching.",0.36866235733032227,0.20786820352077484,"The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers. Exposing ports of any system is always a concern, since it increases the surface for malicious attacks. For containers, we also need to be careful, analysing whether we really need to publish ports to the host. For instance, if the goal is to allow containers to access a specific port from another container, there is no need to publish any port to the host. This can be solved by connecting all the containers to the same network. You should publish ports of a container to the host only if you want to make it available to non-Docker workloads. When a container is created no port is published to the host, the option
+--publish
+(or
+-p
+) should be passed to
+docker
+run
+or
+docker
+create
+listing which port will be exposed and how. The
+--publish
+option of Docker CLI accepts the following options:
+First, the host port that will be used to publish the container’s port. It can also contain the IP address of the host. For example,
+0.0.0.0:8080
+. Second, the container’s port to be published. For example,
+80
+.",1.1422975063323975
+38,EKS: kubectl hangs until MFA expires or times out.,AWS CLI creds expire; update kubeconfig with a role that can be assumed and configure MFA caching. Use `aws eks update-kubeconfig --role-arn ...` and renew sessions prior to using kubectl.,0.5355159640312195,0.33311194777488706,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",1.0748164653778076
+39,CoreDNS pods CrashLoopBackOff after upgrade.,Corefile syntax may be outdated. Edit ConfigMap and verify `forward` plugin syntax matches your cluster DNS setup.,0.41069746017456055,0.2262217655777931,"1) Path validation: From a pod, `dig +trace` to see where resolution fails. Confirm NodeLocal DNSCache forwards to CoreDNS, which in turn forwards to Azure DNS (168.63.129.16) or the resolver you intend. 
+2) Azure Firewall: Allow outbound 53/UDP+TCP from node and firewall rules to resolver. If using FQDN tags, verify the domains. 
+3) Private DNS zone linking: Ensure the VNet is linked to the Private DNS zone and that split-horizon doesn’t loop. Avoid forwarding back into the same zone. 
+4) CoreDNS: Increase `max_concurrent` and cache TTL. Ensure stubdomains don’t point to resolvers only reachable via blocked UDRs. 
+5) NodeLocal DNSCache: Update to latest; set `-localip` and `-upstreamsvc` explicitly. If cache evictions high, grow cache capacity. 
+6) Verification: Run steady DNS qps tests; ensure p99 latency is stable and NXDOMAIN rates match expectations.",1.286712646484375
+40,Docker build stuck at 'Sending build context'.,Your build context is large. Use `.dockerignore` to exclude unnecessary files or move Dockerfile closer to relevant source directory.,0.44084951281547546,0.29773621410131457,"Then,
+24.0.7-0ubuntu4.1
+was removed from the
+-updates
+pocket on
+2024-11-26
+. You could then use
+20241126T230000Z
+as the snapshot ID to get the target
+package (
+26.1.3-0ubuntu1~24.04.1
+):
+$ sudo apt install docker.io --update --snapshot 20241126T230000Z
+...
+$ docker --version
+Docker version 26.1.3, build 26.1.3-0ubuntu1~24.04.1
+Note
+Note that, at the time of writing, the version of
+docker.io
+in the
+noble-security
+pocket is
+27.5.1-0ubuntu3~24.04.2
+, i.e., the version used in
+the example above may be affected by known vulnerabilities.",1.1637327671051025
+41,Docker container restarts repeatedly.,"Check logs with `docker logs <container>`. If restart policy is `always`, fix root cause inside app (e.g., crash) or set `--restart=no` temporarily.",0.4042830467224121,0.2495991125702858,"""DriverOpts""
+:
+{}
+}
+}
+}
+The container c2 is connected to two networks
+bridge
+and
+my-net
+. The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers.",1.060318946838379
+42,EKS: Pods Scheduling fails due to PodSecurityPolicy after upgrade.,PSP is deprecated/removed. Migrate to Pod Security Admission (PSA) or Gatekeeper policies and adjust namespace labels (`pod-security.kubernetes.io/*`).,0.17855766415596008,0.11339647844433784,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.7702689170837402
+43,Node disk pressure warning and pods being evicted.,Free disk space or increase node storage. Docker or containerd may have stale images; run `kubectl get nodes` to confirm disk pressure status.,0.4861947298049927,0.2338908553123474,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",1.1547586917877197
+44,Pods across namespaces randomly lose network connectivity for seconds every few hours.,"ARP cache exhaustion or conntrack table overflow. Increase `net.netfilter.nf_conntrack_max` and node sysctl, deploy conntrack cleaner DaemonSet, and monitor network saturation.",0.3502808213233948,0.2653503388166428,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",0.9451286792755127
+45,"After a control-plane node disk failure, etcd was restored from a snapshot. The cluster came back, but HorizontalPodAutoscalers and Leases behave oddly: some controllers never reacquire leader election and new objects sporadically fail with 'resource version too old'. How do you heal the control plane without full redeploy?","You're seeing watch cache inconsistencies post-restore. 
+
+1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.9127597808837891,0.3960466295480728,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",1.0834734439849854
+46,Metrics API reports negative CPU usage for pods.,"Metrics-server rounding bug or stale cadvisor data. Restart metrics-server, ensure `--kubelet-preferred-address-types` set to InternalIP, and upgrade to fixed version.",0.366327702999115,0.28338584303855896,"...I! Loaded
+inputs:
+swap
+system
+cpu
+disk
+diskio
+kernel
+mem
+processes
+...I! Loaded
+outputs:
+http
+prometheus_client
+...I!
+[
+agent
+]
+Config:
+Interval:10s,
+Quiet:false,
+Hostname:
+""workload""
+,
+Flush
+Interval:10s
+...I!
+[
+outputs.prometheus_client
+]
+Listening
+on
+http://127.0.0.1:9273/metrics
+Verify that it is collecting metrics by connecting to Telegraf’s web interface:
+workload:~#
+wget
+-O-
+http://workload:9273/metrics
+# HELP cpu_usage_guest Telegraf collected metric
+# TYPE cpu_usage_guest gauge
+cpu_usage_guest
+{
+cpu
+=
+""cpu-total""
+,host
+=
+""workload""
+}
+0
+cpu_usage_guest
+{
+cpu
+=
+""cpu0""
+,host
+=
+""workload""
+}
+0
+cpu_usage_guest
+{
+cpu
+=
+""cpu1""
+,host
+=
+""workload""
+}
+0
+cpu_usage_guest
+{
+cpu
+=
+""cpu10""
+,host
+=
+""workload""
+}
+0
+...
+cpu_usage_idle
+{
+cpu
+=
+""cpu-total""
+,host
+=
+""workload""
+}
+92
+.74914376428686
+cpu_usage_idle
+{
+cpu
+=
+""cpu0""
+,host
+=
+""workload""
+}
+86
+.72897196325539
+cpu_usage_idle
+{
+cpu
+=
+""cpu1""
+,host
+=
+""workload""
+}
+90
+.11857707405758
+cpu_usage_idle
+{
+cpu
+=
+""cpu10""
+,host
+=
+""workload""
+}
+95
+.95141700494543
+Set up the Monitor node
+¶
+Now let’s create the Monitor. As before, we’ll be using LXD as the container technology but feel free to adapt these steps to your chosen alternative:
+$
+lxc
+launch
+ubuntu:20.10
+monitor
+Creating
+monitor
+Starting
+monitor
+$
+lxc
+exec
+monitor
+--
+bash
+monitor:~#
+Make a note of the newly created container’s IP address, which we’ll need later on;
+monitor:~#
+ip
+addr
+|
+grep
+'inet .",0.8004751205444336
+47,Docker Compose up fails with 'network not found'.,"Run `docker network ls` to verify existing networks. If missing, remove orphaned containers and rebuild: `docker-compose down && docker-compose up --build`.",0.5799582600593567,0.36207225620746614,"Fea22fbb6e3685eae28815f3ad8c8a655340ebcd6a0c13f3aad0b45d71a20935
+Connect the running container to the network and verify that it’s connected.
+docker
+network
+connect
+my-net
+c2
+docker
+inspect
+c2
+--format
+'{{ json .NetworkSettings }}'
+|
+jq
+.
+{
+""Bridge""
+:
+""""
+,
+""SandboxID""
+:
+""82a7ea6efd679dffcc3e4392e0e5da61a8ccef33dd78eb5381c9792a4c01f366""
+,
+""HairpinMode""
+:
+false
+,
+""LinkLocalIPv6Address""
+:
+""""
+,
+""LinkLocalIPv6PrefixLen""
+:
+0
+,
+""Ports""
+:
+{
+""80/tcp""
+:
+null
+},
+""SandboxKey""
+:
+""/var/run/docker/netns/82a7ea6efd67""
+,
+""SecondaryIPAddresses""
+:
+null
+,
+""SecondaryIPv6Addresses""
+:
+null
+,
+""EndpointID""
+:
+""490c15cf3bcb149dd8649e3ac96f71addd13f660b4ec826dc39e266184b3f65b""
+,
+""Gateway""
+:
+""172.17.0.1""
+,
+""GlobalIPv6Address""
+:
+""""
+,
+""GlobalIPv6PrefixLen""
+:
+0
+,
+""IPAddress""
+:
+""172.17.0.3""
+,
+""IPPrefixLen""
+:
+16
+,
+""IPv6Gateway""
+:
+""""
+,
+""MacAddress""
+:
+""02:42:ac:11:00:03""
+,
+""Networks""
+:
+{
+""bridge""
+:
+{
+""IPAMConfig""
+:
+null
+,
+""Links""
+:
+null
+,
+""Aliases""
+:
+null
+,
+""NetworkID""
+:
+""1f55a8891c4a523a288aca8881dae0061f9586d5d91c69b3a74e1ef3ad1bfcf4""
+,
+""EndpointID""
+:
+""490c15cf3bcb149dd8649e3ac96f71addd13f660b4ec826dc39e266184b3f65b""
+,
+""Gateway""
+:
+""172.17.",0.7982933521270752
+48,A PCI-compliant namespace forbids mounting `emptyDir` with medium=Memory. Your in-house service needs fast scratch space. What’s a compliant alternative?,"Use persistent storage or tmpfs-like volumes under policy. 
+
+1) Provision a small fast PVC (NVMe-backed) with strict quotas and encryption. 
+2) If CSI supports ephemeral volumes, use `ephemeral` inline PVCs with `ReadWriteOncePod`. 
+3) Employ application-level in-memory caches with bounded size and spillover to PVC; tune for GC. 
+4) Ensure audit trails for access; wipe on pod termination via preStop hooks.",0.42109405994415283,0.2512419044971466,"Mount
+Point
+Options
+/dev/hugepages
+rw,relatime,pagesize
+=
+2M
+A one-stop info for the overall huge page status of the system can be reported with:
+hugeadm
+--explain
+Huge page usage in libvirt
+¶
+With the above in place, libvirt can map guest memory to huge pages. In a guest definition add the most simple form of:
+<memoryBacking>
+<hugepages/>
+</memoryBacking>
+That will allocate the huge pages using the default huge page size from an autodetected mount point. For more control, e.g. how memory is spread over
+Numa nodes
+or which page size to use, check out the details at the
+libvirt docs
+. Controlling addressing bits
+¶
+This is a topic that rarely matters on a single computer with virtual machines for generic use; libvirt will automatically use the hypervisor default, which in the case of QEMU is 40 bits. This default aims for compatibility since it will be the same on all systems, which simplifies migration between them and usually is compatible even with older hardware. However, it can be very important when driving more advanced use cases. If one needs bigger guest sizes with more than a terabyte of memory then controlling the addressing bits is crucial.
+-hpb machine types
+¶
+Since Ubuntu 18.04, the QEMU in Ubuntu has
+provided special machine-types
+. These include machine types like
+pc-q35-jammy
+or
+pc-i440fx-jammy
+, but with a
+-hpb
+suffix. The “
+HPB
+” abbreviation stands for “host-physical-bits”, which is the QEMU option that this represents. For example, by using
+pc-q35-jammy-hpb
+, the guest would use the number of physical bits that the Host CPU has available. Providing the configuration that a guest should use more address bits as a machine type has the benefit that many higher level management stacks like for example openstack, are already able to control it through libvirt.",0.8970696926116943
+49,Docker build using COPY --chown fails on Windows hosts.,The `--chown` flag is not supported on Windows file systems. Remove it or build on Linux environment.,0.17847876250743866,0.032227815687656404,"1) Stop mutating binaries at startup; bake final entrypoints into the image. If you must replace, write to a new path and `exec` it rather than in-place replace. 
+2) Use `initContainers` to stage artifacts into an `emptyDir` (medium: Memory if small or default if larger), then point CMD to that immutable copy. 
+3) If you wrap shells, ensure `fsGroup`/permissions are set once and avoid chmod/chown on hot code paths. 
+4) On containerd, consider `overlayfs` vs `native` snapshotter tradeoffs. If fuse-overlayfs is used (rootless), upgrade to a version with race fixes. 
+5) Validate that anti-virus/EDR on nodes isn’t locking files. 
+6) Add `terminationGracePeriodSeconds` and retry with backoff for transient locks while you remove mutation from the startup path.",0.8053669929504395
+50,Service type LoadBalancer stuck without external IP.,"Ensure cloud controller manager is running and your cluster is integrated with a supported cloud provider (e.g., AWS, GCP, Azure). Check CCM logs.",0.2655450701713562,0.17418243139982223,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.9435043334960938
+51,Pods crash with 'Invalid CrossDeviceLink' during volume mount.,Containerd snapshotter type incompatible with overlay filesystem. Use `overlayfs` snapshotter or switch to fuse-overlayfs compatible configuration.,0.33640381693840027,0.2122591942548752,"The above sample could also be improved to also use another volume for persisting data, and even a Grafana default configuration for the Prometheus datasource. Since we already installed Docker in the section above, all that is needed is to create and start the containers defined in this Compose file. This can be achieved with:
+$
+sudo
+docker
+compose
+up
+-d
+[
++
+]
+Running
+10
+/10
+✔
+grafana
+Pulled
+✔
+bccd10f490ab
+Already
+exists
+✔
+549078d9d057
+Pull
+complete
+✔
+6ef870aa8500
+Pull
+complete
+✔
+2b475da7ccbd
+Pull
+complete
+✔
+prometheus
+Pulled
+✔
+a8b1c5f80c2d
+Already
+exists
+✔
+f021062473aa
+Pull
+complete
+✔
+9c6122d12d1d
+Pull
+complete
+✔
+274b56f68abe
+Pull
+complete
+[
++
+]
+Running
+3
+/3
+✔
+Network
+compose_default
+Created
+✔
+Container
+prometheus-container
+Started
+✔
+Container
+grafana-container
+Started
+As before, the
+-d
+indicates that all containers in this stack should be started in the background.",0.909534215927124
+52,Kubernetes node shows 'NotReady' status. What to check first?,Inspect kubelet logs with `journalctl -u kubelet`. Ensure networking (CNI) is functional and node certificates are valid. Restart kubelet if necessary.,0.46014299988746643,0.28176191747188567,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.763225793838501
+53,Docker healthcheck always returns unhealthy even though service works.,Healthcheck command may not match container shell. Use `/bin/sh -c` for proper command evaluation and ensure exit codes reflect success (0).,0.3402858078479767,0.16809021830558776,"/docker-entrypoint.sh:
+/docker-entrypoint.d/
+is
+not
+empty,
+will
+attempt
+to
+perform
+configuration
+/docker-entrypoint.sh:
+Looking
+for
+shell
+scripts
+in
+/docker-entrypoint.d/
+/docker-entrypoint.sh:
+Launching
+/docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh:
+Configuration
+complete
+;
+ready
+for
+start
+up
+Depending on the driver you might also want to pass some options. You can do that via the CLI, passing
+--log-opt
+or in the daemon config file adding the key
+log-opts
+. For more information check the
+logging driver documentation
+.
+Docker CLI also provides the
+docker
+logs
+and
+docker
+service
+logs
+commands which allows one to check for the logs produced by a given container or service (set of containers) in the host. However, those two commands are functional only if the logging driver for the containers is
+json-file
+,
+local
+or
+journald
+. They are useful for debugging in general, but there is the downside of increasing the storage needed in the host.
+The remote logging drivers are useful to store data in an external service/host, and they also avoid spending more disk space in the host to store log files. Nonetheless, sometimes, for debugging purposes, it is important to have log files locally. Considering that, Docker has a feature called “dual logging”, which is enabled by default, and even if the system administrator configures a logging driver different from
+json-file
+,
+local
+and
+journald
+, the logs will be available locally to be accessed via the Docker CLI. If this is not the desired behavior, the feature can be disabled in the
+/etc/docker/daemon.json
+file:
+{
+""log-driver""
+:
+""syslog""
+,
+""log-opts""
+:
+{
+""cache-disabled""
+:
+""true""
+,
+""syslog-address""
+:
+""udp://1.2.3.4:1111""
+}
+}
+The option
+cache-disabled
+is used to disable the “dual logging” feature. If you try to run
+docker
+logs
+with that configuration you will get the following error:
+$
+docker
+logs
+web-server",1.020395278930664
+54,kube-proxy crashlooping in kube-system namespace.,Check ConfigMap `kube-proxy` for malformed configuration. Reset it or redeploy daemonset using correct API server and cluster CIDR values.,0.5337015986442566,0.42328591346740724,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.9159197807312012
+55,AKS: Private cluster; kubectl cannot reach API server from local machine.,Private AKS exposes API only on VNet. Use a jumpbox/ExpressRoute/VPN/Private Endpoint. Alternatively enable 'publicFQDN' with authorized IP ranges for limited public access.,0.22822630405426025,0.11720246337354183,"After changing the config file you can reload the server configuration through
+kea-shell
+with the following command (considering you have the
+kea-ctrl-agent
+running as described above):
+kea-shell
+--host
+127
+.0.0.1
+--port
+8000
+--auth-user
+kea-api
+--auth-password
+$(
+cat
+/etc/kea/kea-api-password
+)
+--service
+dhcp4
+config-reload
+Then, press
+ctrl
+-
+d
+. The server should respond with:
+[
+{
+""result""
+:
+0
+,
+""text""
+:
+""Configuration successful.""
+}
+]
+meaning your configuration was received by the server. The
+kea-dhcp4-server
+service logs should contain an entry similar to:
+DHCP4_DYNAMIC_RECONFIGURATION_SUCCESS
+dynamic
+server
+reconfiguration
+succeeded
+with
+file
+:
+/
+etc
+/
+kea
+/
+kea
+-
+dhcp4
+.
+conf
+signaling that the server was successfully reconfigured. You can read
+kea-dhcp4-server
+service logs with
+journalctl
+:
+journalctl
+-u
+kea-dhcp4-server
+Alternatively, instead of reloading the DHCP4 server configuration through
+kea-shell
+,  you can restart the
+kea-dhcp4-service
+with:
+systemctl
+restart
+kea-dhcp4-server
+Further reading
+¶
+ISC Kea Documentation",1.150132656097412
+56,EKS: 'cni failed to attach ENI' in aws-node logs.,"IAM policy missing for CNI or subnet lacks free IPs. Attach `AmazonEKS_CNI_Policy`, ensure secondary CIDR/IPAM correct, and verify ENI quotas aren’t exhausted.",0.31845518946647644,0.21379799246788025,";; Query time: 460 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1) (UDP)
+;; WHEN: Fri Oct 25 16:10:19 UTC 2024
+;; MSG SIZE  rcvd: 78
+That’s a very generic failure: it just says
+SERVFAIL
+, and gives us no IP:
+IN
+A
+is empty. The BIND9 logs, however, tell a more detailed story:
+$ journalctl -u named.service -f
+(...)
+named[286]: validating dnssec-failed.org/DNSKEY: no valid signature found (DS)
+named[286]: no valid RRSIG resolving 'dnssec-failed.org/DNSKEY/IN': 68.87.85.132#53
+named[286]: validating dnssec-failed.org/DNSKEY: no valid signature found (DS)
+named[286]: no valid RRSIG resolving 'dnssec-failed.org/DNSKEY/IN': 68.87.68.244#53
+named[286]: validating dnssec-failed.org/DNSKEY: no valid signature found (DS)
+named[286]: no valid RRSIG resolving 'dnssec-failed.org/DNSKEY/IN': 68.87.76.228#53
+named[286]: validating dnssec-failed.org/DNSKEY: no valid signature found (DS)
+named[286]: no valid RRSIG resolving 'dnssec-failed.org/DNSKEY/IN': 68.87.72.244#53
+named[286]: validating dnssec-failed.org/DNSKEY: no valid signature found (DS)
+named[286]: no valid RRSIG resolving 'dnssec-failed.org/DNSKEY/IN': 69.252.250.103#53
+named[286]: broken trust chain resolving 'www.dnssec-failed.org/A/IN': 68.87.72.244#53
+Client-side tooling: dig
+¶
+One of the more versatile DNS troubleshooting tools is
+dig
+, generally used for interrogating DNS name servers to lookup and display domain information, but its broad functionality makes it a flexible aid for DNS troubleshooting. It provides direct control over setting most of the DNS flags in queries, and displays detailed responses for inspection.",1.1084504127502441
+57,All pods with initContainers stuck in Init:0/1 after upgrading to containerd 1.7.,"CRI plugin race condition. Restart containerd, check sandbox creation logs, and ensure cni-plugins binary path matches kubelet config. Upgrade to patched containerd version.",0.33228516578674316,0.2340925879776478,"1) Stop mutating binaries at startup; bake final entrypoints into the image. If you must replace, write to a new path and `exec` it rather than in-place replace. 
+2) Use `initContainers` to stage artifacts into an `emptyDir` (medium: Memory if small or default if larger), then point CMD to that immutable copy. 
+3) If you wrap shells, ensure `fsGroup`/permissions are set once and avoid chmod/chown on hot code paths. 
+4) On containerd, consider `overlayfs` vs `native` snapshotter tradeoffs. If fuse-overlayfs is used (rootless), upgrade to a version with race fixes. 
+5) Validate that anti-virus/EDR on nodes isn’t locking files. 
+6) Add `terminationGracePeriodSeconds` and retry with backoff for transient locks while you remove mutation from the startup path.",1.0613722801208496
+58,EKS: EFS CSI mount stalls at 'permission denied'.,"EFS access point POSIX permissions or SG/NACLs. Allow NFS (2049) between node SGs and EFS mount target SGs, use an Access Point with correct UID/GID, and set pod `fsGroup`.",0.5237274169921875,0.35836121737957,"Let’s try accessing that existing mount with the
+ubuntu
+user, without acquiring a kerberos ticket:
+# sudo -u ubuntu -i
+$ ls -l /mnt/*
+ls: cannot access '/mnt/*': Permission denied
+The
+ubuntu
+user will only be able to access that mount if they have a kerberos ticket:
+$ kinit
+Password for ubuntu@VMS: 
+$ ls -l /mnt/*
+-rw-r--r-- 1 root root 0 Apr  5 14:50 /mnt/hello-from-nfs-server.txt
+And now we have not only the TGT, but also a ticket for the NFS service:
+$ klist
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: ubuntu@VMS",0.8811254501342773
+59,One node constantly flaps between Ready and NotReady with kubelet log 'cgroup driver mismatch'.,Container runtime uses systemd while kubelet expects cgroupfs. Align drivers in kubelet config (`cgroupDriver: systemd`) or switch containerd configuration accordingly.,0.2187972068786621,0.15620868504047394,"Without these features, guests could be large, but potentially unable to migrate freely between all nodes since not all systems would support the same amount of addressing bits. But now, one can either set a fixed value of addressing bits:
+<maxphysaddr
+mode=
+'emulate'
+bits=
+'42'
+/>
+Or use the best available by a given hardware, without going over a certain limit to retain some compute node compatibility.
+<maxphysaddr
+mode=
+'passthrough'
+limit=
+'41/
+>
+AppArmor isolation
+¶
+By default, libvirt will spawn QEMU guests using AppArmor isolation for enhanced security. The
+AppArmor rules for a guest
+will consist of multiple elements:
+A static part that all guests share =>
+/etc/apparmor.d/abstractions/libvirt-qemu
+A dynamic part created at guest start time and modified on hotplug/unplug =>
+/etc/apparmor.d/libvirt/libvirt-f9533e35-6b63-45f5-96be-7cccc9696d5e.files
+Of the above, the former is provided and updated by the
+libvirt-daemon
+package, and the latter is generated on guest start. Neither of the two should be manually edited. They will, by default, cover the vast majority of use cases and work fine. But there are certain cases where users either want to:
+Further lock down the guest, e.g. by explicitly denying access that usually would be allowed. Open up the guest isolation. Most of the time this is needed if the setup on the local machine does not follow the commonly used paths. To do so there are two files. Both are local overrides which allow you to modify them without getting them clobbered or command file prompts on package upgrades.
+/etc/apparmor.d/local/abstractions/libvirt-qemu
+This will be applied to every guest. Therefore it is a rather powerful (if blunt) tool. It is a quite useful place to add additional
+deny rules
+.
+/etc/apparmor.d/local/usr.lib.libvirt.virt-aa-helper
+The above-mentioned
+dynamic part
+that is individual per guest is generated by a tool called
+libvirt.virt-aa-helper
+. That is under AppArmor isolation as well.",0.8093392848968506
+60,Node reboot causes pods with local storage to crash permanently.,Ephemeral local PVs lost after reboot. Use StatefulSets with persistent storage or use `local-storage` CSI driver to recreate local PVs bound to nodes.,0.2695331275463104,0.19688300639390946,"Kernel crash dump mechanism
+¶
+When a kernel panic occurs, the kernel relies on the
+kexec
+mechanism to quickly reboot a new instance of the kernel in a pre-reserved section of memory that had been allocated when the system booted (see below). This permits the existing memory area to remain untouched in order to safely copy its contents to storage. KDump enabled by default
+¶
+Starting in Oracular Oriole (24.10) the kernel crash dump facility will be enabled by default during standard Ubuntu Desktop or Ubuntu Server installations on systems that meet the following requirements:
+the system has at least 4 CPU threads
+the system has at least 6GB of RAM, and less than 2TB of RAM
+the free space available in
+/var
+is more than 5 times the amount of RAM and swap space
+and the CPU architecture is
+amd64 or s390x, or
+arm64 and UEFI is used
+On machines with it enabled (either by default or by manual installation), it can be disabled via the command:
+sudo
+apt
+remove
+kdump-tools
+On machines that do not meet these requirements and on pre-24.10 releases, the kernel crash dump facility can be enabled manually by following the installation instructions that follow. Installation
+¶
+The kernel crash dump utility is installed with the following command:
+sudo
+apt
+install
+kdump-tools
+Note
+Starting with 16.04, the kernel crash dump mechanism is enabled by default. During the installation, you will be prompted with the following dialog:
+|------------------------| Configuring kdump-tools |------------------------|
+ |                                                                           |
+ |                                                                           |
+ | If you choose this option, the kdump-tools mechanism will be enabled.",1.0993366241455078
+61,kubectl command returns 'connection refused' to API server.,The API server might be down or kubeconfig misconfigured. Check control plane pods (`kubectl get pods -n kube-system`) or verify `~/.kube/config` cluster endpoint.,0.4651312232017517,0.43215282559394835,"After changing the config file you can reload the server configuration through
+kea-shell
+with the following command (considering you have the
+kea-ctrl-agent
+running as described above):
+kea-shell
+--host
+127
+.0.0.1
+--port
+8000
+--auth-user
+kea-api
+--auth-password
+$(
+cat
+/etc/kea/kea-api-password
+)
+--service
+dhcp4
+config-reload
+Then, press
+ctrl
+-
+d
+. The server should respond with:
+[
+{
+""result""
+:
+0
+,
+""text""
+:
+""Configuration successful.""
+}
+]
+meaning your configuration was received by the server. The
+kea-dhcp4-server
+service logs should contain an entry similar to:
+DHCP4_DYNAMIC_RECONFIGURATION_SUCCESS
+dynamic
+server
+reconfiguration
+succeeded
+with
+file
+:
+/
+etc
+/
+kea
+/
+kea
+-
+dhcp4
+.
+conf
+signaling that the server was successfully reconfigured. You can read
+kea-dhcp4-server
+service logs with
+journalctl
+:
+journalctl
+-u
+kea-dhcp4-server
+Alternatively, instead of reloading the DHCP4 server configuration through
+kea-shell
+,  you can restart the
+kea-dhcp4-service
+with:
+systemctl
+restart
+kea-dhcp4-server
+Further reading
+¶
+ISC Kea Documentation",0.9814865589141846
+62,Pod terminated with 'OOMKilled' status.,Container exceeded memory limits. Increase memory limit in the resource spec or optimize application memory usage.,0.29603999853134155,0.1360067069530487,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.8122870922088623
+63,Kubernetes ConfigMap changes not reflected in running pods.,Pods don’t auto-reload updated ConfigMaps. Restart pods or use projected volumes with `subPath` disabled to reflect dynamic changes.,0.3695145845413208,0.17417129762470723,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",0.9128341674804688
+64,"After upgrading Kubernetes from 1.26 to 1.28, all CRDs backed by conversion webhooks fail to serve.","Conversion webhook API version changed or TLS cert expired. Check webhook endpoint health, update API version to `v1`, and rotate serving certs if expired.",0.18824045360088348,0.11360721960663796,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.8492608070373535
+65,kubectl describe pod shows 'Back-off pulling image'.,Registry unreachable or DNS misconfigured. Ensure image name correctness and add imagePullSecrets if private registry is used.,0.2204173356294632,0.11629643589258194,"1) Stop mutating binaries at startup; bake final entrypoints into the image. If you must replace, write to a new path and `exec` it rather than in-place replace. 
+2) Use `initContainers` to stage artifacts into an `emptyDir` (medium: Memory if small or default if larger), then point CMD to that immutable copy. 
+3) If you wrap shells, ensure `fsGroup`/permissions are set once and avoid chmod/chown on hot code paths. 
+4) On containerd, consider `overlayfs` vs `native` snapshotter tradeoffs. If fuse-overlayfs is used (rootless), upgrade to a version with race fixes. 
+5) Validate that anti-virus/EDR on nodes isn’t locking files. 
+6) Add `terminationGracePeriodSeconds` and retry with backoff for transient locks while you remove mutation from the startup path.",0.8262732028961182
+66,AKS: Outbound to specific SaaS is blocked though general Internet works.,"Firewall/NSG or Azure FW DNAT rules. Add FQDN tags or explicit rules to allow the SaaS endpoints, verify proxy configuration in CoreDNS/Pods, and consider Private Endpoints if supported.",0.6218262910842896,0.22658422142267226,"1) Path validation: From a pod, `dig +trace` to see where resolution fails. Confirm NodeLocal DNSCache forwards to CoreDNS, which in turn forwards to Azure DNS (168.63.129.16) or the resolver you intend. 
+2) Azure Firewall: Allow outbound 53/UDP+TCP from node and firewall rules to resolver. If using FQDN tags, verify the domains. 
+3) Private DNS zone linking: Ensure the VNet is linked to the Private DNS zone and that split-horizon doesn’t loop. Avoid forwarding back into the same zone. 
+4) CoreDNS: Increase `max_concurrent` and cache TTL. Ensure stubdomains don’t point to resolvers only reachable via blocked UDRs. 
+5) NodeLocal DNSCache: Update to latest; set `-localip` and `-upstreamsvc` explicitly. If cache evictions high, grow cache capacity. 
+6) Verification: Run steady DNS qps tests; ensure p99 latency is stable and NXDOMAIN rates match expectations.",0.9116959571838379
+67,Docker build fails with 'no matching manifest for linux/amd64 in the manifest list entries'.,Your base image lacks an amd64 manifest. Use `--platform` to specify supported architecture or choose a multi-arch base image.,0.2691958248615265,0.16477882415056228,"03483cc28166fc5c56317e4ee71904941ec5942071e7c936524f74d732b6a24c
+Inspect your container to check for the tmpfs mount:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""tmpfs""
+,
+""Source""
+:
+""""
+,
+""Destination""
+:
+""/app""
+,
+""Mode""
+:
+""""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+Choosing the right storage drivers
+¶
+Before changing the configuration and restarting the daemon, make sure that the specified filesystem (zfs, btrfs, or device mapper) is mounted at
+/var/lib/docker
+.
+Otherwise, if you configure the Docker daemon to use a storage driver different from the filesystem mounted at
+/var/lib/docker
+, a failure will happen. The Docker daemon expects that
+/var/lib/docker
+is correctly set up when it starts.
+Check the current storage driver
+$
+docker
+info
+|
+grep
+""Storage Driver""
+Storage
+Driver:
+overlay2
+Ensure the required Filesystem is available. We will be using the ZFS Filesystem.
+$
+apt
+install
+zfsutils-linux
+-y
+# Install ZFS
+$
+fallocate
+-l
+5G
+/zfs-pool.img
+# Create a 5GB file
+$
+zpool
+create
+mypool
+/zfs-pool.img
+# Create a ZFS pool
+$
+zfs
+create
+-o
+mountpoint
+=
+/var/lib/docker
+mypool/docker
+# Create a ZFS dataset and mount it to dockers directory, ""/var/lib/docker"".
+$
+zfs
+list
+# Verify that it mounted successfully
+NAME
+USED
+AVAIL
+REFER
+MOUNTPOINT
+mypool
+162K
+4
+.36G
+24K
+/mypool
+mypool/docker
+39K
+4
+.36G
+39K
+/var/lib/docker
+Change the storage driver
+Stop the docker daemon
+systemctl
+stop
+docker
+Edit
+/etc/docker/daemon.json
+using your favorite editor, then update the storage driver value to
+zfs
+.",0.91375732421875
+68,kube-scheduler crashlooping with 'nil pointer dereference'.,Custom scheduler config malformed. Validate `kubescheduler.config.k8s.io/v1` syntax and remove plugin weights causing invalid config merge.,0.4488297700881958,0.2735624298453331,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.7568962574005127
+69,Docker container runs but application reports 'read-only file system'.,The container or specific mount is read-only. Check `docker inspect` Mounts configuration and remove `:ro` from volume flags or remount writable.,0.37915700674057007,0.2506901003420353,"The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers. Exposing ports of any system is always a concern, since it increases the surface for malicious attacks. For containers, we also need to be careful, analysing whether we really need to publish ports to the host. For instance, if the goal is to allow containers to access a specific port from another container, there is no need to publish any port to the host. This can be solved by connecting all the containers to the same network. You should publish ports of a container to the host only if you want to make it available to non-Docker workloads. When a container is created no port is published to the host, the option
+--publish
+(or
+-p
+) should be passed to
+docker
+run
+or
+docker
+create
+listing which port will be exposed and how. The
+--publish
+option of Docker CLI accepts the following options:
+First, the host port that will be used to publish the container’s port. It can also contain the IP address of the host. For example,
+0.0.0.0:8080
+. Second, the container’s port to be published. For example,
+80
+.",0.7938501834869385
+70,Pod eviction storms when nodes under IO pressure.,Enable `NodePressureEviction` tuning via kubelet `--eviction-hard` thresholds. Investigate disk I/O saturation using iostat and node logs.,0.47122567892074585,0.24560675770044327,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",0.9510900974273682
+71,Docker build fails with 'permission denied' when copying files.,Ensure the build context includes correct file permissions and paths. Avoid copying files from outside the build context. Adjust file permissions using `chmod` or Dockerfile USER directives.,0.4060612916946411,0.21352265328168868,"03483cc28166fc5c56317e4ee71904941ec5942071e7c936524f74d732b6a24c
+Inspect your container to check for the tmpfs mount:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""tmpfs""
+,
+""Source""
+:
+""""
+,
+""Destination""
+:
+""/app""
+,
+""Mode""
+:
+""""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+Choosing the right storage drivers
+¶
+Before changing the configuration and restarting the daemon, make sure that the specified filesystem (zfs, btrfs, or device mapper) is mounted at
+/var/lib/docker
+.
+Otherwise, if you configure the Docker daemon to use a storage driver different from the filesystem mounted at
+/var/lib/docker
+, a failure will happen. The Docker daemon expects that
+/var/lib/docker
+is correctly set up when it starts.
+Check the current storage driver
+$
+docker
+info
+|
+grep
+""Storage Driver""
+Storage
+Driver:
+overlay2
+Ensure the required Filesystem is available. We will be using the ZFS Filesystem.
+$
+apt
+install
+zfsutils-linux
+-y
+# Install ZFS
+$
+fallocate
+-l
+5G
+/zfs-pool.img
+# Create a 5GB file
+$
+zpool
+create
+mypool
+/zfs-pool.img
+# Create a ZFS pool
+$
+zfs
+create
+-o
+mountpoint
+=
+/var/lib/docker
+mypool/docker
+# Create a ZFS dataset and mount it to dockers directory, ""/var/lib/docker"".
+$
+zfs
+list
+# Verify that it mounted successfully
+NAME
+USED
+AVAIL
+REFER
+MOUNTPOINT
+mypool
+162K
+4
+.36G
+24K
+/mypool
+mypool/docker
+39K
+4
+.36G
+39K
+/var/lib/docker
+Change the storage driver
+Stop the docker daemon
+systemctl
+stop
+docker
+Edit
+/etc/docker/daemon.json
+using your favorite editor, then update the storage driver value to
+zfs
+.",0.8476681709289551
+72,AKS: kubectl times out when using Azure AD auth.,"Expired token or context mismatch. Re-login with `az login`, refresh the kubeconfig via `az aks get-credentials --overwrite-existing`, and ensure your AAD group is bound in RBAC.",0.3791448175907135,0.2004695288836956,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.8136656284332275
+73,Docker Compose build fails with 'unknown flag --mount'.,You’re using old Compose version. Update to Docker Compose v2 or newer where BuildKit `--mount` is supported.,0.5522041916847229,0.23100563809275626,"03483cc28166fc5c56317e4ee71904941ec5942071e7c936524f74d732b6a24c
+Inspect your container to check for the tmpfs mount:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""tmpfs""
+,
+""Source""
+:
+""""
+,
+""Destination""
+:
+""/app""
+,
+""Mode""
+:
+""""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+Choosing the right storage drivers
+¶
+Before changing the configuration and restarting the daemon, make sure that the specified filesystem (zfs, btrfs, or device mapper) is mounted at
+/var/lib/docker
+.
+Otherwise, if you configure the Docker daemon to use a storage driver different from the filesystem mounted at
+/var/lib/docker
+, a failure will happen. The Docker daemon expects that
+/var/lib/docker
+is correctly set up when it starts.
+Check the current storage driver
+$
+docker
+info
+|
+grep
+""Storage Driver""
+Storage
+Driver:
+overlay2
+Ensure the required Filesystem is available. We will be using the ZFS Filesystem.
+$
+apt
+install
+zfsutils-linux
+-y
+# Install ZFS
+$
+fallocate
+-l
+5G
+/zfs-pool.img
+# Create a 5GB file
+$
+zpool
+create
+mypool
+/zfs-pool.img
+# Create a ZFS pool
+$
+zfs
+create
+-o
+mountpoint
+=
+/var/lib/docker
+mypool/docker
+# Create a ZFS dataset and mount it to dockers directory, ""/var/lib/docker"".
+$
+zfs
+list
+# Verify that it mounted successfully
+NAME
+USED
+AVAIL
+REFER
+MOUNTPOINT
+mypool
+162K
+4
+.36G
+24K
+/mypool
+mypool/docker
+39K
+4
+.36G
+39K
+/var/lib/docker
+Change the storage driver
+Stop the docker daemon
+systemctl
+stop
+docker
+Edit
+/etc/docker/daemon.json
+using your favorite editor, then update the storage driver value to
+zfs
+.",0.7895383834838867
+74,"Docker build fails with 'EACCES: permission denied, mkdir'.",Ensure build directory permissions allow access to Docker user. Avoid running builds as non-root unless necessary.,0.4441835582256317,0.29924691542983056,"Then,
+24.0.7-0ubuntu4.1
+was removed from the
+-updates
+pocket on
+2024-11-26
+. You could then use
+20241126T230000Z
+as the snapshot ID to get the target
+package (
+26.1.3-0ubuntu1~24.04.1
+):
+$ sudo apt install docker.io --update --snapshot 20241126T230000Z
+...
+$ docker --version
+Docker version 26.1.3, build 26.1.3-0ubuntu1~24.04.1
+Note
+Note that, at the time of writing, the version of
+docker.io
+in the
+noble-security
+pocket is
+27.5.1-0ubuntu3~24.04.2
+, i.e., the version used in
+the example above may be affected by known vulnerabilities.",0.9092013835906982
+75,"Multiple clusters share a single external etcd for historical reasons. After a network partition, only one cluster recovered; the others show frequent leader re-elections and high latency. How do you de-risk and migrate with minimal downtime?","Shared etcd is a liability. 
+
+1) Stabilize: Increase etcd quorum stability by ensuring low, consistent latency between etcd peers. Remove unhealthy members and add dedicated nodes for each cluster’s etcd (or move to embedded control plane etcd). 
+2) Snapshot: Take consistent snapshots for each logical dataset (ideally you already separated). If not separated, you must sequence migrations: stand up per-cluster etcd, restore snapshot filtered to that cluster’s keys (advanced), or rebuild control plane from scratch and re-register nodes. 
+3) Cutover: Drain control plane components to new etcd endpoints (update manifests on static pods). 
+4) Validate: Run conformance and watch apiserver latencies. 
+5) Long term: Never share etcd across clusters; isolate failure domains.",0.9567796587944031,0.3662374645471573,"1) Stabilize: Increase etcd quorum stability by ensuring low, consistent latency between etcd peers. Remove unhealthy members and add dedicated nodes for each cluster’s etcd (or move to embedded control plane etcd). 
+2) Snapshot: Take consistent snapshots for each logical dataset (ideally you already separated). If not separated, you must sequence migrations: stand up per-cluster etcd, restore snapshot filtered to that cluster’s keys (advanced), or rebuild control plane from scratch and re-register nodes. 
+3) Cutover: Drain control plane components to new etcd endpoints (update manifests on static pods). 
+4) Validate: Run conformance and watch apiserver latencies. 
+5) Long term: Never share etcd across clusters; isolate failure domains.",0.9974620342254639
+76,Docker container startup delayed due to DNS resolution timeout.,Add `--dns 8.8.8.8` or configure `/etc/docker/daemon.json` with a reliable DNS. Avoid corporate DNS blocking internal traffic.,0.652006208896637,0.3571841478347778,"""DriverOpts""
+:
+{}
+}
+}
+}
+The container c2 is connected to two networks
+bridge
+and
+my-net
+. The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers.",0.9640920162200928
+77,"During cluster restore testing, you find that Secrets re-applied from backups are base64-decoded incorrectly by a homegrown tool, corrupting credentials. How do you make secret restoration safe and verifiable?","Treat Secrets as opaque and validate integrity. 
+
+1) Store encrypted secrets (SOPS/SealedSecrets/External Secrets) instead of raw base64. 
+2) Write restore jobs that compare SHA-256 hashes or test decryption before apply. 
+3) Use a dry-run apply (`--server-side --dry-run=server`) to validate schemas. 
+4) After restore, run connectivity checks (DB login, API tokens). 
+5) Version and sign backups; audit toolchain for base64 double-encode/strip issues.",0.2163015753030777,0.17398993968963622,"If we inspect the backup target location on the Storage server (which in this deployment is the same as the Director), we can see that a volume file was created:
+-
+rw
+-
+r
+-----
+1
+bacula
+tape
+345
+K
+Oct
+20
+20
+:
+21
+/
+storage
+/
+backups
+/
+Vol
+-
+0001
+Restoring a backup
+¶
+So what is it that was backed up? This job used the
+Home
+Set
+, so we expect to see files from the
+/home
+directory. To see what are the contents of that backup job, we can use the
+restore
+command (the
+RestoreFiles
+job should never be executed directly). Below is the output of an interactive
+restore
+session where we selected the option “Select the most recent backup for a client”:
+First you select one or more JobIds that contain files
+to be restored. You will be presented several methods
+of specifying the JobIds. Then you will be allowed to
+select which files from those JobIds are to be restored.",1.0175247192382812
+78,Pods scheduled on specific node never start.,Check node taints and ensure pod tolerations match. Inspect kubelet status on the node for runtime or disk space issues.,0.41108810901641846,0.28414044082164763,"1) Stabilize: Increase etcd quorum stability by ensuring low, consistent latency between etcd peers. Remove unhealthy members and add dedicated nodes for each cluster’s etcd (or move to embedded control plane etcd). 
+2) Snapshot: Take consistent snapshots for each logical dataset (ideally you already separated). If not separated, you must sequence migrations: stand up per-cluster etcd, restore snapshot filtered to that cluster’s keys (advanced), or rebuild control plane from scratch and re-register nodes. 
+3) Cutover: Drain control plane components to new etcd endpoints (update manifests on static pods). 
+4) Validate: Run conformance and watch apiserver latencies. 
+5) Long term: Never share etcd across clusters; isolate failure domains.",0.8814904689788818
+79,Node-level kube-proxy dies after enabling IPVS.,IPVS kernel modules not loaded. Run `modprobe ip_vs` and `ip_vs_rr`. Update kube-proxy ConfigMap to include mode: ipvs and reload daemonset.,0.4478854238986969,0.2781130522489548,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",1.1178064346313477
+80,etcd disk fills rapidly even after compaction.,"Large number of Events or Leases not garbage-collected. Enable TTL controller, prune expired events, and check for controllers spamming resource updates.",0.3224453628063202,0.11784045808017254,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.9130628108978271
+81,EKS: Pods cannot reach kube-dns intermittently.,Node-local DNS cache not deployed or SG rules block 53/UDP between pods and CoreDNS. Deploy NodeLocal DNSCache for stability and ensure SG allows DNS traffic.,0.4459754526615143,0.2689354345202446,"1) Observe ingress dataplane: Check NGINX Ingress Controller metrics (requests, p50/p90/p99 latency, reload events). If reload storms exist, enable `--enable-dynamic-certificates` and `--update-status-on-shutdown=false`. Consider using a dedicated configuration ConfigMap and setting `worker-shutdown-timeout` for graceful reloads. 
+2) CoreDNS: Inspect `kubectl -n kube-system logs deploy/coredns` for timeouts. Enable NodeLocal DNSCache to reduce upstream lookups; verify Corefile plugins (`cache`, `forward`) and ensure `forward . /etc/resolv.conf` or the required upstream resolvers are reachable. 
+3) API server pressure: Enable API Priority and Fairness (APF) if not already; tune controller watches that cause large object lists (e.g., CRDs). Use audit logs and apiserver metrics (`apiserver_request_duration_seconds`) to identify expensive endpoints. 
+4) Deployment storm mitigation: Roll deployments with `maxUnavailable` > 0 but reasonable; stagger rollouts, and enable HorizontalPodAutoscaler stabilization windows to avoid thrashing. 
+5) Ingress config reload strategy: Use NGINX `--election-id` for leader election stability; for massive config changes, switch to canary IngressClass to warm new config before flipping traffic. 
+6) Network: Validate ENI/SNAT capacity (cloud) or conntrack limits (`nf_conntrack_max`). 
+7) Verification: Run synthetic probes during a canary rollout; confirm p99 stabilizes before full rollout. Combine these to smooth reload-induced jitter and reduce control-plane coupling with the data plane.",0.8485229015350342
+82,Pod stuck in Init state.,Inspect initContainer logs using `kubectl logs <pod> -c <init-container>`. Initialization script or dependency likely failing.,0.43573689460754395,0.33145357966423034,"The
+kdump-config
+show
+command can be used to confirm that
+kdump
+is correctly configured to use the NFS protocol :
+kdump-config
+show
+Which produces an output like this:
+DUMP_MODE:        kdump
+USE_KDUMP:        1
+KDUMP_SYSCTL:     kernel.panic_on_oops=1
+KDUMP_COREDIR:    /var/crash
+crashkernel addr: 0x2c000000
+   /var/lib/kdump/vmlinuz: symbolic link to /boot/vmlinuz-4.4.0-10-generic
+kdump initrd: 
+   /var/lib/kdump/initrd.img: symbolic link to /var/lib/kdump/initrd.img-4.4.0-10-generic
+NFS:              kdump-netcrash:/var/crash
+HOSTTAG:          hostname
+current state:    ready to kdump
+Verification
+¶
+To confirm that the kernel dump mechanism is enabled, there are a few things to verify. First, confirm that the
+crashkernel
+boot parameter is present (note that the following line has been split into two to fit the format of this document):
+cat
+/proc/cmdline
+BOOT_IMAGE
+=
+/vmlinuz-3.2.0-17-server
+root
+=
+/dev/mapper/PreciseS-root
+ro
+crashkernel
+=
+384M-2G:64M,2G-:128M
+The
+crashkernel
+parameter has the following syntax:
+crashkernel=<range1>:<size1>[,<range2>:<size2>,...][@offset]
+    range=start-[end] 'start' is inclusive and 'end' is exclusive.",0.8388402462005615
+83,EKS: Pods randomly drop connections across nodes.,Security group for pods or incorrect SG rules with VPC CNI SG-for-Pods feature. Ensure inter-pod SG allows required ports and that `AWS_VPC_K8S_CNI_EXTERNALSNAT` is correct for your NAT design.,0.4146776795387268,0.23224761784076692,"1) SDK config: Ensure your SDK uses a cached credential provider and retries AssumeRoleWithWebIdentity with exponential backoff. Increase HTTP connection pooling. 
+2) Token audiences & clock skew: Confirm the projected service account token’s aud matches IAM role trust policy; fix NTP drift on nodes to prevent early/late token rejection. 
+3) Token refresh: Lengthen token rotation window; mount the projected token and ensure the SDK reloads automatically (newer AWS SDKs support file-watching). 
+4) Scale-out: If bursts exceed STS throttling, shard workloads across multiple roles or pre-warm connections. Consider larger pod replicas to smooth spikes. 
+5) Observability: Emit STS metrics and S3 retry counts; validate drop after adding backoff + connection reuse.",0.943030595779419
+84,Docker container I/O latency too high under heavy load.,"Switch to overlay2 storage driver, enable journaling on host filesystem, and consider using bind mounts for high-performance I/O operations.",0.21440957486629486,0.14637361727654935,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.8571188449859619
+85,API server requests hang during large ConfigMap update.,"ConfigMap objects exceed size limit causing slow serialization. Move large binary data to a volume or external store, or increase `maxRequestBodyBytes` parameter.",0.2943437397480011,0.16835384964942932,"1) Argo CD settings: Enable resource exclusions (e.g., Events) and narrow the set of watched namespaces. Use ApplicationSet generators to shard apps across multiple controllers to distribute load. 
+2) Informer resync: Increase `--app-resync` interval; enable `--sharding` with `--shard` flags. 
+3) Large manifests: Split monolithic Helm charts; avoid embedding large binaries or gigantic ConfigMaps/Secrets. 
+4) Server-side apply: Prefer SSA with field managers to reduce patch conflicts. Ensure `--prune` is used judiciously to prevent wholesale DELETE/CREATE churn. 
+5) API PF (Priority & Fairness): Define fair-queuing for Argo CD clients to prevent starvation of system controllers. 
+6) Observability: Track apiserver metrics by user agent; confirm drops after sharding/exclusions. 
+7) Last resort: Introduce dedicated APIServer for aggregated CRDs (API Aggregation) isolating heavy CRDs from core paths.",0.8564796447753906
+86,Docker compose deploy to swarm fails with 'invalid mount config for type bind'.,Bind mounts in Swarm require absolute host paths. Replace relative paths with full paths and ensure the directory exists on all swarm nodes.,0.2160903811454773,0.1457895502448082,"No locked files
+You can also restrict access to the share as usual. Just keep in mind the syntax for the domain users. For example, to restrict access to the
+[storage]
+share we just created to
+only
+members of the
+LTS
+Releases
+domain group, add the
+valid
+users
+parameter like below:
+[storage]
+    path = /storage
+    comment = Storage share
+    writable = yes
+    guest ok = no
+    valid users = ""@INTEXAMPLE\ LTS Releases""
+Choose an
+idmap
+backend
+¶
+realm
+made some choices for us when we joined the domain. A very important one is the
+idmap
+backend, and it might need changing for more complex setups. User and group identifiers on the AD side are not directly usable as identifiers on the Linux site. A
+mapping
+needs to be performed. Winbind supports several
+idmap
+backends, and each one has its own manual page. The three main ones are:
+idmap_ad(8)
+idmap_autorid(8)
+idmap_rid(8)
+Choosing the correct backend for each deployment type needs careful planing. Upstream has some guidelines at
+Choosing an
+idmap
+backend
+, and each man page has more details and recommendations. The
+realm
+tool selects (by default) the
+rid
+backend. This backend uses an algorithm to calculate the Unix user and group IDs from the respective RID value on the AD side. You might need to review the
+idmap
+config
+settings in
+/etc/samba/smb.conf
+and make sure they can accommodate the number of users and groups that exist in the domain, and that the range does not overlap with users from other sources. For example, these settings:
+idmap config * : range = 10000-999999
+idmap config intexample : backend = rid
+idmap config intexample : range = 2000000-2999999
+idmap config * : backend = tdb
+Will reserve the
+2,000,000
+through
+2,999,999
+range for user and group ID allocations on the Linux side for the
+intexample
+domain. The default backend (
+*
+, which acts as a “globbing” catch-all rule) is used for the
+BUILTIN
+user and groups, and other domains (if they exist). It’s important that these ranges do not overlap.",0.9675776958465576
+87,Kubernetes dashboard shows 'Unauthorized'.,You need a valid service account token. Retrieve it using `kubectl -n kubernetes-dashboard create token admin-user` and use it to login.,0.4353412091732025,0.34163240492343905,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.9315788745880127
+88,EKS: CoreDNS CrashLoop after enabling stubDomains for on-prem DNS.,"DNS loop or unreachable upstream. Verify VPC resolver rules, ensure conditional forwarders route correctly over VPN/Direct Connect, and reduce query timeouts.",0.4977326989173889,0.2416856773197651,"1) Path validation: From a pod, `dig +trace` to see where resolution fails. Confirm NodeLocal DNSCache forwards to CoreDNS, which in turn forwards to Azure DNS (168.63.129.16) or the resolver you intend. 
+2) Azure Firewall: Allow outbound 53/UDP+TCP from node and firewall rules to resolver. If using FQDN tags, verify the domains. 
+3) Private DNS zone linking: Ensure the VNet is linked to the Private DNS zone and that split-horizon doesn’t loop. Avoid forwarding back into the same zone. 
+4) CoreDNS: Increase `max_concurrent` and cache TTL. Ensure stubdomains don’t point to resolvers only reachable via blocked UDRs. 
+5) NodeLocal DNSCache: Update to latest; set `-localip` and `-upstreamsvc` explicitly. If cache evictions high, grow cache capacity. 
+6) Verification: Run steady DNS qps tests; ensure p99 latency is stable and NXDOMAIN rates match expectations.",0.9508814811706543
+89,"Cluster nodes occasionally reboot due to underlying host patches. After reboot, some pods fail because `subPath` volume mounts point to stale inodes. How do you sanitize and prevent recurrence?","`subPath` is sensitive to path existence/time. 
+
+1) On node boot, run a systemd unit to clean stale kubelet `pods/volumes` directories if not mounted. 
+2) Avoid dynamic creation under `subPath`; precreate directories via initContainers. 
+3) Prefer projected volumes or CSI volumes instead of deep `subPath` trees. 
+4) Monitor kubelet logs for `reconstruct volume` errors; alert and cordon nodes with repeated failures.",0.36647215485572815,0.2316053807735443,"kexec command:
+      /sbin/kexec -p --command-line=""BOOT_IMAGE=/vmlinuz-4.4.0-10-generic root=/dev/mapper/VividS--vg-root ro debug break=init console=ttyS0,115200 irqpoll maxcpus=1 nousb systemd.unit=kdump-tools.service"" --initrd=/var/lib/kdump/initrd.img /var/lib/kdump/vmlinuz
+Testing the crash dump mechanism
+¶
+Warning
+Testing the crash dump mechanism
+will cause a system reboot
+. In certain situations, this can cause data loss if the system is under heavy load. If you want to test the mechanism, make sure that the system is idle or under very light load. Verify that the
+SysRQ
+mechanism is enabled by looking at the value of the
+/proc/sys/kernel/sysrq
+kernel parameter:
+cat
+/proc/sys/kernel/sysrq
+If a value of
+0
+is returned, the dump and then reboot feature is disabled. A value greater than
+1
+indicates that a sub-set of
+sysrq
+features is enabled. See
+/etc/sysctl.d/10-magic-sysrq.conf
+for a detailed description of the options and their default values. Enable dump then reboot testing with the following command:
+sudo
+sysctl
+-w
+kernel.sysrq
+=
+1
+Once this is done, you must become root, as just using
+sudo
+will not be sufficient. As the
+root
+user, you will have to issue the command
+echo
+c
+>
+/proc/sysrq-trigger
+. If you are using a network connection, you will lose contact with the system. This is why it is better to do the test while being connected to the system console. This has the advantage of making the kernel dump process visible.",0.924755334854126
+90,Docker image fails with 'no space left on device'.,Clean up unused images and containers using `docker system prune -a`. Increase disk size or move Docker storage location via `daemon.json` configuration.,0.5266197919845581,0.33096010237932205,"03483cc28166fc5c56317e4ee71904941ec5942071e7c936524f74d732b6a24c
+Inspect your container to check for the tmpfs mount:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""tmpfs""
+,
+""Source""
+:
+""""
+,
+""Destination""
+:
+""/app""
+,
+""Mode""
+:
+""""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+Choosing the right storage drivers
+¶
+Before changing the configuration and restarting the daemon, make sure that the specified filesystem (zfs, btrfs, or device mapper) is mounted at
+/var/lib/docker
+.
+Otherwise, if you configure the Docker daemon to use a storage driver different from the filesystem mounted at
+/var/lib/docker
+, a failure will happen. The Docker daemon expects that
+/var/lib/docker
+is correctly set up when it starts.
+Check the current storage driver
+$
+docker
+info
+|
+grep
+""Storage Driver""
+Storage
+Driver:
+overlay2
+Ensure the required Filesystem is available. We will be using the ZFS Filesystem.
+$
+apt
+install
+zfsutils-linux
+-y
+# Install ZFS
+$
+fallocate
+-l
+5G
+/zfs-pool.img
+# Create a 5GB file
+$
+zpool
+create
+mypool
+/zfs-pool.img
+# Create a ZFS pool
+$
+zfs
+create
+-o
+mountpoint
+=
+/var/lib/docker
+mypool/docker
+# Create a ZFS dataset and mount it to dockers directory, ""/var/lib/docker"".
+$
+zfs
+list
+# Verify that it mounted successfully
+NAME
+USED
+AVAIL
+REFER
+MOUNTPOINT
+mypool
+162K
+4
+.36G
+24K
+/mypool
+mypool/docker
+39K
+4
+.36G
+39K
+/var/lib/docker
+Change the storage driver
+Stop the docker daemon
+systemctl
+stop
+docker
+Edit
+/etc/docker/daemon.json
+using your favorite editor, then update the storage driver value to
+zfs
+.",0.8266613483428955
+91,kubectl proxy command fails with 'could not get server version'.,Check API server health and kubeconfig context. Ensure cluster endpoint URL is reachable from your client machine.,0.5426244139671326,0.21381577849388123,"1) Verify etcd health: `etcdctl endpoint status --write-out=table` and `etcdctl alarm list`. Clear any NO_SPACE or CORRUPT alarms. Run a compaction (`etcdctl compact <rev>`) followed by `etcdctl defrag` to reclaim space. 
+2) API server restart loop: Restart kube-apiserver to rebuild in-memory watch caches. Stagger restarts to keep quorum available. 
+3) Lease cleanup: List leases in `kube-system` and controller namespaces. If leases are stale, delete them (e.g., `kubectl delete lease -n kube-system kube-scheduler`) so controllers can reacquire leadership. 
+4) HPA and metrics chain: Validate metrics-server (`kubectl get apiservice v1beta1.metrics.k8s.io -o yaml` for STATUS). If APIServices show discovery failures, restart metrics-server and aggregation layer. 
+5) Admission webhooks: Ensure their endpoints are healthy; stale endpoints can block create/updates. 
+6) Post-restore consistency: Run conformance checks (e.g., `sonobuoy`) and verify controllers (scheduler, controller-manager) reconcile loops stabilize (look for reduction in 'resource version too old' warnings).",0.9442026615142822
+92,Docker push fails with 'blob upload invalid'.,Registry or proxy corrupted upload session. Clear `/var/lib/docker` registry cache or retry push with `--disable-content-trust`.,0.47593051195144653,0.2177092380821705,"03483cc28166fc5c56317e4ee71904941ec5942071e7c936524f74d732b6a24c
+Inspect your container to check for the tmpfs mount:
+docker
+inspect
+web-server
+--format
+'{{ json .Mounts }}'
+|
+jq
+.
+[
+{
+""Type""
+:
+""tmpfs""
+,
+""Source""
+:
+""""
+,
+""Destination""
+:
+""/app""
+,
+""Mode""
+:
+""""
+,
+""RW""
+:
+true
+,
+""Propagation""
+:
+""""
+}
+]
+Choosing the right storage drivers
+¶
+Before changing the configuration and restarting the daemon, make sure that the specified filesystem (zfs, btrfs, or device mapper) is mounted at
+/var/lib/docker
+.
+Otherwise, if you configure the Docker daemon to use a storage driver different from the filesystem mounted at
+/var/lib/docker
+, a failure will happen. The Docker daemon expects that
+/var/lib/docker
+is correctly set up when it starts.
+Check the current storage driver
+$
+docker
+info
+|
+grep
+""Storage Driver""
+Storage
+Driver:
+overlay2
+Ensure the required Filesystem is available. We will be using the ZFS Filesystem.
+$
+apt
+install
+zfsutils-linux
+-y
+# Install ZFS
+$
+fallocate
+-l
+5G
+/zfs-pool.img
+# Create a 5GB file
+$
+zpool
+create
+mypool
+/zfs-pool.img
+# Create a ZFS pool
+$
+zfs
+create
+-o
+mountpoint
+=
+/var/lib/docker
+mypool/docker
+# Create a ZFS dataset and mount it to dockers directory, ""/var/lib/docker"".
+$
+zfs
+list
+# Verify that it mounted successfully
+NAME
+USED
+AVAIL
+REFER
+MOUNTPOINT
+mypool
+162K
+4
+.36G
+24K
+/mypool
+mypool/docker
+39K
+4
+.36G
+39K
+/var/lib/docker
+Change the storage driver
+Stop the docker daemon
+systemctl
+stop
+docker
+Edit
+/etc/docker/daemon.json
+using your favorite editor, then update the storage driver value to
+zfs
+.",0.8828747272491455
+93,Docker container fails to bind to IPv6 address.,"Enable IPv6 in Docker daemon configuration by adding `{ ""ipv6"": true, ""fixed-cidr-v6"": ""2001:db8:1::/64"" }` to `daemon.json`.",0.5375379323959351,0.33386448472738267,"Fea22fbb6e3685eae28815f3ad8c8a655340ebcd6a0c13f3aad0b45d71a20935
+Connect the running container to the network and verify that it’s connected.
+docker
+network
+connect
+my-net
+c2
+docker
+inspect
+c2
+--format
+'{{ json .NetworkSettings }}'
+|
+jq
+.
+{
+""Bridge""
+:
+""""
+,
+""SandboxID""
+:
+""82a7ea6efd679dffcc3e4392e0e5da61a8ccef33dd78eb5381c9792a4c01f366""
+,
+""HairpinMode""
+:
+false
+,
+""LinkLocalIPv6Address""
+:
+""""
+,
+""LinkLocalIPv6PrefixLen""
+:
+0
+,
+""Ports""
+:
+{
+""80/tcp""
+:
+null
+},
+""SandboxKey""
+:
+""/var/run/docker/netns/82a7ea6efd67""
+,
+""SecondaryIPAddresses""
+:
+null
+,
+""SecondaryIPv6Addresses""
+:
+null
+,
+""EndpointID""
+:
+""490c15cf3bcb149dd8649e3ac96f71addd13f660b4ec826dc39e266184b3f65b""
+,
+""Gateway""
+:
+""172.17.0.1""
+,
+""GlobalIPv6Address""
+:
+""""
+,
+""GlobalIPv6PrefixLen""
+:
+0
+,
+""IPAddress""
+:
+""172.17.0.3""
+,
+""IPPrefixLen""
+:
+16
+,
+""IPv6Gateway""
+:
+""""
+,
+""MacAddress""
+:
+""02:42:ac:11:00:03""
+,
+""Networks""
+:
+{
+""bridge""
+:
+{
+""IPAMConfig""
+:
+null
+,
+""Links""
+:
+null
+,
+""Aliases""
+:
+null
+,
+""NetworkID""
+:
+""1f55a8891c4a523a288aca8881dae0061f9586d5d91c69b3a74e1ef3ad1bfcf4""
+,
+""EndpointID""
+:
+""490c15cf3bcb149dd8649e3ac96f71addd13f660b4ec826dc39e266184b3f65b""
+,
+""Gateway""
+:
+""172.17.",0.9332959651947021
+94,Docker container on Windows can't resolve Linux hostnames.,Windows Docker Desktop uses a VM. Use `host.docker.internal` or configure internal DNS forwarding to access Linux host resources.,0.5846870541572571,0.354545521736145,"The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers. Exposing ports of any system is always a concern, since it increases the surface for malicious attacks. For containers, we also need to be careful, analysing whether we really need to publish ports to the host. For instance, if the goal is to allow containers to access a specific port from another container, there is no need to publish any port to the host. This can be solved by connecting all the containers to the same network. You should publish ports of a container to the host only if you want to make it available to non-Docker workloads. When a container is created no port is published to the host, the option
+--publish
+(or
+-p
+) should be passed to
+docker
+run
+or
+docker
+create
+listing which port will be exposed and how. The
+--publish
+option of Docker CLI accepts the following options:
+First, the host port that will be used to publish the container’s port. It can also contain the IP address of the host. For example,
+0.0.0.0:8080
+. Second, the container’s port to be published. For example,
+80
+.",0.8026127815246582
+95,AKS: Pod-to-pod connectivity broken across node pools.,"NSG or UDR blocks traffic between subnets, or different VNets without peering. Ensure NSGs allow intra-subnet and inter-subnet traffic and that VNet peering is configured without 'UseRemoteGateways' conflicts.",0.21090048551559448,0.17632567286491393,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.8798363208770752
+96,Docker network inspection shows stale containers.,"Run `docker network prune` to remove unused networks. If network still shows ghosts, restart Docker daemon to refresh overlay cache.",0.4898197054862976,0.3011655807495117,"""DriverOpts""
+:
+{}
+}
+}
+}
+The container c2 is connected to two networks
+bridge
+and
+my-net
+. The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers.",0.9525938034057617
+97,A cluster with SPIRE/SPIFFE identities experiences sudden mTLS failures between services after node replacements. Certificates are valid. Logs show SVID rotation stalls on some nodes. Steps?,"Node attestation and agent rotation likely stuck. 
+
+1) Verify SPIRE Agent on nodes has correct join token or attestor config; check clock skew. 
+2) Restart agents and server; inspect bundle endpoints and federation. 
+3) Ensure the workload API socket is accessible and not blocked by SELinux/AppArmor. 
+4) Force reissue SVIDs for affected workloads; validate rotation interval and backoff not overlapping with node drains. 
+5) Add alerts for SVID age and rotation latency.",0.3798563480377197,0.2662323653697968,"1) Sidecar (Envoy) metrics: Inspect `cluster.upstream_rq_pending_overflow` and `upstream_cx_active` counters. Increase `maxRequestsPerConnection` or disable HTTP/2 where not needed. 
+2) Connection pool tuning: In DestinationRule, set outlier detection and connection pool thresholds. For high RPS with short-lived connections, raise `http2MaxRequests` and `maxConnections`. 
+3) mTLS: Verify certificate rotation hasn’t caused brief trust gaps; ensure SDS is healthy and `istiod` is not CPU throttled. 
+4) Pod resources: Confirm containers are not CPU throttled; bursts for TLS and HPACK decompression need headroom. 
+5) Retry budget: Configure exponential backoff with jitter and failover to same-version subset during surge. 
+6) Load test: Reproduce with controlled traffic; compare HTTP/1.1 vs HTTP/2. If HTTP/2 exacerbates the issue, consider disabling H2 between sidecars for this service pair. 
+7) Validate probe/Ingress mismatch: NGINX/ALB health may succeed on a non-mesh path while mesh traffic fails; unify health endpoint through mesh for consistency.",0.9220278263092041
+98,Docker network bridge conflicts with host network IP.,"Edit `/etc/docker/daemon.json` to change the default bridge subnet: `{ ""bip"": ""172.26.0.1/16"" }`, then restart Docker.",0.7917226552963257,0.4281393110752106,"The default network created by the Docker daemon is called
+bridge
+using the
+bridge network driver
+. Modifying the default network “bridge”
+¶
+A system administrator can modify this default networks IP address by editing
+/etc/docker/daemon.json
+and including the below into the JSON object
+vim
+/etc/docker/daemon.json
+{
+""bip""
+:
+""192.168.1.1/24""
+,
+""fixed-cidr""
+:
+""192.168.1.0/25""
+,
+""fixed-cidr-v6""
+:
+""2001:db8::/64""
+,
+""mtu""
+:
+1500
+,
+""default-gateway""
+:
+""192.168.1.254""
+,
+""default-gateway-v6""
+:
+""2001:db8:abcd::89""
+,
+""dns""
+:
+[
+""10.20.1.2""
+,
+""10.20.1.3""
+]
+}
+Restart the Docker daemon
+systemctl
+restart
+docker
+Verify your changes
+docker
+network
+inspect
+bridge
+Exposing a container port to the host
+¶
+After deciding how you are going to manage the network and selecting the most appropriate driver, there are some specific deployment details that a system administrator has to bear in mind when running containers. Exposing ports of any system is always a concern, since it increases the surface for malicious attacks. For containers, we also need to be careful, analysing whether we really need to publish ports to the host. For instance, if the goal is to allow containers to access a specific port from another container, there is no need to publish any port to the host. This can be solved by connecting all the containers to the same network. You should publish ports of a container to the host only if you want to make it available to non-Docker workloads. When a container is created no port is published to the host, the option
+--publish
+(or
+-p
+) should be passed to
+docker
+run
+or
+docker
+create
+listing which port will be exposed and how. The
+--publish
+option of Docker CLI accepts the following options:
+First, the host port that will be used to publish the container’s port. It can also contain the IP address of the host. For example,
+0.0.0.0:8080
+. Second, the container’s port to be published. For example,
+80
+.",0.8766803741455078
+99,Docker volume not persisting data.,Ensure you’re using a named volume or host mount. Anonymous volumes are recreated each run. Use `-v mydata:/app/data` instead of `-v /app/data`.,0.328480064868927,0.1553091436624527,"The above sample could also be improved to also use another volume for persisting data, and even a Grafana default configuration for the Prometheus datasource. Since we already installed Docker in the section above, all that is needed is to create and start the containers defined in this Compose file. This can be achieved with:
+$
+sudo
+docker
+compose
+up
+-d
+[
++
+]
+Running
+10
+/10
+✔
+grafana
+Pulled
+✔
+bccd10f490ab
+Already
+exists
+✔
+549078d9d057
+Pull
+complete
+✔
+6ef870aa8500
+Pull
+complete
+✔
+2b475da7ccbd
+Pull
+complete
+✔
+prometheus
+Pulled
+✔
+a8b1c5f80c2d
+Already
+exists
+✔
+f021062473aa
+Pull
+complete
+✔
+9c6122d12d1d
+Pull
+complete
+✔
+274b56f68abe
+Pull
+complete
+[
++
+]
+Running
+3
+/3
+✔
+Network
+compose_default
+Created
+✔
+Container
+prometheus-container
+Started
+✔
+Container
+grafana-container
+Started
+As before, the
+-d
+indicates that all containers in this stack should be started in the background.",0.7566862106323242

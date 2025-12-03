@@ -1,0 +1,34 @@
+# Индексы
+colbert_index/
+.ragatouille/
+*.index
+*.idx
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Данные
+*.log
+*.tmp
+*.cache
+
+# Модели (если скачиваются автоматически)
+models/
+*.bin
+*.safetensors
+

@@ -1,0 +1,28 @@
+# RAG система с RAGatouille и ColBERT
+ragatouille==0.0.9
+torch>=2.0.0
+transformers>=4.30.0
+sentencepiece>=0.1.99
+
+# Обработка текста
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# Утилиты
+tqdm>=4.65.0
+numpy>=1.24.0
+
+# Дополнительные зависимости для работы с индексами
+faiss-cpu>=1.7.4  # Для векторного поиска (опционально, если RAGatouille требует)
+
+# LangChain для компрессии документов (опционально)
+langchain>=0.0.320,<0.1.0
+sentence-transformers>=2.2.0
+
+FastAPI
+uvicorn
+pydantic
+httpx
+
+streamlit
+
