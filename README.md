@@ -16,8 +16,7 @@ A smart RAG system for creating a system administrator assistant using:
 * 🎯 **LangChain document compressors** for improving context quality (optional)
 
 Demo:
-<video src="https://github.com/LidaDavydova/SysAdminRAG/blob/main/demo.mp4" controls="controls" style="max-width: 730px;">
-</video>
+[demo.mp4](https://github.com/LidaDavydova/SysAdminRAG/blob/main/demo.mp4)
 
 ## Installation
 
